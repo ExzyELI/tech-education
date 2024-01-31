@@ -1,4 +1,13 @@
 export default function Home() {
+  const [user] = useAuthState(auth);
+  const userSession = sessionStorage.getItem("user");
+
+  console.log(user);
+  const router = useRouter();
+  if (!user && !userSession) {
+    router.push("/sign-in");
+  }
+
   return (
     <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
