@@ -18,7 +18,7 @@ export default function Home() {
             </button>
             <button
               type="button"
-              className="rounded-lg bg-[#ffe08d] px-5 py-2 text-center text-sm font-medium hover:bg-[#ffd564]"
+              className="rounded-lg bg-[#f78b51] px-5 py-2 text-center text-sm font-medium hover:bg-[#f87a36]"
             >
               Sign Up
             </button>
@@ -33,7 +33,7 @@ export default function Home() {
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               {/* left column for text */}
-              <div className="mt-12 lg:mt-[105px]">
+              <div className="mt-12 lg:mt-[100px]">
                 <h1 className="text-5xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
                   Technology education <br />
                   <span className="text-primary">for grades k-2</span>
@@ -44,7 +44,8 @@ export default function Home() {
                     {/* link for the image source */}
                     <a
                       className="text-xs text-[#ff6865]"
-                      href="https://www.vectorstock.com/royalty-free-vector/home-education-parent-teaching-child-mother-vector-46882075"
+                      href="https://www.vectorstock.com/royalty-free-vector/home-education-parent-teaching-child-mother-vector-46882075 "
+                      target="_blank"
                     >
                       img source
                     </a>
@@ -80,16 +81,18 @@ export default function Home() {
             <div className="mt-6 w-full p-6 sm:w-1/2">
               <div className="align-middle">
                 <h3 className="mb-3 text-3xl font-bold leading-none text-gray-800">
-                  Lorem ipsum dolor sit amet
+                  K-2 Learning
                 </h3>
                 <p className="mb-8 text-gray-600">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+                  To teach children about technology and the basics of using a
+                  computer with a mouse and keyboard through puzzles and brain
+                  games
                   <br />
                   {/* link for the image source */}
                   <a
                     className="text-xs text-[#ff6865]"
                     href="https://www.vectorstock.com/royalty-free-vector/flat-hands-typing-on-white-keyboard-with-cable-vector-15384106"
+                    target="_blank"
                   >
                     img source
                   </a>
@@ -117,6 +120,7 @@ export default function Home() {
                 <a
                   className="text-xs text-[#ff6865]"
                   href="https://www.vectorstock.com/royalty-free-vector/female-teacher-in-classroom-school-and-learning-vector-38666684"
+                  target="_blank"
                 >
                   img source
                 </a>
@@ -136,6 +140,7 @@ export default function Home() {
                 <a
                   className="text-xs text-[#ff6865]"
                   href="https://www.vectorstock.com/royalty-free-vector/family-parents-son-vector-36474395"
+                  target="_blank"
                 >
                   img source
                 </a>
@@ -147,7 +152,7 @@ export default function Home() {
             </div>
           </div>
           {/* third role */}
-          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3 ">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
               <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
                 Student
@@ -155,6 +160,7 @@ export default function Home() {
                 <a
                   className="text-xs text-[#ff6865]"
                   href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
+                  target="_blank"
                 >
                   img source
                 </a>
