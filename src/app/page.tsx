@@ -27,7 +27,7 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="-mb-[96px] bg-[#ffecde] lg:-mt-5">
+      <section className="-mb-[96px] border-b bg-[#ffecde] lg:-mt-5">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -43,7 +43,7 @@ export default function Home() {
                 </h1>
               </div>
               {/* right column for image */}
-              <div className="-mb-[48px]">
+              <div className="-mb-[96px]">
                 <img src="https://i.imgur.com/4x0P6w8.png" className="w-full" />
               </div>
             </div>
@@ -53,8 +53,22 @@ export default function Home() {
       {/* banner ends */}
 
       {/* mission statement begins */}
-      <section className="relative mt-[96px] border-t bg-[#e1f3ff]">
-        <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left"></div>
+      <section className="relative mt-[97px] border-b bg-[#e5f2fe] pt-[60px]">
+        <div className="container -my-[25px] mx-auto max-w-5xl">
+          {/* title for section */}
+          <h2 className="w-full text-center text-5xl font-bold leading-tight text-gray-800">
+            Our Goal
+          </h2>
+          {/* image on left side of column */}
+          <div className="flex flex-col-reverse flex-wrap sm:flex-row">
+            <div className="w-full p-6 sm:w-1/2">
+              <img
+                className="min-h-0 w-full"
+                src="https://i.imgur.com/giIQWTi.jpg"
+              />
+            </div>
+          </div>
+        </div>
       </section>
       {/* mission statement ends */}
     </main>
