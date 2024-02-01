@@ -162,6 +162,16 @@ export default function Home() {
         </div>
       </section>
       {/* roles ends */}
+
+      {/* footer begins */}
+      <footer className="bg-[#ffe08d]">
+        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
+          <span className="text-sm sm:text-center ">
+            © 2024 Tech Education™
+          </span>
+        </div>
+      </footer>
+      {/* footer ends */}
     </main>
   );
 }
