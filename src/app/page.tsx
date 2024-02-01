@@ -4,23 +4,31 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <header className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-        <div className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-[#afce8b] flex justify-between items-center px-4 py-2">
-          <h1 className="cursor-pointer text-xl font-bold hover:text-2xl transition-all duration-800 ">Tech Education</h1>
-          <div className="flex text-lg">
-            <label className="mr-5 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:bg-orange-500 hover:text-white hover:p-1 hover:rounded">Activities</label>
-            <label className="mr-5 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:bg-orange-500 hover:text-white hover:p-1 hover:rounded">Grade</label>
-            <label className="mr-5 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:bg-orange-500 hover:text-white hover:p-1 hover:rounded">Reports</label>
-          </div>
+        <div className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-[#afce8b] flex justify-between items-center px-4 py-5"> 
+          <h1 className="cursor-pointer text-xl font-bold ">Tech Education</h1>
+          <nav className="text-2lg">
+            <a href="#" className="text-[#132241] cursor-pointer text-lg px-3 font-semibold hover:text-[#5c6ac4]">Activities</a>
+            <a href="#" className="text-[#132241] cursor-pointer text-lg px-3 font-semibold hover:text-[#5c6ac4]">Grade</a>
+            <a href="#" className="text-[#132241] cursor-pointer text-lg px-3 font-semibold hover:text-[#5c6ac4]">Reports</a>
+            <a href="#" className="text-[#132241] cursor-pointer text-lg px-3 font-semibold hover:text-[#5c6ac4]">Profile</a>
+          </nav>
         </div>
       </header>
-
-
-      <section className="container mx-auto py-20">
-        <h1 className="text-orange-500 text-7xl font-bold py-1">Welcome to our Homepage</h1>
-        <h2 className="text-black opacity-20 text-5xl font-bold">Coming soon</h2>
+      <section className="absolute top-20 w-full text-center ">
+        <h1 className="text-orange-500 text-5xl font-bold py-1 ">Welcome to Tech Education!</h1>
+        <h2 className="text-black text-5xl font-bold">...</h2>
         </section>
-
-    
+        <div className="cursor-pointer flex justify-center mt-[220px] ">
+        <a href="#" className="w-1/4 h-[300px] bg-gray-300 rounded-md m-2 hover:scale-105 hover:border-2 border-orange-500 transition-transform">
+          <h1 className="text-3xl text-center font-semibold ">Kindergarden</h1>
+        </a>
+        <a href="#" className="w-1/4 h-[300px] bg-gray-300 rounded-md m-2 hover:scale-105 hover:border-2 border-orange-500 transition-transform">
+          <h1 className="text-3xl text-center font-semibold">1st Grade</h1>
+        </a>
+        <a href="#" className="w-1/4 h-[300px] bg-gray-300 rounded-md m-2 hover:scale-105 hover:border-2 border-orange-500 transition-transform">
+          <h1 className="text-3xl text-center font-semibold">2nd Grade</h1>
+        </a>
+      </div>
 
       <footer className="bg-gray-800 text-white py-8 mt-auto">
         <div className="container mt-auto text-2xl mx-20 ">
@@ -30,3 +38,4 @@ export default function Home() {
     </div>
   );
 }
+
