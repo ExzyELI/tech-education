@@ -4,6 +4,7 @@ import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth, db} from '@/app/firebase/init_app'
 import {useRouter} from "next/navigation";
 import {doc, setDoc} from "firebase/firestore";
+import Radio from "../../../comps/radio";
 
 
 export default function Signup() {
@@ -11,7 +12,8 @@ export default function Signup() {
     const [password, setPassword] = useState('');
     const [firstName, setfirstName] = useState('');
     const [lastName, setlastName] = useState('');
-    const router = useRouter()
+    const router = useRouter();
+    const [role, selectedRole] = useState('');
 
     const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   
@@ -21,7 +23,7 @@ export default function Signup() {
         const res = await createUserWithEmailAndPassword(email, password);
         console.log({res});
         if (res){
-          await setDoc(doc(db,'users',res.user.uid),{email:res.user.email, firstName:firstName, lastName:lastName});
+          await setDoc(doc(db,'users',res.user.uid),{email:res.user.email, firstName:firstName, lastName:lastName, role:role});
         }
 
         sessionStorage.setItem('user','true');
@@ -117,7 +119,9 @@ export default function Signup() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 />
               </div>
-            </div>
+            </div>   
+            
+            <Radio role={role} setradioButton={selectedRole}/>
 
             <div>
               <button
