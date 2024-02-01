@@ -1,5 +1,7 @@
 import Image from "next/image";
 
+
+{/*Student HomePage */}
 export default function Home() {
   return (
     <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
@@ -28,15 +30,15 @@ export default function Home() {
       <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-5">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="mt-12 lg:mt-[105px]">
+
+              <div className=" flex justify-center lg:mt-[50px]">
                 {/* title */}
                 <h1 className="text-6xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
                   Welcome to Tech Education!
                   </h1>
                   </div>
                   {/* title */}
-                  <div className="cursor-pointer flex justify-center items-center py-2 bg-white">
+                  <div className="cursor-pointer flex justify-center items-center py-2">
                     <a href="#" className="w-1/4 h-[280px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform flex justify-center items-center">
                       <h1 className="text-3xl text-center font-semibold tracking-tight">Kindergarten</h1>
                       </a>
@@ -47,15 +49,15 @@ export default function Home() {
                           <h1 className="text-3xl text-center font-semibold tracking-tight">2nd <br />Grade</h1>
                           </a>
                           </div>
+                          {/* Image */}
                           </div>
                           </div>
-                           </div>
-                           </section>
+                          </section>
       {/* banner ends */}
 
       {/* footer begins */}
       <footer className="fixed bottom-0 left-0 right-0 bg-[#afce8b]">
-        <div className=" mt-[100px] mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
+        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
           <span className="text-sm sm:text-center ">
             © 2024 Tech Education™
           </span>
