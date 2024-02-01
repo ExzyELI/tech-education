@@ -32,14 +32,13 @@ export default function Home() {
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2">
               {/* left column for text */}
-              <div className="mt-12 lg:mt-0">
+              <div className="mt-12 lg:mt-[105px]">
                 <h1 className="text-5xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
-                  <p className="mb-2 text-2xl font-medium">Welcome</p>
                   Technology education <br />
                   <span className="text-primary">for grades k-2</span>
                   <p className="mt-5 text-2xl font-medium lg:mb-8">
                     Join us today to gain exclusive access to educational
-                    material
+                    material for your student or child
                   </p>
                 </h1>
               </div>
@@ -52,6 +51,12 @@ export default function Home() {
         </div>
       </section>
       {/* banner ends */}
+
+      {/* mission statement begins */}
+      <section className="relative mt-[96px] border-t bg-[#e1f3ff]">
+        <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left"></div>
+      </section>
+      {/* mission statement ends */}
     </main>
   );
 }
