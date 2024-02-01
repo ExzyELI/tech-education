@@ -1,12 +1,17 @@
 'use client'
 import {useState} from "react";
 import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth'
-import {auth} from '@/app/firebase/init_app'
+import {auth, db} from '@/app/firebase/init_app'
 import {useRouter} from "next/navigation";
+import {doc, setDoc} from "firebase/firestore";
+
 
 export default function Signup() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [firstName, setfirstName] = useState('');
+    const [lastName, setlastName] = useState('');
+    const router = useRouter()
 
     const [createUserWithEmailAndPassword] = useCreateUserWithEmailAndPassword(auth);
   
@@ -15,10 +20,15 @@ export default function Signup() {
       try {
         const res = await createUserWithEmailAndPassword(email, password);
         console.log({res});
+        if (res){
+          await setDoc(doc(db,'users',res.user.uid),{email:res.user.email, firstName:firstName, lastName:lastName});
+        }
+
         sessionStorage.setItem('user','true');
         setEmail('');
         setPassword('');
         // Later redirect to sign-in page
+        router.push('/')
       } catch (error) {
         console.error(error)
       }
@@ -39,6 +49,40 @@ export default function Signup() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6" onSubmit={handleSignup}>
+          <div>
+              <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
+                First Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="firstName"
+                  name="firstName"
+                  type="firstName"
+                  autoComplete="firstName"
+                  required
+                  onChange={(e) => setfirstName(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
+                Last Name
+              </label>
+              <div className="mt-2">
+                <input
+                  id="lastName"
+                  name="lastName"
+                  type="lastName"
+                  autoComplete="lastName"
+                  required
+                  onChange={(e) => setlastName(e.target.value)}
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
                 Email address
