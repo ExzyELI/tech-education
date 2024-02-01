@@ -88,7 +88,7 @@ export default function Home() {
                   <br />
                   {/* link for the image source */}
                   <a
-                    className="text-xs text-[#a8cd87] underline"
+                    className="text-xs text-[#a8cd87]"
                     href="https://www.vectorstock.com/royalty-free-vector/flat-hands-typing-on-white-keyboard-with-cable-vector-15384106"
                   >
                     img source
@@ -114,25 +114,49 @@ export default function Home() {
           {/* first role */}
           <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
-              <div className="mt-5 w-full px-6 text-xl font-bold text-gray-800">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold text-gray-800">
                 Teacher
+                <br></br>
+                <a className="text-xs text-[#a8cd87]" href="">
+                  img source
+                </a>
               </div>
+              <img
+                className="min-h-0 w-full border"
+                src="https://i.imgur.com/OpDy0C7.jpg"
+              />
             </div>
           </div>
           {/* second role */}
           <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
-              <div className="mt-5 w-full px-6 text-xl font-bold text-gray-800">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold text-gray-800">
                 Parent
+                <br></br>
+                <a className="text-xs text-[#a8cd87]" href="">
+                  img source
+                </a>
               </div>
+              <img
+                className="min-h-0 w-full border"
+                src="https://i.imgur.com/4VtP2NJ.jpg"
+              />
             </div>
           </div>
           {/* third role */}
           <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
-              <div className="mt-5 w-full px-6 text-xl font-bold text-gray-800">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold text-gray-800">
                 Student
+                <br></br>
+                <a className="text-xs text-[#a8cd87]" href="">
+                  img source
+                </a>
               </div>
+              <img
+                className="min-h-0 w-full border"
+                src="https://i.imgur.com/JwXJyhl.jpg"
+              />
             </div>
           </div>
         </div>
