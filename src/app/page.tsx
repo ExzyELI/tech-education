@@ -77,6 +77,14 @@ export default function Home() {
                 <p className="mb-8 text-gray-600">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                   Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+                  <br />
+                  {/* link for the image source */}
+                  <a
+                    className="text-xs text-[#a8cd87] underline"
+                    href="https://www.vectorstock.com/royalty-free-vector/flat-hands-typing-on-white-keyboard-with-cable-vector-15384106"
+                  >
+                    img source
+                  </a>
                 </p>
               </div>
             </div>
