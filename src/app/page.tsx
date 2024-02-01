@@ -27,7 +27,7 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-5">
+      <section className="pb-[100px] border-b bg-[#ffecde] lg:-mt-5">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
 
