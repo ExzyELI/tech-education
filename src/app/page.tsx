@@ -28,7 +28,7 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="-mb-[96px] border-b bg-[#ffecde] lg:-mt-5">
+      <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-5">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -37,9 +37,17 @@ export default function Home() {
                 <h1 className="text-5xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
                   Technology education <br />
                   <span className="text-primary">for grades k-2</span>
-                  <p className="mt-5 text-2xl font-medium lg:mb-8">
+                  <p className="mt-5 whitespace-normal text-2xl font-medium">
                     Join us today to gain exclusive access to educational
-                    material for your student or child
+                    material for your student or child{" "}
+                    <br className="whitespace-normal"></br>
+                    {/* link for the image source */}
+                    <a
+                      className="text-xs text-[#a8cd87]"
+                      href="https://www.vectorstock.com/royalty-free-vector/home-education-parent-teaching-child-mother-vector-46882075"
+                    >
+                      img source
+                    </a>
                   </p>
                 </h1>
               </div>
@@ -54,18 +62,18 @@ export default function Home() {
       {/* banner ends */}
 
       {/* mission statement begins */}
-      <section className="relative mt-[97px] border-b bg-[#e5f2fe] pt-[60px]">
-        <div className="container -my-[25px] mx-auto max-w-5xl">
+      <section className="relative mt-[95px] border-y bg-white pb-4 pt-[60px]">
+        <div className="container -my-[32px] mx-auto max-w-5xl">
           {/* title for section */}
           <h2 className="w-full text-center text-5xl font-bold leading-tight text-gray-800">
             Our Goal
           </h2>
           {/* image on left side of column */}
           <div className="flex flex-col-reverse flex-wrap sm:flex-row">
-            <div className="w-full p-6 sm:w-1/2">
+            <div className="w-full p-4 sm:w-1/2">
               <img
                 className="min-h-0 w-full"
-                src="https://i.imgur.com/giIQWTi.jpg"
+                src="https://i.imgur.com/cwQJPmH.jpg"
               />
             </div>
             {/* description for mission on right side of column */}
@@ -92,6 +100,44 @@ export default function Home() {
         </div>
       </section>
       {/* mission statement ends */}
+
+      {/* roles begins */}
+      <section className="border-b bg-[#ffecde] py-2">
+        <div className="container mx-auto flex flex-wrap pb-12 pt-4">
+          {/* section title */}
+          <h2 className="my-2 w-full text-center text-5xl font-bold leading-tight text-gray-800">
+            Roles
+          </h2>
+          <div className="mb-4 w-full">
+            <div className="gradient mx-auto my-0 h-1 w-64 rounded-t py-0 opacity-25" />
+          </div>
+          {/* first role */}
+          <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
+              <div className="mt-5 w-full px-6 text-xl font-bold text-gray-800">
+                Teacher
+              </div>
+            </div>
+          </div>
+          {/* second role */}
+          <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
+              <div className="mt-5 w-full px-6 text-xl font-bold text-gray-800">
+                Parent
+              </div>
+            </div>
+          </div>
+          {/* third role */}
+          <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
+              <div className="mt-5 w-full px-6 text-xl font-bold text-gray-800">
+                Student
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* roles ends */}
     </main>
   );
 }
