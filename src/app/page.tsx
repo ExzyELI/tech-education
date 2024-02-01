@@ -30,9 +30,11 @@ export default function Home() {
         </a>
       </div>
 
-      <footer className="bg-gray-800 text-white py-8 mt-auto">
-        <div className="container mt-auto text-2xl mx-20 ">
-          <p> footer </p>
+      <footer className="bg-[#ffe08d]">
+        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
+          <span className="text-sm sm:text-center ">
+            © 2024 Tech Education™
+          </span>
         </div>
       </footer>
     </div>
