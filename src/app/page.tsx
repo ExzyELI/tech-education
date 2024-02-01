@@ -1,5 +1,31 @@
+'use client'
+import Image from "next/image";
+import {useAuthState} from 'react-firebase-hooks/auth'
+import {auth} from '@/app/firebase/init_app'
+import {useRouter} from "next/navigation";
+import {signOut} from "firebase/auth";
+
 export default function Home() {
+  const [user] = useAuthState(auth);
+  const userSession = sessionStorage.getItem('user');
+
+  console.log(user);
+  const router = useRouter()
+  if (!user && !userSession){
+    router.push('/sign-in')
+  }
+
   return (
+    
+    //Mock sign-out button
+    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+      <button onClick={() => {
+        signOut(auth)
+        sessionStorage.removeItem('user')
+      }
+    }>
+        Log out
+      </button>
     <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       {/* navbar begins */}
@@ -24,6 +50,7 @@ export default function Home() {
             </button>
           </div>
         </div>
+        
       </nav>
       {/* navbar ends */}
 
