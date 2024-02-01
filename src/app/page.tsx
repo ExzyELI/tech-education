@@ -16,17 +16,17 @@ export default function Home() {
         </div>
       </header>
       <section className="absolute top-20 w-full text-center ">
-        <h1 className="text-orange-500 text-5xl font-bold py-1 tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl ">Welcome to Tech Education!</h1>
+        <h1 className="text-black text-5xl font-bold py-1 tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl ">Welcome to Tech Education!</h1>
         <h2 className="text-black text-5xl font-bold">...</h2>
         </section>
         <div className="cursor-pointer flex justify-center mt-[220px] ">
-        <a href="#" className="w-1/4 h-[300px] bg-gray-300 rounded-md m-2 hover:scale-105 hover:border-2 border-orange-500 transition-transform">
+        <a href="#" className="w-1/4 h-[300px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform">
           <h1 className="text-3xl text-center font-semibold ">Kindergarden</h1>
         </a>
-        <a href="#" className="w-1/4 h-[300px] bg-gray-300 rounded-md m-2 hover:scale-105 hover:border-2 border-orange-500 transition-transform">
+        <a href="#" className="w-1/4 h-[300px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform">
           <h1 className="text-3xl text-center font-semibold">1st Grade</h1>
         </a>
-        <a href="#" className="w-1/4 h-[300px] bg-gray-300 rounded-md m-2 hover:scale-105 hover:border-2 border-orange-500 transition-transform">
+        <a href="#" className="w-1/4 h-[300px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform">
           <h1 className="text-3xl text-center font-semibold">2nd Grade</h1>
         </a>
       </div>
