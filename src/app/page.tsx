@@ -43,7 +43,7 @@ export default function Home() {
                     <br className="whitespace-normal"></br>
                     {/* link for the image source */}
                     <a
-                      className="text-xs text-[#a8cd87]"
+                      className="text-xs text-[#ff6865]"
                       href="https://www.vectorstock.com/royalty-free-vector/home-education-parent-teaching-child-mother-vector-46882075"
                     >
                       img source
@@ -88,7 +88,7 @@ export default function Home() {
                   <br />
                   {/* link for the image source */}
                   <a
-                    className="text-xs text-[#a8cd87]"
+                    className="text-xs text-[#ff6865]"
                     href="https://www.vectorstock.com/royalty-free-vector/flat-hands-typing-on-white-keyboard-with-cable-vector-15384106"
                   >
                     img source
@@ -115,7 +115,7 @@ export default function Home() {
                 Teacher
                 <br></br>
                 <a
-                  className="text-xs text-[#a8cd87]"
+                  className="text-xs text-[#ff6865]"
                   href="https://www.vectorstock.com/royalty-free-vector/female-teacher-in-classroom-school-and-learning-vector-38666684"
                 >
                   img source
@@ -134,7 +134,7 @@ export default function Home() {
                 Parent
                 <br></br>
                 <a
-                  className="text-xs text-[#a8cd87]"
+                  className="text-xs text-[#ff6865]"
                   href="https://www.vectorstock.com/royalty-free-vector/family-parents-son-vector-36474395"
                 >
                   img source
@@ -153,7 +153,7 @@ export default function Home() {
                 Student
                 <br></br>
                 <a
-                  className="text-xs text-[#a8cd87]"
+                  className="text-xs text-[#ff6865]"
                   href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
                 >
                   img source
