@@ -8,6 +8,7 @@ export default function Home() {
           <span className="self-center whitespace-nowrap text-2xl font-semibold">
             Tech Education
           </span>
+          {/* buttons */}
           <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
             <button
               type="button"
@@ -66,6 +67,18 @@ export default function Home() {
                 className="min-h-0 w-full"
                 src="https://i.imgur.com/giIQWTi.jpg"
               />
+            </div>
+            {/* description for mission on right side of column */}
+            <div className="mt-6 w-full p-6 sm:w-1/2">
+              <div className="align-middle">
+                <h3 className="mb-3 text-3xl font-bold leading-none text-gray-800">
+                  Lorem ipsum dolor sit amet
+                </h3>
+                <p className="mb-8 text-gray-600">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                  Aliquam at ipsum eu nunc commodo posuere et sit amet ligula.
+                </p>
+              </div>
             </div>
           </div>
         </div>
