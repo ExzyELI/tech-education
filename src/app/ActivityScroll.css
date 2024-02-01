@@ -1,0 +1,26 @@
+    /* Styling for activity and grade boxes */
+  .activity-box,
+  .grade-box {
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .activity-box:nth-child(odd) {
+    background-color: #a8cd87; /* green for odd activities */
+  }
+  
+  .activity-box:nth-child(even) {
+    background-color: #ffecde; /* salmon for even activities */
+  }
+  
+  .grade-box:nth-child(odd) {
+    background-color: #a8cd87; /* green for odd grades */
+  }
+  
+  .grade-box:nth-child(even) {
+    background-color: #ffecde; /* salmon for even grades */
+  }
+  
+
+  
