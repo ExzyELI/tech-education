@@ -62,18 +62,18 @@ export default function Home() {
       {/* banner ends */}
 
       {/* mission statement begins */}
-      <section className="relative mt-[95px] border-y bg-white pb-4 pt-[60px]">
+      <section className="relative mt-[95px] border-y bg-[#e1f3ff] pb-4 pt-[60px]">
         <div className="container -my-[32px] mx-auto max-w-5xl">
           {/* title for section */}
           <h2 className="w-full text-center text-5xl font-bold leading-tight text-gray-800">
-            Our Goal
+            Our Mission
           </h2>
           {/* image on left side of column */}
           <div className="flex flex-col-reverse flex-wrap sm:flex-row">
             <div className="w-full p-4 sm:w-1/2">
               <img
                 className="min-h-0 w-full"
-                src="https://i.imgur.com/cwQJPmH.jpg"
+                src="https://i.imgur.com/V04n91S.png"
               />
             </div>
             {/* description for mission on right side of column */}
@@ -102,60 +102,66 @@ export default function Home() {
       {/* mission statement ends */}
 
       {/* roles begins */}
-      <section className="border-b bg-[#ffecde] py-2">
+      <section className="border-b bg-white py-2">
         <div className="container mx-auto flex flex-wrap pb-12 pt-4">
           {/* section title */}
-          <h2 className="my-2 w-full text-center text-5xl font-bold leading-tight text-gray-800">
+          <h2 className="my-2 w-full text-center text-5xl font-bold leading-tight">
             Roles
           </h2>
-          <div className="mb-4 w-full">
-            <div className="gradient mx-auto my-0 h-1 w-64 rounded-t py-0 opacity-25" />
-          </div>
           {/* first role */}
-          <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
-            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
-              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold text-gray-800">
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
                 Teacher
                 <br></br>
-                <a className="text-xs text-[#a8cd87]" href="">
+                <a
+                  className="text-xs text-[#a8cd87]"
+                  href="https://www.vectorstock.com/royalty-free-vector/female-teacher-in-classroom-school-and-learning-vector-38666684"
+                >
                   img source
                 </a>
               </div>
               <img
-                className="min-h-0 w-full border"
-                src="https://i.imgur.com/OpDy0C7.jpg"
+                className="w-full border"
+                src="https://i.imgur.com/Ai2Vfhc.jpg"
               />
             </div>
           </div>
           {/* second role */}
-          <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
-            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
-              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold text-gray-800">
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
                 Parent
                 <br></br>
-                <a className="text-xs text-[#a8cd87]" href="">
+                <a
+                  className="text-xs text-[#a8cd87]"
+                  href="https://www.vectorstock.com/royalty-free-vector/family-parents-son-vector-36474395"
+                >
                   img source
                 </a>
               </div>
               <img
-                className="min-h-0 w-full border"
-                src="https://i.imgur.com/4VtP2NJ.jpg"
+                className="w-full border"
+                src="https://i.imgur.com/PBc2ZxY.jpg"
               />
             </div>
           </div>
           {/* third role */}
-          <div className="flex w-full flex-shrink flex-grow flex-col p-6 md:w-1/3">
-            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-white shadow">
-              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold text-gray-800">
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
                 Student
                 <br></br>
-                <a className="text-xs text-[#a8cd87]" href="">
+                <a
+                  className="text-xs text-[#a8cd87]"
+                  href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
+                >
                   img source
                 </a>
               </div>
               <img
-                className="min-h-0 w-full border"
-                src="https://i.imgur.com/JwXJyhl.jpg"
+                className="w-full border"
+                src="https://i.imgur.com/ydIJSTW.jpg"
               />
             </div>
           </div>
@@ -164,7 +170,7 @@ export default function Home() {
       {/* roles ends */}
 
       {/* footer begins */}
-      <footer className="bg-[#ffe08d]">
+      <footer className="bg-[#afce8b]">
         <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
           <span className="text-sm sm:text-center ">
             © 2024 Tech Education™
