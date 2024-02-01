@@ -43,6 +43,10 @@ export default function Home() {
                   </p>
                 </h1>
               </div>
+              {/* right column for image */}
+              <div className="-mb-[48px]">
+                <img src="https://i.imgur.com/4x0P6w8.png" className="w-full" />
+              </div>
             </div>
           </div>
         </div>
