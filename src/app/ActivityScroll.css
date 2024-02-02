@@ -7,19 +7,22 @@
   }
   
   .activity-box:nth-child(odd) {
-    background-color: #a8cd87; /* green for odd activities */
+    background-color: #f87a36; /* orange from sign up for odd activities */
+    color: #ffffff; /* white text for odd font color */
   }
   
   .activity-box:nth-child(even) {
-    background-color: #ffecde; /* salmon for even activities */
+    background-color: #e1f3ff; /* sky blue for even activities */
+    
   }
   
   .grade-box:nth-child(odd) {
-    background-color: #a8cd87; /* green for odd grades */
+    background-color: #f87a36; /* orange from sign up for odd grades */
+    color: #ffffff; /* white text for odd font color */
   }
   
   .grade-box:nth-child(even) {
-    background-color: #ffecde; /* salmon for even grades */
+    background-color: #e1f3ff; /* sky blue for even grades */
   }
   
 
