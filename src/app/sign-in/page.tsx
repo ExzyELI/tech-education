@@ -3,6 +3,7 @@ import {useState} from "react";
 import {useSignInWithEmailAndPassword} from 'react-firebase-hooks/auth'
 import {auth} from '@/app/firebase/init_app'
 import {useRouter} from "next/navigation";
+import { browserLocalPersistence,setPersistence } from "firebase/auth";
 
 export default function Signin() {
     const [email, setEmail] = useState('');
@@ -13,13 +14,13 @@ export default function Signin() {
     const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
+            await setPersistence(auth, browserLocalPersistence)
             const res = await signInWithEmailAndPassword(email, password);
             console.log('signed in', {res});
-            sessionStorage.setItem('user','true');
-            setEmail('');
-            setPassword('');
-            // Redirect to homepage after sign-in
-            router.push('/');
+            
+            if (res !== undefined){
+                router.push('/');
+            }
         } catch (error) {
             console.error(error);
         }
