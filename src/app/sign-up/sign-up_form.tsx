@@ -28,8 +28,10 @@ export default function Sign_up_form() {
         sessionStorage.setItem('user','true');
         setEmail('');
         setPassword('');
-        // Later redirect to sign-in page
-        router.push('/')
+
+        if (res !== undefined){
+          router.push('/');
+        }
       } catch (error) {
         console.error(error)
       }
