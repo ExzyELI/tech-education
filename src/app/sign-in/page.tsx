@@ -29,14 +29,14 @@ export default function Signin() {
   return (
     <div>
       <title>Tech Education | Sign In</title>
-      <div className="flex h-screen min-h-screen items-center bg-[#e1f3ff] text-[#434343]">
+      <div className="flex h-screen min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
         {/* container */}
         <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-4xl">
           {/* left column */}
           <div
-            className="rounded-l-lg bg-cover lg:block lg:w-1/2"
+            className="rounded-l-lg bg-cover object-center lg:block lg:w-1/2"
             style={{
-              backgroundImage: 'url("https://i.imgur.com/F9RX0cC.jpg")',
+              backgroundImage: 'url("https://i.imgur.com/ZmR82c5.jpg")',
             }}
           />
           {/* right column */}
@@ -44,9 +44,7 @@ export default function Signin() {
             <p className="mt-3 text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
             </p>
-            <p className="mt-2 text-center font-medium text-[#ff6865]">
-              Welcome back!
-            </p>
+            <p className="mt-2 text-center font-medium">Welcome back!</p>
 
             {/* begin form for signing in */}
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -55,7 +53,7 @@ export default function Signin() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-[#ff7200]"
+                    className="mb-2 block text-sm font-medium"
                   >
                     Email address
                   </label>
@@ -74,7 +72,7 @@ export default function Signin() {
                   <div className="flex items-center justify-between">
                     <label
                       htmlFor="password"
-                      className="mb-2 block text-sm font-medium text-[#ff7200]"
+                      className="mb-2 block text-sm font-medium"
                     >
                       Password
                     </label>
@@ -88,6 +86,37 @@ export default function Signin() {
                     className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
                 </div>
+
+                {/* sign in button */}
+                <div>
+                  <button
+                    type="submit"
+                    className="w-full transform rounded-lg bg-[#ffe08d] px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-[#ffe9b0] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50"
+                  >
+                    Sign in
+                  </button>
+                </div>
+
+                {/* link to sign up page */}
+                <p className="mt-10 text-center text-sm text-gray-500">
+                  Don't have an account?{" "}
+                  <a
+                    href="/sign-up"
+                    className="font-semibold leading-6 text-[#ffc21e]"
+                  >
+                    Sign up
+                  </a>
+                </p>
+
+                {/* image source */}
+                <p className="text-center text-xs text-[#ff6865]">
+                  <a
+                    href="https://www.vectorstock.com/royalty-free-vector/children-learning-various-language-vector-21389977"
+                    target="_blank"
+                  >
+                    img source
+                  </a>
+                </p>
               </form>
             </div>
           </div>
