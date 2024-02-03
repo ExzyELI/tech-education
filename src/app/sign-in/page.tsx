@@ -29,7 +29,7 @@ export default function Signin() {
   return (
     <div>
       <title>Tech Education | Sign In</title>
-      <div className="flex h-screen min-h-screen items-center bg-[#e1f3ff] text-[#132241]">
+      <div className="flex h-screen min-h-screen items-center bg-[#e1f3ff] text-[#434343]">
         {/* container */}
         <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-4xl">
           {/* left column */}
@@ -55,20 +55,38 @@ export default function Signin() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="mb-2 block text-sm font-medium text-[#ffabab]"
+                    className="mb-2 block text-sm font-medium text-[#ff7200]"
                   >
                     Email address
                   </label>
-                  <div className="mt-2">
-                    <input
-                      id="email"
-                      name="email"
-                      type="email"
-                      required
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
-                    />
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                  />
+                </div>
+
+                {/* password slot */}
+                <div className="mt-4">
+                  <div className="flex items-center justify-between">
+                    <label
+                      htmlFor="password"
+                      className="mb-2 block text-sm font-medium text-[#ff7200]"
+                    >
+                      Password
+                    </label>
                   </div>
+                  <input
+                    id="password"
+                    name="password"
+                    type="password"
+                    required
+                    onChange={(e) => setPassword(e.target.value)}
+                    className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                  />
                 </div>
               </form>
             </div>
