@@ -27,7 +27,7 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="pb-[100px] border-b bg-[#ffecde] lg:-mt-5">
+      <section className="pb-[302px] border-b bg-[#ffecde] lg:-mt-5">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
 
@@ -39,13 +39,13 @@ export default function Home() {
                   </div>
                   {/* title */}
                   <div className="cursor-pointer flex justify-center items-center py-2">
-                    <a href="#" className="w-1/4 h-[280px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform flex justify-center items-center">
+                    <a href="#" className="w-1/4 h-[280px] rounded-md m-2 hover:scale-105 delay-50 transition-transform flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
                       <h1 className="text-3xl text-center font-semibold tracking-tight">Kindergarten</h1>
                       </a>
-                      <a href="#" className="w-1/4 h-[280px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform flex justify-center items-center">
+                      <a href="#" className="w-1/4 h-[280px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 delay-50 transition-transform flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
                         <h1 className="text-3xl text-center font-semibold tracking-tight">1st <br />Grade</h1>
                         </a>
-                        <a href="#" className="w-1/4 h-[280px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 transition-transform flex justify-center items-center">
+                        <a href="#" className="w-1/4 h-[280px] bg-[#e1f3ff] rounded-md m-2 hover:scale-105 delay-50 transition-transform flex justify-center items-center bg-gradient-to-r from-green-400 to-blue-500 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
                           <h1 className="text-3xl text-center font-semibold tracking-tight">2nd <br />Grade</h1>
                           </a>
                           </div>
