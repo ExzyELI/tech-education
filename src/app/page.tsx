@@ -33,7 +33,11 @@ export default function Home() {
                 </a>
                 <a
                   href="#"
+<<<<<<< HEAD
                   className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+=======
+                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+>>>>>>> e4bb4d7 (Fixed navbar and footer to stick to the top and bottom of the page)
                 >
                   Profile
                 </a>
