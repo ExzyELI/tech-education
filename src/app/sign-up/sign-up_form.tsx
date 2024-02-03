@@ -1,5 +1,6 @@
 import {useState} from "react";
-import {useCreateUserWithEmailAndPassword} from 'react-firebase-hooks/auth'
+import {sendEmailVerification} from "firebase/auth";
+import {useCreateUserWithEmailAndPassword, SendEmailVerificationHook} from 'react-firebase-hooks/auth'
 import {auth, db} from '@/app/firebase/init_app'
 import {useRouter} from "next/navigation";
 import {doc, setDoc} from "firebase/firestore";
@@ -23,8 +24,9 @@ export default function Sign_up_form() {
         console.log({res});
         if (res){
           await setDoc(doc(db,'users',res.user.uid),{email:res.user.email, firstName:firstName, lastName:lastName, role:role});
+          //Sending email verification
+          await sendEmailVerification(res.user);
         }
-
         sessionStorage.setItem('user','true');
         setEmail('');
         setPassword('');
@@ -132,6 +134,12 @@ export default function Sign_up_form() {
                 Sign up
               </button>
             </div>
+              <p className="mt-10 text-center text-sm text-gray-500">
+                  Already have a account?{' '}
+                <a href="/sign-in" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                  Sign in
+                </a>
+              </p>
           </form>
 
         </div>
