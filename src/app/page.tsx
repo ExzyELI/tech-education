@@ -116,6 +116,12 @@ export default function Home() {
                 </table>
               </div>
             </div>
+
+            <div className="relative h-32 w-32 [310px] ">
+              <div className="absolute bottom-[35px] left-[100px] h-[490px] w-[490px]"><img src="https://cdn3.vectorstock.com/i/1000x1000/40/42/teacher-sitting-classroom-with-chalkboard-vector-43444042.jpg"/>
+              <p className="">
+              <a href="https://www.vectorstock.com/royalty-free-vector/teacher-sitting-classroom-with-chalkboard-vector-43444042">Vector image by VectorStock / HappyDwiS</a></p></div>
+              </div>
           </div>
         </div>
       </section>
