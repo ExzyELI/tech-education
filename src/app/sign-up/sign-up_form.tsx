@@ -45,7 +45,7 @@ export default function Sign_up_form() {
         <div className="flex h-screen min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
           <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-4xl">
             
-            <div className="w-full px-4 py-2 md:px-8 lg:w-1/2">
+            <div className="w-full px-4 py-1 md:px-8 lg:w-1/2">
                 <p className="mt-3 text-center text-xl font-bold text-[#ff6865]">
                   TECH EDUCATION
                 </p>
@@ -63,7 +63,7 @@ export default function Sign_up_form() {
                         autoComplete="firstName"
                         required
                         onChange={(e) => setfirstName(e.target.value)}
-                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                        className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>
@@ -80,7 +80,7 @@ export default function Sign_up_form() {
                         autoComplete="lastName"
                         required
                         onChange={(e) => setlastName(e.target.value)}
-                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                        className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>
@@ -97,7 +97,7 @@ export default function Sign_up_form() {
                         autoComplete="email"
                         required
                         onChange={(e) => setEmail(e.target.value)}
-                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                        className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>
@@ -116,7 +116,7 @@ export default function Sign_up_form() {
                         autoComplete="current-password"
                         required
                         onChange={(e) => setPassword(e.target.value)}
-                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                        className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>   
@@ -126,19 +126,19 @@ export default function Sign_up_form() {
                   <div>
                     <button
                       type="submit"
-                      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      className="w-full transform rounded-lg bg-[#ffe08d] px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-[#ffe9b0] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50"
                     >
                     Sign up
                     </button>
                   </div>
                   <p className="mt-10 text-center text-sm text-gray-500">
                     Already have a account?{' '}
-                    <a href="/sign-in" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    <a href="/sign-in" className="font-semibold leading-6 text-[#ffc21e]">
                       Sign in
                     </a>
                   </p>
 
-                  <p className="text-center text-xs text-[#ff6865]">
+                  <p className="pb-3 text-center text-xs text-[#ff6865]">
                     <a
                       href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
                       target="_blank"
