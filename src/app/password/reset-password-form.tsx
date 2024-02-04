@@ -3,80 +3,104 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../firebase/init_app";
 
-{
-  /* use state will be used to keep track of the values the user enters in the form */
-}
 export default function ResetPasswordForm() {
   const [email, setEmail] = useState("");
-
+  // use state will be used to keep track of the values the user enters in the form
   async function handleSubmit() {
     await sendPasswordResetEmail(auth, email);
   }
   return (
-    <div className="mx-auto flex flex-col items-center justify-center px-6 py-8 md:h-screen lg:py-0">
-      <a
-        href="#"
-        className="mb-6 flex items-center text-2xl font-semibold text-gray-900 dark:text-white"
-      >
-        <img
-          className="mr-2 h-8 w-8"
-          src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
-          alt="logo"
-        />
-        Flowbite
-      </a>
-      <div className="w-full rounded-lg bg-white p-6 shadow sm:max-w-md sm:p-8 md:mt-0 dark:border dark:border-gray-700 dark:bg-gray-800">
-        <h2 className="mb-1 text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-          Change Password
-        </h2>
-        <form
-          onSubmit={handleSubmit}
-          className="mt-4 space-y-4 md:space-y-5 lg:mt-5"
-          action="#"
-        >
-          <div>
-            <label
-              htmlFor="email"
-              className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Your email
-            </label>
-            <input
-              type="email"
-              name="email"
-              id="email"
-              className="focus:ring-primary-600 focus:border-primary-600 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 sm:text-sm dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-blue-500 dark:focus:ring-blue-500"
-              placeholder="name@company.com"
-              value={email}
-              // event e calls the setForm function to update our form state
-              // we will return an object with all the old form values
-              // then update the email value e.target.value
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div>
-            <div className="ml-3 text-sm">
-              <label
-                htmlFor="newsletter"
-                className="font-light text-gray-500 dark:text-gray-300"
-              >
-                I accept the{" "}
-                <a
-                  className="text-primary-600 dark:text-primary-500 font-medium hover:underline"
-                  href="#"
-                >
-                  Terms and Conditions
-                </a>
-              </label>
+    <div>
+      <title>Tech Education | Sign In</title>
+      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
+        {/* container */}
+        <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-3xl">
+          {/* left column */}
+          <div
+            className="rounded-l-lg bg-[#e1f3ff] bg-cover object-center lg:block lg:w-1/2"
+            style={{
+              backgroundImage: 'url("https://i.imgur.com/59W6oS6.png")',
+            }}
+          />
+          {/* right column */}
+          <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+            <p className="mt-3 text-center text-xl font-bold text-[#ff6865]">
+              TECH EDUCATION
+            </p>
+            <p className="mt-1 text-center font-medium">Forgot password?</p>
+
+            {/* begin form for signing in */}
+            <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+              <form className="space-y-6" onSubmit={handleSubmit}>
+                {/* email address slot */}
+                <div>
+                  <label
+                    htmlFor="email"
+                    className="mb-2 block text-sm font-medium"
+                  >
+                    Email address
+                  </label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    required
+                    value={email}
+                    // event e calls the setForm function to update our form state
+                    // we will return an object with all the old form values
+                    // then update the email value e.target.value
+                    onChange={(e) => setEmail(e.target.value)}
+                    className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                  />
+                </div>
+
+                {/* sign in button */}
+                <div>
+                  <button
+                    type="submit"
+                    className="w-full transform rounded-lg bg-[#ffe08d] px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-[#ffe9b0] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50"
+                  >
+                    Reset
+                  </button>
+                </div>
+
+                <div className="flex flex-col gap-2">
+                  {/* link to sign in page */}
+                  <p className="text-center text-sm text-gray-500">
+                    Already have an account?{" "}
+                    <a
+                      href="/sign-in"
+                      className="font-semibold leading-6 text-[#a8cd87]"
+                    >
+                      Sign in
+                    </a>
+                  </p>
+
+                  {/* link to sign up page */}
+                  <p className="text-center text-sm text-gray-500">
+                    Don't have an account?{" "}
+                    <a
+                      href="/sign-up"
+                      className="font-semibold leading-6 text-[#ffc21e]"
+                    >
+                      Sign up
+                    </a>
+                  </p>
+                </div>
+
+                {/* image source */}
+                <p className="text-center text-xs text-[#ff6865]">
+                  <a
+                    href="https://www.vectorstock.com/royalty-free-vector/thinking-kids-children-asking-question-expression-vector-41950097"
+                    target="_blank"
+                  >
+                    img source
+                  </a>
+                </p>
+              </form>
             </div>
           </div>
-          <button
-            type="submit"
-            className="bg-primary-600 hover:bg-primary-700 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800 w-full rounded-lg px-5 py-2.5 text-center text-sm font-medium text-white focus:outline-none focus:ring-4"
-          >
-            Reset passwod
-          </button>
-        </form>
+        </div>
       </div>
     </div>
   );
