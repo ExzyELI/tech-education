@@ -45,14 +45,14 @@ export default function Sign_up_form() {
         <div className="flex h-screen min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
           <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-4xl">
             
-            <div className="w-full px-4 py-3 md:px-8 lg:w-1/2">
+            <div className="w-full px-4 py-2 md:px-8 lg:w-1/2">
                 <p className="mt-3 text-center text-xl font-bold text-[#ff6865]">
                   TECH EDUCATION
                 </p>
                 <p className="mt-2 text-center font-medium">Welcome!</p>
               <form className="space-y-6" onSubmit={handleSignup}>
                 <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="firstName" className="mb-2 block text-sm font-medium">
                       First Name
                     </label>
                     <div className="mt-2">
@@ -63,13 +63,13 @@ export default function Sign_up_form() {
                         autoComplete="firstName"
                         required
                         onChange={(e) => setfirstName(e.target.value)}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="lastName" className="mb-2 block text-sm font-medium">
                       Last Name
                     </label>
                     <div className="mt-2">
@@ -80,13 +80,13 @@ export default function Sign_up_form() {
                         autoComplete="lastName"
                         required
                         onChange={(e) => setlastName(e.target.value)}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                    <label htmlFor="email" className="mb-2 block text-sm font-medium">
                       Email address
                     </label>
                     <div className="mt-2">
@@ -97,14 +97,14 @@ export default function Sign_up_form() {
                         autoComplete="email"
                         required
                         onChange={(e) => setEmail(e.target.value)}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>
 
                   <div>
                     <div className="flex items-center justify-between">
-                      <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                      <label htmlFor="password" className="mb-2 block text-sm font-medium">
                         Password
                       </label>
                     </div>
@@ -116,7 +116,7 @@ export default function Sign_up_form() {
                         autoComplete="current-password"
                         required
                         onChange={(e) => setPassword(e.target.value)}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                       />
                     </div>
                   </div>   
