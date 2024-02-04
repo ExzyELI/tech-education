@@ -75,6 +75,12 @@ export default function Sign_in_form() {
                     >
                       Password
                     </label>
+                    <a
+                      href="/password"
+                      className="text-xs text-gray-600 hover:text-[#ffcf4f] dark:text-gray-400"
+                    >
+                      Forget Password?
+                    </a>
                   </div>
                   <input
                     id="password"
