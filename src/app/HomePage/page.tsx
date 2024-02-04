@@ -83,6 +83,7 @@ export default function Home() {
                 </h1>
               </a>
             </div>
+            {/* mouse image start */}
             <div className="relative flex justify-center items-center h-screen">
               <div className="absolute">
                 <div className="h-[420px] w-[420px] hover:animate-bounce ">
@@ -93,6 +94,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
+            {/* mouse image end */}
           </div>
         </div>
       </section>
