@@ -136,6 +136,7 @@ export default function Home() {
                 </table>
               </div>
             </div>
+            {/* mouse image end */}
           </div>
         </div>
       </section>
