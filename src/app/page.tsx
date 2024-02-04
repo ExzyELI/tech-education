@@ -83,7 +83,16 @@ export default function Home() {
                 </h1>
               </a>
             </div>
-            {/* Image */}
+            <div className="relative flex justify-center items-center h-screen">
+              <div className="absolute">
+                <div className="h-[420px] w-[420px] hover:animate-bounce ">
+                  <img src="/vectorstock_4995646_transparent.png" alt="Computer Mouse" />
+                </div>
+                <p className="mt-2 text-center">
+                  <a href="https://www.vectorstock.com/royalty-free-vector/computer-mouse-vector-4995646">Vector image by VectorStock / siaminka</a>
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
