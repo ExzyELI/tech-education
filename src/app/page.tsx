@@ -1,113 +1,205 @@
+"use client";
 import Image from "next/image";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
 
 export default function Home() {
+  const [user] = useAuthState(auth);
+  const userSession = sessionStorage.getItem("user");
+
+  console.log(user);
+  const router = useRouter();
+  if (!user && !userSession) {
+    router.push("/sign-in");
+  }
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
+    <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
+      <title>Tech Education</title>
+      {/* navbar begins */}
+      <nav className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-[#afce8b]">
+        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+          <span className="self-center whitespace-nowrap text-2xl font-semibold">
+            Tech Education
+          </span>
+          {/* buttons */}
+          <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+            <button
+              type="button"
+              className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564] md:me-2 lg:me-2"
+            >
+              Login
+            </button>
+            <button
+              type="button"
+              className="rounded-lg bg-[#f78b51] px-5 py-2 text-center text-sm font-medium hover:bg-[#f87a36]"
+            >
+              Sign Up
+            </button>
+          </div>
         </div>
-      </div>
+      </nav>
+      {/* navbar ends */}
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+      {/* banner begins */}
+      <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-5">
+        <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
+          <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
+            <div className="grid items-center gap-12 lg:grid-cols-2">
+              {/* left column for text */}
+              <div className="mt-12 lg:mt-[100px]">
+                <h1 className="text-5xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
+                  Technology education <br />
+                  <span className="text-primary">for grades k-2</span>
+                  <p className="mt-5 whitespace-normal text-2xl font-medium">
+                    Join us today to gain exclusive access to educational
+                    material for your student or child{" "}
+                    <br className="whitespace-normal"></br>
+                    {/* link for the image source */}
+                    <a
+                      className="text-xs text-[#ff6865]"
+                      href="https://www.vectorstock.com/royalty-free-vector/home-education-parent-teaching-child-mother-vector-46882075 "
+                      target="_blank"
+                    >
+                      img source
+                    </a>
+                  </p>
+                </h1>
+              </div>
+              {/* right column for image */}
+              <div className="-mb-[96px]">
+                <img src="https://i.imgur.com/4x0P6w8.png" className="w-full" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* banner ends */}
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
+      {/* mission statement begins */}
+      <section className="relative mt-[95px] border-y bg-[#e1f3ff] pb-4 pt-[60px]">
+        <div className="container -my-[32px] mx-auto max-w-5xl">
+          {/* title for section */}
+          <h2 className="w-full text-center text-5xl font-bold leading-tight text-gray-800">
+            Our Mission
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+          {/* image on left side of column */}
+          <div className="flex flex-col-reverse flex-wrap sm:flex-row">
+            <div className="w-full p-4 sm:w-1/2">
+              <img
+                className="min-h-0 w-full"
+                src="https://i.imgur.com/V04n91S.png"
+              />
+            </div>
+            {/* description for mission on right side of column */}
+            <div className="mt-6 w-full p-6 sm:w-1/2">
+              <div className="align-middle">
+                <h3 className="mb-3 text-3xl font-bold leading-none text-gray-800">
+                  K-2 Learning
+                </h3>
+                <p className="mb-8 text-gray-600">
+                  To teach children about technology and the basics of using a
+                  computer with a mouse and keyboard through puzzles and brain
+                  games
+                  <br />
+                  {/* link for the image source */}
+                  <a
+                    className="text-xs text-[#ff6865]"
+                    href="https://www.vectorstock.com/royalty-free-vector/flat-hands-typing-on-white-keyboard-with-cable-vector-15384106"
+                    target="_blank"
+                  >
+                    img source
+                  </a>
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* mission statement ends */}
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
+      {/* roles begins */}
+      <section className="border-b bg-white py-2">
+        <div className="container mx-auto flex flex-wrap pb-12 pt-4">
+          {/* section title */}
+          <h2 className="my-2 w-full text-center text-5xl font-bold leading-tight">
+            Roles
           </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
+          {/* first role */}
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
+                Teacher
+                <br></br>
+                <a
+                  className="text-xs text-[#ff6865]"
+                  href="https://www.vectorstock.com/royalty-free-vector/female-teacher-in-classroom-school-and-learning-vector-38666684"
+                  target="_blank"
+                >
+                  img source
+                </a>
+              </div>
+              <img
+                className="w-full border"
+                src="https://i.imgur.com/Ai2Vfhc.jpg"
+              />
+            </div>
+          </div>
+          {/* second role */}
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
+                Parent
+                <br></br>
+                <a
+                  className="text-xs text-[#ff6865]"
+                  href="https://www.vectorstock.com/royalty-free-vector/family-parents-son-vector-36474395"
+                  target="_blank"
+                >
+                  img source
+                </a>
+              </div>
+              <img
+                className="w-full border"
+                src="https://i.imgur.com/PBc2ZxY.jpg"
+              />
+            </div>
+          </div>
+          {/* third role */}
+          <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3 ">
+            <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
+              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
+                Student
+                <br></br>
+                <a
+                  className="text-xs text-[#ff6865]"
+                  href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
+                  target="_blank"
+                >
+                  img source
+                </a>
+              </div>
+              <img
+                className="w-full border"
+                src="https://i.imgur.com/ydIJSTW.jpg"
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* roles ends */}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      {/* footer begins */}
+      <footer className="bg-[#afce8b]">
+        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
+          <span className="text-sm sm:text-center ">
+            © 2024 Tech Education™
+          </span>
+        </div>
+      </footer>
+      {/* footer ends */}
     </main>
   );
 }
