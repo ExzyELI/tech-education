@@ -1,3 +1,8 @@
+"use client";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
+
 export default function Home() {
   const [user] = useAuthState(auth);
   const userSession = sessionStorage.getItem("user");
