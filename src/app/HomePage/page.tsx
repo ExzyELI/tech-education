@@ -1,20 +1,15 @@
 "use client";
-import {useAuthState} from "react-firebase-hooks/auth";
-import {auth} from "@/app/firebase/init_app";
+//import {useAuthState} from "react-firebase-hooks/auth";
+import {auth, handleRedirect} from "@/app/firebase/init_app";
 import {useRouter} from "next/navigation";
 import {signOut} from "firebase/auth";
 {
   /*Student HomePage */
 }
 export default function Home() {
-  const [user] = useAuthState(auth);
-  //const userSession = sessionStorage.getItem("user");
 
-  console.log(user);
+  handleRedirect();
   const router = useRouter();
-  if (!user && user == null) {
-    router.push("/sign-in");
-  }
 
   const handleSignOut = async () => {
     try {
@@ -44,7 +39,7 @@ export default function Home() {
                   Activities
                 </a>
                 <a
-                  href="#"
+                  href="/grades"
                   className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Grade

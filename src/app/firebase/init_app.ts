@@ -3,6 +3,8 @@ import "firebase/auth";
 import {getAuth} from "firebase/auth";
 import "firebase/firestore";
 import {getFirestore} from "firebase/firestore";
+import {useAuthState} from "react-firebase-hooks/auth";
+import {useRouter} from "next/navigation";
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_API_KEY,
@@ -20,4 +22,16 @@ const auth = getAuth(firebaseApp);
 
 const db = getFirestore(firebaseApp);
 
-export {firebaseApp, auth, db};
+const handleRedirect = async () => {
+  const [user] = useAuthState(auth);
+  console.log(user);
+  const router = useRouter();
+  const authCheck = auth.onAuthStateChanged(() => {
+    if (!user && user == null) {
+      router.push("/sign-in");
+    }
+    });
+  authCheck();
+}
+
+export {firebaseApp, auth, db, handleRedirect};
