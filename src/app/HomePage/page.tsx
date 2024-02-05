@@ -48,14 +48,35 @@ export default function Home() {
       <section className="min-h-screen bg-[#ffecde] pt-10">
         <div className="text-center md:px-12 lg:text-left">
           <div>
-            <div className="flex justify-center">
+            <div className="flex flex-col items-center justify-center">
               {/* title */}
-              <h1 className="pb-10 text-5xl font-bold tracking-tight">
+              <h1 className="text-5xl font-bold tracking-tight">
                 Welcome to Tech Education!
               </h1>
+              <p>
+                <a
+                  className="text-xs text-[#ff6865]"
+                  href="https://www.vectorstock.com/royalty-free-vector/computer-mouse-vector-4995646"
+                  target="_blank"
+                >
+                  img source
+                </a>
+              </p>
+
+              {/* mouse image start */}
+              <div className="relative -mt-[40px] flex items-center justify-center">
+                <div className="h-[300px] w-[300px] hover:animate-bounce ">
+                  <img
+                    src="/vectorstock_4995646_transparent.png"
+                    alt="Computer Mouse"
+                  />
+                </div>
+              </div>
+              {/* mouse image end */}
             </div>
+
             {/* title */}
-            <div className="flex cursor-pointer items-center justify-center py-2">
+            <div className="-mt-[70px] flex cursor-pointer items-center justify-center py-2 pb-20">
               <a
                 href="#"
                 className="delay-50 m-2 flex h-[280px] w-1/4 items-center justify-center rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500"
@@ -83,22 +104,9 @@ export default function Home() {
                 </h1>
               </a>
             </div>
-            {/* mouse image start */}
-            <div className="relative flex justify-center items-center h-screen">
-              <div className="absolute">
-                <div className="h-[420px] w-[420px] hover:animate-bounce ">
-                  <img src="/vectorstock_4995646_transparent.png" alt="Computer Mouse" />
-                </div>
-                <p className="mt-2 text-center">
-                  <a href="https://www.vectorstock.com/royalty-free-vector/computer-mouse-vector-4995646">Vector image by VectorStock / siaminka</a>
-                </p>
-              </div>
-            </div>
-            {/* mouse image end */}
           </div>
         </div>
       </section>
-      {/* banner ends */}
 
       {/* footer begins */}
       <footer className="sticky bg-[#afce8b]">
