@@ -31,7 +31,7 @@ export default function ResetPasswordForm() {
 
             {/* begin form for signing in */}
             <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-              <form className="space-y-6" onSubmit={handleSubmit}>
+              <form className="space-y-6" onSubmit={handleSubmit} action="#">
                 {/* email address slot */}
                 <div>
                   <label
@@ -46,7 +46,7 @@ export default function ResetPasswordForm() {
                     type="email"
                     required
                     value={email}
-                    // event e calls the setForm function to update our form state
+                    // event e calls the setEmail function to update our form state
                     // we will return an object with all the old form values
                     // then update the email value e.target.value
                     onChange={(e) => setEmail(e.target.value)}
