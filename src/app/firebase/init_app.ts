@@ -1,6 +1,6 @@
 import {initializeApp, getApps, getApp} from "firebase/app";
 import "firebase/auth";
-import {getAuth} from "firebase/auth";
+import {browserLocalPersistence, getAuth, setPersistence} from "firebase/auth";
 import "firebase/firestore";
 import {getFirestore} from "firebase/firestore";
 import {useAuthState} from "react-firebase-hooks/auth";
@@ -22,8 +22,12 @@ const auth = getAuth(firebaseApp);
 
 const db = getFirestore(firebaseApp);
 
+setPersistence(auth, browserLocalPersistence);
+
 const handleRedirect = async () => {
+  //await new Promise(resolve => setTimeout(resolve, 1000));
   const [user] = useAuthState(auth);
+  //const user = auth.currentUser;
   console.log(user);
   const router = useRouter();
   const authCheck = auth.onAuthStateChanged(() => {

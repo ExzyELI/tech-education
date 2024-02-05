@@ -2,10 +2,11 @@
 import {auth, handleRedirect} from "@/app/firebase/init_app";
 import {useRouter} from "next/navigation";
 import {signOut} from "firebase/auth";
+import {useAuthState} from "react-firebase-hooks/auth";
 
 export default function Home() {
-  handleRedirect();
   const router = useRouter();
+  handleRedirect();
 
   const handleSignOut = async () => {
     try {
@@ -22,9 +23,7 @@ export default function Home() {
       <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
         <header className="font-family: font-serif leading-normal tracking-normal">
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-            <span className="self-center whitespace-nowrap text-2xl font-semibold">
-              Tech Education
-            </span>
+          <span className="text-2xl font-semibold">Tech Education</span>
             {/* tabs */}
             <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
               <nav className="text-2lg">
@@ -58,12 +57,13 @@ export default function Home() {
                 >
                   Profile
                 </a>
-                <a
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+                <button
+                  type="button"
+                  className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564] md:me-2 lg:me-2"
                   onClick={handleSignOut}
                 >
                   Sign out
-                </a>
+                </button>
               </nav>
             </div>
           </div>
@@ -72,7 +72,7 @@ export default function Home() {
       {/* navbar ends */}
 
       <section className="container mx-auto w-full py-5">
-        <h1 className="items-center py-1 text-center text-5xl font-medium">
+        <h1 className="flex w-full items-center justify-center py-3 font-serif text-5xl leading-normal tracking-normal">
           Grades
         </h1>
         <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
