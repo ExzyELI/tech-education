@@ -22,10 +22,12 @@ export default function Sign_up_form() {
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
+    try 
+    {
       const res = await createUserWithEmailAndPassword(email, password);
       console.log({ res });
-      if (res) {
+      if (res) 
+      {
         await setDoc(doc(db, "users", res.user.uid), {
           email: res.user.email,
           firstName: firstName,
@@ -40,9 +42,10 @@ export default function Sign_up_form() {
       setPassword("");
 
       if (res !== undefined) {
-        router.push("/");
+        router.push("/HomePage");
       }
-    } catch (error) {
+    } 
+    catch (error) {
       console.error(error);
     }
   };

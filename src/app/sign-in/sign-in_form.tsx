@@ -12,17 +12,19 @@ export default function Sign_in_form() {
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      await setPersistence(auth, browserLocalPersistence);
-      const res = await signInWithEmailAndPassword(email, password);
-      console.log("signed in", { res });
+      try 
+      {
+        await setPersistence(auth, browserLocalPersistence);
+        const res = await signInWithEmailAndPassword(email, password);
+        console.log("signed in", { res });
 
-      if (res !== undefined) {
-        router.push("/");
+        if (res !== undefined) {
+          router.push("/HomePage");
+        }
+      } 
+      catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   return (
