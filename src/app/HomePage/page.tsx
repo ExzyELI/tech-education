@@ -1,39 +1,39 @@
+{
+  /*Student HomePage */
+}
 export default function Home() {
   return (
-    <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
+    <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       {/*navbar begins */}
       <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
-        <header className="font-family: font-serif leading-normal tracking-normal">
+        <header className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-            <span className="self-center whitespace-nowrap text-2xl font-semibold">
-              {" "}
-              Tech Education
-            </span>
+            <span className="text-2xl font-semibold">Tech Education</span>
             {/* tabs */}
             <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
               <nav className="text-2lg">
                 <a
                   href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Activities
                 </a>
                 <a
                   href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Grade
                 </a>
                 <a
                   href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Reports
                 </a>
                 <a
                   href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Profile
                 </a>
@@ -45,108 +45,73 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="border-b bg-[#ffecde]">
-        <div className="px-6 pb-10 text-center md:px-12 lg:text-left">
-          <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-            <header className="flex w-full items-center justify-center py-3 font-serif text-5xl leading-normal tracking-normal">
-              My Classroom
-            </header>
-
-            <div className="col-span-1 row-span-1 mb-10">
-              <div className="flex items-center justify-center object-center">
-                <img
-                  className="h-[250px]"
-                  src="https://i.imgur.com/1EDuUBO.png"
-                />
-              </div>
-
-              <p className="text-center text-xs text-[#ff6865]">
+      <section className="min-h-screen bg-[#ffecde] pt-10">
+        <div className="text-center md:px-12 lg:text-left">
+          <div>
+            <div className="flex flex-col items-center justify-center">
+              {/* title */}
+              <h1 className="text-5xl font-bold tracking-tight">
+                Welcome to Tech Education!
+              </h1>
+              <p>
                 <a
-                  href="https://www.vectorstock.com/royalty-free-vector/teacher-sitting-classroom-with-chalkboard-vector-43444042"
+                  className="text-xs text-[#ff6865]"
+                  href="https://www.vectorstock.com/royalty-free-vector/computer-mouse-vector-4995646"
                   target="_blank"
                 >
                   img source
                 </a>
               </p>
+
+              {/* mouse image start */}
+              <div className="relative -mt-[40px] flex items-center justify-center">
+                <div className="h-[300px] w-[300px] hover:animate-bounce ">
+                  <img
+                    src="/vectorstock_4995646_transparent.png"
+                    alt="Computer Mouse"
+                  />
+                </div>
+              </div>
+              {/* mouse image end */}
             </div>
 
-            {/* three sections */}
-            <div className="grid grid-flow-col grid-rows-4 gap-10 text-center ">
-              <div className="col-span-1 row-span-1 rounded-md border border-gray-200 bg-white">
-                <div className="rounded-t-md bg-[#e1f3ff] py-1 font-semibold">
-                  Teacher Info
-                </div>
-                <table className="flex table-auto flex-col items-center justify-center">
-                  <tbody>
-                    <tr>
-                      {/* create a Tname option that changes according to Tname */}
-                      <td>Name:</td>
-                      <td>Naruto Uzumaki </td>
-                    </tr>
-                    <tr>
-                      {/* create a class naming option so class name changes depending on classroom */}
-                      <td>Class:</td>
-                      <td>Akatsuki</td>
-                    </tr>
-                    <tr>
-                      {/* create a pin option so students can join classroom */}
-                      <td>PIN:</td>
-                      <td className="blur-sm hover:blur-none ">1234</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="col-span-1 row-span-1 rounded-md border border-gray-200 bg-white">
-                <div className="rounded-t-md bg-[#e1f3ff] py-1 font-semibold">
-                  Actions
-                </div>
-                <table className="flex table-auto flex-col items-center justify-center">
-                  <tbody>
-                    <tr className="cursor-pointer hover:text-[#ff6865]">
-                      {/* create a Tname option that changes according to Tname */}
-                      <td>Change Classroom</td>
-                    </tr>
-                    <tr className="cursor-pointer hover:text-[#ff6865]">
-                      {/* create a class naming option so class name changes depending on classroom */}
-                      <td>Add Student</td>
-                    </tr>
-                    <tr className="cursor-pointer hover:text-[#ff6865]">
-                      {/* create a pin option so students can join classroom */}
-                      <td>Remove Student</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="col-span-1 row-span-3 rounded-md border border-gray-200 bg-white">
-                <div className="rounded-t-md bg-[#e1f3ff] py-1 font-semibold">
-                  Students
-                </div>
-                {/* ADD Student Feature */}
-                <table className="flex table-auto flex-col border-b border-gray-200">
-                  <tbody>
-                    <tr className="flex border-b border-gray-200">
-                      <td>John Doe</td>
-                    </tr>
-                    <tr>
-                      <td>Ricky Stue</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+            {/* title */}
+            <div className="-mt-[70px] flex cursor-pointer items-center justify-center py-2 pb-20">
+              <a
+                href="#"
+                className="delay-50 m-2 flex h-[280px] w-1/4 items-center justify-center rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500"
+              >
+                <h1 className="text-center text-3xl font-semibold tracking-tight">
+                  Kindergarten
+                </h1>
+              </a>
+              <a
+                href="#"
+                className="delay-50 m-2 flex h-[280px] w-1/4 items-center justify-center rounded-md bg-[#e1f3ff] bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500"
+              >
+                <h1 className="text-center text-3xl font-semibold tracking-tight">
+                  1st <br />
+                  Grade
+                </h1>
+              </a>
+              <a
+                href="#"
+                className="delay-50 m-2 flex h-[280px] w-1/4 items-center justify-center rounded-md bg-[#e1f3ff] bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500"
+              >
+                <h1 className="text-center text-3xl font-semibold tracking-tight">
+                  2nd <br />
+                  Grade
+                </h1>
+              </a>
             </div>
-            {/* mouse image end */}
           </div>
         </div>
       </section>
 
       {/* footer begins */}
-      <footer className="sticky w-full bg-[#afce8b]">
-        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
-          <span className="text-sm sm:text-center ">
-            © 2024 Tech Education™
-          </span>
+      <footer className="sticky bg-[#afce8b]">
+        <div className="flex w-full items-center justify-center px-4 py-4">
+          <span className="text-sm">© 2024 Tech Education™</span>
         </div>
       </footer>
       {/* footer ends */}
