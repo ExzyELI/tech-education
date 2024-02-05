@@ -1,72 +1,128 @@
-import Image from "next/image";
-import "./ActivityScroll.css"
 export default function Home() {
   return (
-    <div className="flex flex-col min-h-screen bg-[#ffecde]">
-      <header className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-        <div className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-[#afce8b] flex justify-between items-center px-4 py-2">
-          <h1 className="cursor-pointer text-xl font-bold hover:text-2xl transition-all duration-800 ">Tech Education</h1>
-          <div className="flex text-lg">
-            <label className="mr-5 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:bg-orange-500 hover:text-white hover:p-1 hover:rounded">Activities</label>
-            <label className="mr-5 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:bg-orange-500 hover:text-white hover:p-1 hover:rounded">Grade</label>
-            <label className="mr-5 cursor-pointer transition-all duration-500 transform hover:-translate-y-1 hover:bg-orange-500 hover:text-white hover:p-1 hover:rounded">Reports</label>
+    <div className="flex min-h-screen flex-col bg-[#ffecde] text-[#132241]">
+      {/*navbar begins */}
+      <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
+        <header className="font-family: font-serif leading-normal tracking-normal">
+          <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
+            <span className="self-center whitespace-nowrap text-2xl font-semibold">
+              Tech Education
+            </span>
+            {/* tabs */}
+            <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
+              <nav className="text-2lg">
+                <a
+                  href="#"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                >
+                  Activities
+                </a>
+                <a
+                  href="#"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                >
+                  Grade
+                </a>
+                <a
+                  href="#"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                >
+                  Reports
+                </a>
+                <a
+                  href="#"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
+                >
+                  Profile
+                </a>
+              </nav>
+            </div>
           </div>
-        </div>
-      </header>
+        </header>
+      </nav>
+      {/* navbar ends */}
 
-
-      <section className="container mx-auto py-20">
-        <h1 className="text-orange-500 text-7xl font-bold py-1">Grades</h1>
-        <h2 className="text-black opacity-20 text-5xl font-bold">Student name</h2>
-        <div className="flex justify-between mt-10">
-          <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-            <h3 className="text-xl font-semibold mb-3">Activities</h3>
-
-            <ul>
-              {/* Activity colors for odds and evens*/}
-              <div className="activity-box">this is a long name for an activiy for testing purposes</div>
-              <div className="activity-box">Activity 2</div>
-              <div className="activity-box">Activity 3</div>
-              <div className="activity-box">Activity 4</div>
-              <div className="activity-box">Activity 5</div>
-              <div className="activity-box">Activity 6</div>
-              <div className="activity-box">Activity 7</div>
-              <div className="activity-box">Activity 8</div>
-              <div className="activity-box">Activity 9</div>
-              <div className="activity-box">Activity 10</div>
+      <section className="container mx-auto w-full py-5">
+        <h1 className="items-center py-1 text-center text-5xl font-medium">
+          Grades
+        </h1>
+        <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
+          Student name
+        </h2>
+        <div className="mx-auto mb-10 mt-5 flex w-1/2 items-center justify-center rounded border bg-white p-8">
+          <div className="gradient font-family: font-serif leading-normal tracking-normal">
+            <h3 className="mb-3 ml-3 text-lg font-semibold">Activities</h3>
+            <ul className="w-[500px]">
+              {/* array for activity colors for odds and evens */}
+              {Array(10)
+                .fill(true)
+                .map((_, index) => {
+                  if (index % 2 == 0) {
+                    return (
+                      <div
+                        key={index}
+                        className="m-2 rounded-md border bg-[#e1f3ff] p-2"
+                      >
+                        Activity {index + 1}
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div
+                        key={index}
+                        className="m-2 rounded-md border bg-[#e8f8da] p-2"
+                      >
+                        Activity {index + 1}
+                      </div>
+                    );
+                  }
+                })}
             </ul>
           </div>
+
           <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-            <h3 className="text-xl font-semibold mb-3">Grades</h3>
-            <ul>
-              {/* Wrap each grade in a div with a custom class */}
-              <div className="grade-box">5/10</div>
-              <div className="grade-box">10/10</div>
-              <div className="grade-box">5/10</div>
-              <div className="grade-box">10/10</div>
-              <div className="grade-box">5/10</div>
-              <div className="grade-box">10/10</div>
-              <div className="grade-box">5/10</div>
-              <div className="grade-box">10/10</div>
-              <div className="grade-box">5/10</div>
-              <div className="grade-box">10/10</div>
-              
+            <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
+              Grades
+            </h3>
+            <ul className="w-[90px]">
+              {/* array for grades to have a different color for odds and evens */}
+              {Array(10)
+                .fill(true)
+                .map((_, index) => {
+                  if (index % 2 == 0) {
+                    return (
+                      <div
+                        key={index}
+                        className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center"
+                      >
+                        5/10
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div
+                        key={index}
+                        className="m-2 rounded-md border bg-[#e8f8da] p-2 text-center"
+                      >
+                        10/10
+                      </div>
+                    );
+                  }
+                })}
             </ul>
           </div>
         </div>
       </section>
 
-
-
-
-
-      <footer className="bg-gray-800 text-white py-8 mt-auto">
+      {/* footer begins */}
+      <footer className="sticky w-full bg-[#afce8b]">
         <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
           <span className="text-sm sm:text-center ">
             © 2024 Tech Education™
           </span>
         </div>
       </footer>
+      {/* footer ends */}
     </div>
   );
 }
