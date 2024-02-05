@@ -1,12 +1,9 @@
-import { useState } from "react";
-import { sendEmailVerification } from "firebase/auth";
-import {
-  useCreateUserWithEmailAndPassword,
-  SendEmailVerificationHook,
-} from "react-firebase-hooks/auth";
-import { auth, db } from "@/app/firebase/init_app";
-import { useRouter } from "next/navigation";
-import { doc, setDoc } from "firebase/firestore";
+import {useState} from "react";
+import {sendEmailVerification} from "firebase/auth";
+import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
+import {auth, db} from "@/app/firebase/init_app";
+import {useRouter} from "next/navigation";
+import {doc, setDoc} from "firebase/firestore";
 import Radio from "../../../comps/radio";
 
 export default function Sign_up_form() {

@@ -1,6 +1,17 @@
 "use client";
+import {useRouter} from "next/navigation";
 
 export default function Home() {
+  
+  const router = useRouter();
+
+  const handleSignInButton = async () => {
+    router.push("/sign-in");
+  };
+
+  const handleSignUpButton = async () => {
+    router.push("/sign-up");
+  };
 
   return (
     <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
@@ -16,12 +27,14 @@ export default function Home() {
             <button
               type="button"
               className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564] md:me-2 lg:me-2"
+              onClick={handleSignInButton}
             >
               Login
             </button>
             <button
               type="button"
               className="rounded-lg bg-[#f78b51] px-5 py-2 text-center text-sm font-medium hover:bg-[#f87a36]"
+              onClick={handleSignUpButton}
             >
               Sign Up
             </button>
