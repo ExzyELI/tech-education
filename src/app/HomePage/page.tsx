@@ -51,13 +51,18 @@ export default function Home() {
                   Reports
                 </a>
                 <a
+                  href="/Classroom"
+                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+                >
+                  Classroom
+                </a>
+                <a
                   href="#"
                   className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Profile
                 </a>
                 <a
-                  href="#"
                   className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                   onClick={handleSignOut}
                 >
