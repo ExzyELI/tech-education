@@ -1,4 +1,3 @@
-
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col bg-[#ffecde] text-[#132241]">
@@ -50,10 +49,10 @@ export default function Home() {
         <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
           Student name
         </h2>
-        <div className="mx-auto mb-10 mt-5 flex w-1/2 items-center justify-center rounded border bg-white p-8">
+        <div className="mx-auto mb-10 mt-5 flex w-5/6 items-center justify-center rounded border bg-white p-8 lg:w-2/3">
           <div className="gradient font-family: font-serif leading-normal tracking-normal">
             <h3 className="mb-3 ml-3 text-lg font-semibold">Activities</h3>
-            <ul className="w-[500px]">
+            <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
               {/* array for activity colors for odds and evens */}
               {Array(10)
                 .fill(true)
