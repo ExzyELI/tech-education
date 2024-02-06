@@ -1,8 +1,8 @@
 "use client";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
+import Footer from "../../comps/footer";
 
 export default function Home() {
-  
   const router = useRouter();
 
   const handleSignInButton = async () => {
@@ -55,16 +55,7 @@ export default function Home() {
                   <span className="text-primary">for grades k-2</span>
                   <p className="mt-5 whitespace-normal text-2xl font-medium">
                     Join us today to gain exclusive access to educational
-                    material for your student or child{" "}
-                    <br className="whitespace-normal"></br>
-                    {/* link for the image source */}
-                    <a
-                      className="text-xs text-[#ff6865]"
-                      href="https://www.vectorstock.com/royalty-free-vector/home-education-parent-teaching-child-mother-vector-46882075 "
-                      target="_blank"
-                    >
-                      img source
-                    </a>
+                    material for your student or child
                   </p>
                 </h1>
               </div>
@@ -103,15 +94,6 @@ export default function Home() {
                   To teach children about technology and the basics of using a
                   computer with a mouse and keyboard through puzzles and brain
                   games
-                  <br />
-                  {/* link for the image source */}
-                  <a
-                    className="text-xs text-[#ff6865]"
-                    href="https://www.vectorstock.com/royalty-free-vector/flat-hands-typing-on-white-keyboard-with-cable-vector-15384106"
-                    target="_blank"
-                  >
-                    img source
-                  </a>
                 </p>
               </div>
             </div>
@@ -130,16 +112,8 @@ export default function Home() {
           {/* first role */}
           <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
-              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
+              <div className="w-full px-6 py-2 text-center text-xl font-bold">
                 Teacher
-                <br></br>
-                <a
-                  className="text-xs text-[#ff6865]"
-                  href="https://www.vectorstock.com/royalty-free-vector/female-teacher-in-classroom-school-and-learning-vector-38666684"
-                  target="_blank"
-                >
-                  img source
-                </a>
               </div>
               <img
                 className="w-full border"
@@ -150,16 +124,8 @@ export default function Home() {
           {/* second role */}
           <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
-              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
+              <div className="w-full px-6 py-2 text-center text-xl font-bold">
                 Parent
-                <br></br>
-                <a
-                  className="text-xs text-[#ff6865]"
-                  href="https://www.vectorstock.com/royalty-free-vector/family-parents-son-vector-36474395"
-                  target="_blank"
-                >
-                  img source
-                </a>
               </div>
               <img
                 className="w-full border"
@@ -170,16 +136,8 @@ export default function Home() {
           {/* third role */}
           <div className="flex w-full flex-shrink flex-grow flex-col p-10 md:w-1/3 ">
             <div className="flex-1 overflow-hidden rounded-b-none rounded-t bg-[#ffe08d] shadow">
-              <div className="mt-5 w-full px-6 py-2 text-center text-xl font-bold">
+              <div className="w-full px-6 py-2 text-center text-xl font-bold">
                 Student
-                <br></br>
-                <a
-                  className="text-xs text-[#ff6865]"
-                  href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
-                  target="_blank"
-                >
-                  img source
-                </a>
               </div>
               <img
                 className="w-full border"
@@ -191,15 +149,7 @@ export default function Home() {
       </section>
       {/* roles ends */}
 
-      {/* footer begins */}
-      <footer className="bg-[#afce8b]">
-        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
-          <span className="text-sm sm:text-center ">
-            © 2024 Tech Education™
-          </span>
-        </div>
-      </footer>
-      {/* footer ends */}
+      <Footer />
     </main>
   );
 }

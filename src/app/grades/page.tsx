@@ -1,8 +1,9 @@
 "use client";
-import {auth, handleRedirect} from "@/app/firebase/init_app";
-import {useRouter} from "next/navigation";
-import {signOut} from "firebase/auth";
-import {useAuthState} from "react-firebase-hooks/auth";
+import { auth, handleRedirect } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import Footer from "../../../comps/footer";
 
 export default function Home() {
   const router = useRouter();
@@ -11,19 +12,19 @@ export default function Home() {
   const handleSignOut = async () => {
     try {
       await signOut(auth);
-      console.log('User signed out successfully');
+      console.log("User signed out successfully");
       router.push("/sign-in");
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error("Error signing out:", error);
     }
   };
   return (
-    <div className="flex min-h-screen flex-col bg-[#ffecde] text-[#132241]">
+    <div className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
       {/*navbar begins */}
       <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
         <header className="font-family: font-serif leading-normal tracking-normal">
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-          <span className="text-2xl font-semibold">Tech Education</span>
+            <span className="text-2xl font-semibold">Tech Education</span>
             {/* tabs */}
             <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
               <nav className="text-2lg">
@@ -75,7 +76,7 @@ export default function Home() {
         <h1 className="flex w-full items-center justify-center py-3 font-serif text-5xl leading-normal tracking-normal">
           Grades
         </h1>
-        <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
+        <h2 className="font-sm -mt-[20px] items-center text-center text-2xl text-[#ff6865]">
           Student name
         </h2>
         <div className="mx-auto mb-10 mt-5 flex w-5/6 items-center justify-center rounded border bg-white p-8 lg:w-2/3">
@@ -143,15 +144,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* footer begins */}
-      <footer className="sticky w-full bg-[#afce8b]">
-        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
-          <span className="text-sm sm:text-center ">
-            © 2024 Tech Education™
-          </span>
-        </div>
-      </footer>
-      {/* footer ends */}
+      <Footer />
     </div>
   );
 }
