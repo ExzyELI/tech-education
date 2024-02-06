@@ -4,25 +4,26 @@ interface Radioroles {
 }
 
 const Radio: React.FC<Radioroles> = ({ role, setradioButton }) => {
-
   const handleRadio = (option: string) => {
     setradioButton(option);
   };
 
   return (
     <>
-      <div className="flex items-center mb-4">
+      <div className="mb-4 flex items-center">
         <input
           id="student-radio"
           type="radio"
           value="Student"
           name="user-type-radio"
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          checked={role === 'Student'}
-          onChange={() => handleRadio('Student')} />
+          className="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+          checked={role === "Student"}
+          onChange={() => handleRadio("Student")}
+        />
         <label
           htmlFor="student-radio"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          className="ml-3 ms-2 text-sm font-medium text-gray-600"
+        >
           Student
         </label>
       </div>
@@ -33,12 +34,14 @@ const Radio: React.FC<Radioroles> = ({ role, setradioButton }) => {
           type="radio"
           value="Parent"
           name="user-type-radio"
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          checked={role === 'Parent'}
-          onChange={() => handleRadio('Parent')}/>
+          className="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+          checked={role === "Parent"}
+          onChange={() => handleRadio("Parent")}
+        />
         <label
           htmlFor="parent-radio"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          className="ml-3 ms-2 text-sm font-medium text-gray-600 dark:text-gray-300"
+        >
           Parent
         </label>
       </div>
@@ -49,12 +52,14 @@ const Radio: React.FC<Radioroles> = ({ role, setradioButton }) => {
           type="radio"
           value="Teacher"
           name="user-type-radio"
-          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-          checked={role === 'Teacher'}
-          onChange={() => handleRadio('Teacher')}/>
+          className="h-4 w-4 border-gray-300 bg-gray-100 text-blue-600 focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-blue-600"
+          checked={role === "Teacher"}
+          onChange={() => handleRadio("Teacher")}
+        />
         <label
           htmlFor="teacher-radio"
-          className="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          className="ml-3 ms-2 text-sm font-medium text-gray-600 dark:text-gray-300"
+        >
           Teacher
         </label>
       </div>

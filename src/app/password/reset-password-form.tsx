@@ -23,7 +23,7 @@ export default function ResetPasswordForm() {
             }}
           />
           {/* right column */}
-          <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+          <div className="w-full px-6 py-10 md:px-8 lg:w-1/2">
             <p className="mt-3 text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
             </p>
@@ -72,7 +72,7 @@ export default function ResetPasswordForm() {
                       href="/sign-in"
                       className="font-semibold leading-6 text-[#a8cd87]"
                     >
-                      Sign in
+                      Login
                     </a>
                   </p>
 
@@ -87,16 +87,6 @@ export default function ResetPasswordForm() {
                     </a>
                   </p>
                 </div>
-
-                {/* image source */}
-                <p className="text-center text-xs text-[#ff6865]">
-                  <a
-                    href="https://www.vectorstock.com/royalty-free-vector/thinking-kids-children-asking-question-expression-vector-41950097"
-                    target="_blank"
-                  >
-                    img source
-                  </a>
-                </p>
               </form>
             </div>
           </div>

@@ -12,19 +12,17 @@ export default function Sign_in_form() {
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-      try 
-      {
-        await setPersistence(auth, browserLocalPersistence);
-        const res = await signInWithEmailAndPassword(email, password);
-        console.log("signed in", { res });
+    try {
+      await setPersistence(auth, browserLocalPersistence);
+      const res = await signInWithEmailAndPassword(email, password);
+      console.log("signed in", { res });
 
-        if (res !== undefined) {
-          router.push("/HomePage");
-        }
-      } 
-      catch (error) {
-        console.error(error);
+      if (res !== undefined) {
+        router.push("/HomePage");
       }
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -41,7 +39,7 @@ export default function Sign_in_form() {
             }}
           />
           {/* right column */}
-          <div className="w-full px-6 py-8 md:px-8 lg:w-1/2">
+          <div className="w-full px-6 py-10 md:px-8 lg:w-1/2">
             <p className="mt-3 text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
             </p>
@@ -81,7 +79,7 @@ export default function Sign_in_form() {
                       href="/password"
                       className="text-xs text-gray-600 hover:text-[#ffcf4f] dark:text-gray-400"
                     >
-                      Forget Password?
+                      Forgot Password?
                     </a>
                   </div>
                   <input
@@ -100,7 +98,7 @@ export default function Sign_in_form() {
                     type="submit"
                     className="w-full transform rounded-lg bg-[#ffe08d] px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-[#ffe9b0] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50"
                   >
-                    Sign in
+                    Login
                   </button>
                 </div>
 
@@ -112,16 +110,6 @@ export default function Sign_in_form() {
                     className="font-semibold leading-6 text-[#ffc21e]"
                   >
                     Sign up
-                  </a>
-                </p>
-
-                {/* image source */}
-                <p className="text-center text-xs text-[#ff6865]">
-                  <a
-                    href="https://www.vectorstock.com/royalty-free-vector/children-learning-various-language-vector-21389977"
-                    target="_blank"
-                  >
-                    img source
                   </a>
                 </p>
               </form>

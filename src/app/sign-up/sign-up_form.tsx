@@ -1,9 +1,9 @@
-import {useState} from "react";
-import {sendEmailVerification} from "firebase/auth";
-import {useCreateUserWithEmailAndPassword} from "react-firebase-hooks/auth";
-import {auth, db} from "@/app/firebase/init_app";
-import {useRouter} from "next/navigation";
-import {doc, setDoc} from "firebase/firestore";
+import { useState } from "react";
+import { sendEmailVerification } from "firebase/auth";
+import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth, db } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
+import { doc, setDoc } from "firebase/firestore";
 import Radio from "../../../comps/radio";
 
 export default function Sign_up_form() {
@@ -19,12 +19,10 @@ export default function Sign_up_form() {
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try 
-    {
+    try {
       const res = await createUserWithEmailAndPassword(email, password);
       console.log({ res });
-      if (res) 
-      {
+      if (res) {
         await setDoc(doc(db, "users", res.user.uid), {
           email: res.user.email,
           firstName: firstName,
@@ -41,8 +39,7 @@ export default function Sign_up_form() {
       if (res !== undefined) {
         router.push("/HomePage");
       }
-    } 
-    catch (error) {
+    } catch (error) {
       console.error(error);
     }
   };
@@ -52,7 +49,7 @@ export default function Sign_up_form() {
       <title>Tech Education | Sign Up</title>
       <div className="flex min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
         <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-4xl">
-          <div className="w-full px-4 py-1 md:px-8 lg:w-1/2">
+          <div className="w-full px-4 py-1 pb-8 md:px-8 lg:w-1/2">
             <p className="pt-5 text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
             </p>
@@ -63,7 +60,7 @@ export default function Sign_up_form() {
                   htmlFor="firstName"
                   className="mb-1 block text-sm font-medium"
                 >
-                  First Name
+                  First name
                 </label>
                 <div>
                   <input
@@ -83,7 +80,7 @@ export default function Sign_up_form() {
                   htmlFor="lastName"
                   className="mb-1 block text-sm font-medium"
                 >
-                  Last Name
+                  Last name
                 </label>
                 <div>
                   <input
@@ -141,6 +138,11 @@ export default function Sign_up_form() {
               </div>
 
               <div className="py-3">
+                <div className="flex items-center justify-between">
+                  <label className="mb-1 block text-sm font-medium">
+                    Select a role:
+                  </label>
+                </div>
                 <Radio role={role} setradioButton={selectedRole} />
               </div>
 
@@ -153,21 +155,12 @@ export default function Sign_up_form() {
                 </button>
               </div>
               <p className="mt-10 text-center text-sm text-gray-500">
-                Already have a account?{" "}
+                Already have an account?{" "}
                 <a
                   href="/sign-in"
                   className="font-semibold leading-6 text-[#ffc21e]"
                 >
-                  Sign in
-                </a>
-              </p>
-
-              <p className="pb-3 text-center text-xs text-[#ff6865]">
-                <a
-                  href="https://www.vectorstock.com/royalty-free-vector/children-learn-computer-or-laptop-vector-21390195"
-                  target="_blank"
-                >
-                  img source
+                  Login
                 </a>
               </p>
             </form>
