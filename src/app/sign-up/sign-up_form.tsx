@@ -13,7 +13,9 @@ export default function Sign_up_form() {
   //confirm password state
   const [confirmPassword, setConfirmPassword] = useState("");
   //error state
-  const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  //role error state
+  const [roleError, setRoleError] = useState("");
 
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
@@ -27,10 +29,17 @@ export default function Sign_up_form() {
     e.preventDefault();
     //if passwords do not match, set error message here
     if (password !== confirmPassword) {
-      setError("Passwords do not match."); 
+      setPasswordError("Passwords do not match."); 
       return; 
     } else {
-      setError(""); 
+      setPasswordError(""); 
+    }
+    //if role is not selected
+    if (!role) {
+      setRoleError("Please select a role.");
+      return;
+    } else {
+      setRoleError("");
     }
     try {
       const res = await createUserWithEmailAndPassword(email, password);
@@ -49,6 +58,7 @@ export default function Sign_up_form() {
       setEmail("");
       setPassword("");
       setConfirmPassword("");
+
       if (res !== undefined) {
         router.push("/HomePage");
       }
@@ -164,9 +174,8 @@ export default function Sign_up_form() {
                   className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                 />
                 {/*error message here if there is one*/}
-                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+                {passwordError && <p className="mt-2 text-sm text-red-500">{passwordError}</p>}
               </div>
-
 
               <div className="py-3">
                 <div className="flex items-center justify-between">
@@ -175,6 +184,8 @@ export default function Sign_up_form() {
                   </label>
                 </div>
                 <Radio role={role} setradioButton={selectedRole} />
+                {/*error message here if there is one*/}
+                {roleError && <p className="mt-2 text-sm text-red-500">{roleError}</p>}
               </div>
 
               <div>
