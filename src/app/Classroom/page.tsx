@@ -1,47 +1,20 @@
+"use client";
+import { auth, handleRedirect } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import Footer from "../../../comps/footer";
+import ClassNavBar from "./classNavBar";
+
+
 export default function Home() {
+  handleRedirect();
+  const router = useRouter();
+
   return (
     <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       {/*navbar begins */}
-      <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
-        <header className="font-family: font-serif leading-normal tracking-normal">
-          <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-            <span className="self-center whitespace-nowrap text-2xl font-semibold">
-              {" "}
-              Tech Education
-            </span>
-            {/* tabs */}
-            <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-              <nav className="text-2lg">
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Activities
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Grade
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Reports
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Profile
-                </a>
-              </nav>
-            </div>
-          </div>
-        </header>
-      </nav>
+      <ClassNavBar/>
       {/* navbar ends */}
 
       {/* banner begins */}
@@ -59,15 +32,6 @@ export default function Home() {
                   src="https://i.imgur.com/1EDuUBO.png"
                 />
               </div>
-
-              <p className="text-center text-xs text-[#ff6865]">
-                <a
-                  href="https://www.vectorstock.com/royalty-free-vector/teacher-sitting-classroom-with-chalkboard-vector-43444042"
-                  target="_blank"
-                >
-                  img source
-                </a>
-              </p>
             </div>
 
             {/* three sections */}
@@ -140,15 +104,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* footer begins */}
-      <footer className="sticky w-full bg-[#afce8b]">
-        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
-          <span className="text-sm sm:text-center ">
-            © 2024 Tech Education™
-          </span>
-        </div>
-      </footer>
-      {/* footer ends */}
+      <Footer />
     </main>
   );
 }

@@ -1,47 +1,19 @@
-{
-  /*Student HomePage */
-}
+"use client";
+import { auth, handleRedirect } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
+import { signOut } from "firebase/auth";
+import Footer from "../../../comps/footer";
+import HomeNavBar from "./homeNavBar";
+
 export default function Home() {
+  handleRedirect();
+  const router = useRouter();
+
   return (
-    <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
+    <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       {/*navbar begins */}
-      <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
-        <header className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-          <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-            <span className="text-2xl font-semibold">Tech Education</span>
-            {/* tabs */}
-            <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-              <nav className="text-2lg">
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
-                >
-                  Activities
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
-                >
-                  Grade
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
-                >
-                  Reports
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
-                >
-                  Profile
-                </a>
-              </nav>
-            </div>
-          </div>
-        </header>
-      </nav>
+      <HomeNavBar/>
       {/* navbar ends */}
 
       {/* banner begins */}
@@ -53,15 +25,6 @@ export default function Home() {
               <h1 className="text-5xl font-bold tracking-tight">
                 Welcome to Tech Education!
               </h1>
-              <p>
-                <a
-                  className="text-xs text-[#ff6865]"
-                  href="https://www.vectorstock.com/royalty-free-vector/computer-mouse-vector-4995646"
-                  target="_blank"
-                >
-                  img source
-                </a>
-              </p>
 
               {/* mouse image start */}
               <div className="relative -mt-[40px] flex items-center justify-center">
@@ -108,13 +71,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* footer begins */}
-      <footer className="sticky bg-[#afce8b]">
-        <div className="flex w-full items-center justify-center px-4 py-4">
-          <span className="text-sm">© 2024 Tech Education™</span>
-        </div>
-      </footer>
-      {/* footer ends */}
+      <Footer />
     </main>
   );
 }
