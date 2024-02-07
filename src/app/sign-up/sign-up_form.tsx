@@ -9,6 +9,12 @@ import Radio from "../../../comps/radio";
 export default function Sign_up_form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //confirm password state
+  const [confirmPassword, setConfirmPassword] = useState("");
+  //error state
+  const [error, setError] = useState("");
+
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const router = useRouter();
@@ -19,6 +25,13 @@ export default function Sign_up_form() {
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //if passwords do not match, set error message here
+    if (password !== confirmPassword) {
+      setError("Passwords do not match."); 
+      return; 
+    } else {
+      setError(""); 
+    }
     try {
       const res = await createUserWithEmailAndPassword(email, password);
       console.log({ res });
@@ -35,7 +48,7 @@ export default function Sign_up_form() {
       sessionStorage.setItem("user", "true");
       setEmail("");
       setPassword("");
-
+      setConfirmPassword("");
       if (res !== undefined) {
         router.push("/HomePage");
       }
@@ -136,6 +149,24 @@ export default function Sign_up_form() {
                   />
                 </div>
               </div>
+
+              <div className="pt-3">
+                <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                />
+                {/*error message here if there is one*/}
+                {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+              </div>
+
 
               <div className="py-3">
                 <div className="flex items-center justify-between">
