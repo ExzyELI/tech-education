@@ -1,5 +1,5 @@
 "use client";
-import { auth, handleRedirect } from "@/app/firebase/init_app";
+import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import Footer from "../../../comps/footer";
@@ -7,9 +7,9 @@ import ClassNavBar from "./classNavBar";
 
 
 export default function Home() {
-  handleRedirect();
   const router = useRouter();
-
+  useHandleRedirect();
+  
   return (
     <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>

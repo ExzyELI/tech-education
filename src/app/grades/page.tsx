@@ -1,12 +1,12 @@
 "use client";
-import {handleRedirect} from "@/app/firebase/init_app";
+import {useHandleRedirect} from "@/app/firebase/init_app";
 import {useRouter} from "next/navigation";
 import Footer from "../../../comps/footer";
 import GradesNavBar from "./gradesNavBar";
 
 export default function Home() {
   const router = useRouter();
-  handleRedirect();
+  useHandleRedirect();
 
   return (
     <div className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
