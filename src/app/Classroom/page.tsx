@@ -3,27 +3,26 @@ import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import Footer from "../../../comps/footer";
-import ClassNavBar from "./classNavBar";
-
+import Nav from "../../../comps/nav";
 
 export default function Home() {
   const router = useRouter();
   useHandleRedirect();
-  
+
   return (
     <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       {/*navbar begins */}
-      <ClassNavBar/>
+      <Nav />
       {/* navbar ends */}
 
       {/* banner begins */}
       <section className="border-b bg-[#ffecde]">
         <div className="px-6 pb-10 text-center md:px-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-            <header className="flex w-full items-center justify-center py-3 font-serif text-5xl leading-normal tracking-normal">
+            <h1 className="flex flex-col items-center justify-center pb-5 pt-8 text-5xl font-bold tracking-tight">
               My Classroom
-            </header>
+            </h1>
 
             <div className="col-span-1 row-span-1 mb-10">
               <div className="flex items-center justify-center object-center">

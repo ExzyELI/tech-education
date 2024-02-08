@@ -3,6 +3,9 @@ import React, { useState, useEffect } from "react";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { auth } from "../firebase/init_app";
 import { User } from "firebase/auth";
+import { signOut } from "firebase/auth";
+import Footer from "../../../comps/footer";
+import Nav from "../../../comps/nav";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<User | null>(null); // logged-in user
@@ -42,41 +45,44 @@ const ProfilePage = () => {
   }, []);
 
   return (
-    <div className="mx-auto min-h-screen bg-gradient-to-br from-blue-100 to-purple-50 p-4 shadow-lg">
-      <div className="mx-auto max-w-md rounded-lg bg-white p-6 shadow-md">
-        {/* Display user's profile information */}
-        {user && (
-          <div>
-            <h1 className="mb-4 text-3xl font-semibold">Profile</h1>
-            <div className="mb-4">
-              <label className="mb-2 block text-sm font-bold text-gray-700">
-                First Name:
-              </label>
-              <p className="text-lg text-gray-900">{firstName}</p>
+    <main className="font-family: bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
+      <title>Tech Education</title>
+      <Nav />
+      <section className="pb-[280px]">
+        <h1 className="flex flex-col items-center justify-center pt-8 text-5xl font-bold tracking-tight">
+          User Profile
+        </h1>
+        <div className="mx-auto mt-5 flex items-center justify-center p-8 lg:w-2/3">
+          {user && (
+            <div className="overflow-hidden rounded-lg bg-white shadow">
+              <div className="px-4 py-5 sm:p-0">
+                <dl className="sm:divide-y sm:divide-gray-200">
+                  <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                    <dt className="text-sm font-medium text-gray-500">Name</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      {firstName} {lastName}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                    <dt className="text-sm font-medium text-gray-500">Email</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      {email}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6 sm:py-5">
+                    <dt className="text-sm font-medium text-gray-500">Role</dt>
+                    <dd className="mt-1 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                      {role}
+                    </dd>
+                  </div>
+                </dl>
+              </div>
             </div>
-            <div className="mb-4">
-              <label className="mb-2 block text-sm font-bold text-gray-700">
-                Last Name:
-              </label>
-              <p className="text-lg text-gray-900">{lastName}</p>
-            </div>
-            <div className="mb-4">
-              <label className="mb-2 block text-sm font-bold text-gray-700">
-                Email:
-              </label>
-              <p className="text-lg text-gray-900">{email}</p>
-            </div>
-
-            <div className="mb-4">
-              <label className="mb-2 block text-sm font-bold text-gray-700">
-                Role:
-              </label>
-              <p className="text-lg text-gray-900">{role}</p>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+          )}
+        </div>
+      </section>
+      <Footer />
+    </main>
   );
 };
 
