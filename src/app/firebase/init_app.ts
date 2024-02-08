@@ -24,7 +24,7 @@ const db = getFirestore(firebaseApp);
 
 setPersistence(auth, browserLocalPersistence);
 
-const handleRedirect = async () => {
+const useHandleRedirect = async () => {
   //await new Promise(resolve => setTimeout(resolve, 1000));
   const [user] = useAuthState(auth);
   //const user = auth.currentUser;
@@ -38,4 +38,4 @@ const handleRedirect = async () => {
   authCheck();
 }
 
-export {firebaseApp, auth, db, handleRedirect};
+export {firebaseApp, auth, db, useHandleRedirect};

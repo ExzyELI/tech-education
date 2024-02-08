@@ -9,6 +9,18 @@ import Radio from "../../../comps/radio";
 export default function Sign_up_form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  //confirm password state
+  const [confirmPassword, setConfirmPassword] = useState("");
+  //error state
+  const [passwordError, setPasswordError] = useState("");
+  //role error state
+  const [roleError, setRoleError] = useState("");
+  //Email error state
+  const [emailError, setEmailError] = useState("");
+  //password length error state
+  const [passwordLengthError, setPasswordLengthError] = useState("");
+
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
   const router = useRouter();
@@ -19,6 +31,20 @@ export default function Sign_up_form() {
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    //if passwords do not match, set error message here
+    if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match."); 
+      return; 
+    } else {
+      setPasswordError(""); 
+    }
+    //if role is not selected
+    if (!role) {
+      setRoleError("Please select a role.");
+      return;
+    } else {
+      setRoleError("");
+    }
     try {
       const res = await createUserWithEmailAndPassword(email, password);
       console.log({ res });
@@ -35,9 +61,21 @@ export default function Sign_up_form() {
       sessionStorage.setItem("user", "true");
       setEmail("");
       setPassword("");
+      setConfirmPassword("");
+
+      //if (setPassword.length <= 7){
+        //setPasswordLengthError("Password must be at least 8 Characters, please use a different password!");
+      //}
 
       if (res !== undefined) {
         router.push("/HomePage");
+      }
+      if (res == undefined){
+        //If the user attempts to sign up with the same email, they are thrown an error
+        setEmailError("Account already created with this email, please reload and try a new email or sign in!");
+      }
+      else{
+        setEmailError("");
       }
     } catch (error) {
       console.error(error);
@@ -48,7 +86,7 @@ export default function Sign_up_form() {
     <div>
       <title>Tech Education | Sign Up</title>
       <div className="flex min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
-        <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-4xl">
+        <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-5xl">
           <div className="w-full px-4 py-1 pb-8 md:px-8 lg:w-1/2">
             <p className="pt-5 text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
@@ -112,6 +150,8 @@ export default function Sign_up_form() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
+                  {/*error message here if there is one for the email section*/}
+                  {emailError && <p className="mt-2 text-sm text-red-500">{emailError}</p>}
                 </div>
               </div>
 
@@ -134,7 +174,26 @@ export default function Sign_up_form() {
                     onChange={(e) => setPassword(e.target.value)}
                     className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
+                  {/*error message here if there is one*/}
+                  {/*{passwordLengthError && <p className="mt-2 text-sm text-red-500">{passwordLengthError}</p>}*/}
                 </div>
+              </div>
+
+              <div className="pt-3">
+                <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  name="confirmPassword"
+                  type="password"
+                  autoComplete="new-password"
+                  required
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                  className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                />
+                {/*error message here if there is one*/}
+                {passwordError && <p className="mt-2 text-sm text-red-500">{passwordError}</p>}
               </div>
 
               <div className="py-3">
@@ -144,6 +203,8 @@ export default function Sign_up_form() {
                   </label>
                 </div>
                 <Radio role={role} setradioButton={selectedRole} />
+                {/*error message here if there is one*/}
+                {roleError && <p className="mt-2 text-sm text-red-500">{roleError}</p>}
               </div>
 
               <div>
