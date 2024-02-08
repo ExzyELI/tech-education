@@ -16,6 +16,8 @@ export default function Sign_up_form() {
   const [passwordError, setPasswordError] = useState("");
   //role error state
   const [roleError, setRoleError] = useState("");
+  //Email error state
+  const [emailError, setEmailError] = useState("");
 
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
@@ -61,6 +63,13 @@ export default function Sign_up_form() {
 
       if (res !== undefined) {
         router.push("/HomePage");
+      }
+      if (res == undefined){
+        //If the user attempts to sign up with the same email, they are thrown an error
+        setEmailError("Account already created with this email, please reload and try a new email or sign in!");
+      }
+      else{
+        setEmailError("");
       }
     } catch (error) {
       console.error(error);
@@ -135,6 +144,8 @@ export default function Sign_up_form() {
                     onChange={(e) => setEmail(e.target.value)}
                     className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
+                  {/*error message here if there is one for the email section*/}
+                  {emailError && <p className="mt-2 text-sm text-red-500">{emailError}</p>}
                 </div>
               </div>
 
