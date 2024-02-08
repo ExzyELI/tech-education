@@ -1,8 +1,8 @@
 "use client";
-import {useHandleRedirect} from "@/app/firebase/init_app";
-import {useRouter} from "next/navigation";
+import { useHandleRedirect } from "@/app/firebase/init_app";
+import { useRouter } from "next/navigation";
 import Footer from "../../../comps/footer";
-import GradesNavBar from "./gradesNavBar";
+import Nav from "../../../comps/nav";
 
 export default function Home() {
   const router = useRouter();
@@ -11,14 +11,14 @@ export default function Home() {
   return (
     <div className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
       {/*navbar begins */}
-      <GradesNavBar/>
+      <Nav />
       {/* navbar ends */}
 
       <section className="container mx-auto w-full py-5">
-        <h1 className="flex w-full items-center justify-center py-3 font-serif text-5xl leading-normal tracking-normal">
+        <h1 className="flex flex-col items-center justify-center pt-4 text-5xl font-bold tracking-tight">
           Grades
         </h1>
-        <h2 className="font-sm -mt-[20px] items-center text-center text-2xl text-[#ff6865]">
+        <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
           Student name
         </h2>
         <div className="mx-auto mb-10 mt-5 flex w-5/6 items-center justify-center rounded border bg-white p-8 lg:w-2/3">
