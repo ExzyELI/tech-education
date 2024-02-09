@@ -52,7 +52,7 @@ export default function Home() {
               <div className="mt-12 lg:mt-[100px]">
                 <h1 className="text-5xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
                   Technology education <br />
-                  <span className="text-primary">for grades k-2</span>
+                  <span className="text-primary">for grades K-2</span>
                   <p className="mt-5 whitespace-normal text-2xl font-medium">
                     Join us today to gain exclusive access to educational
                     material for your student or child
