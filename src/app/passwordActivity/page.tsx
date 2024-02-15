@@ -1,13 +1,25 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import Footer from "../../../comps/footer";
+import { auth } from "../firebase/init_app";
+import { User } from "firebase/auth";
 import Nav from "../../../comps/nav";
+import Footer from "../../../comps/footer";
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
   const [showPassword, setShowPassword] = useState(false); // track password visibility
+  const [user, setUser] = useState<User | null>(null); // store logged in user
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user); // update the user state when authentication state changes
+    });
+
+    return () => unsubscribe(); // cleanup function to unsubscribe from the auth state listener
+  }, []);
 
   // function to handle password input change
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,19 +50,45 @@ const PasswordPage = () => {
   const strength = calculateStrength(); // calculate password strength
   const progressWidth = (strength / 4) * 100; // calculate progress width based on strength
 
+  // function to handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault(); // prevent default form submission behavior
+    if (!user) {
+      console.error("User is not logged in."); // log error if user is not logged in
+      return;
+    }
+    const firestore = getFirestore();
+    try {
+      // store the score document in firestore with user's ID
+      const docRef = await addDoc(
+        collection(firestore, `users/${user.uid}/scores`),
+        {
+          // add document to 'scores' collection with score and timestamp
+          score: strength,
+          timestamp: new Date(),
+        },
+      );
+      alert(`Score submitted successfully!`); // show success message
+      console.log("logging: ", docRef.id); // log document ID
+    } catch (error) {
+      console.error("error: ", error); // log error if any
+    }
+    setPassword(""); // clear password field
+  };
+
   return (
     <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       <Nav />
       <div>
         <div className="mx-auto max-w-sm">
-          <form>
+          <form onSubmit={handleSubmit}>
             <label htmlFor="psw" className="mb-2 block text-lg font-semibold">
               Password
             </label>
             <div className="flex items-center">
               <input
-                type={showPassword ? "text" : "password"} // Toggle input type based on password visibility state
+                type={showPassword ? "text" : "password"} // shows or hides password
                 id="psw"
                 name="psw"
                 value={password}
