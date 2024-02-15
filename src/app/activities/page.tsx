@@ -11,6 +11,38 @@ export default function ActivitiesPage() {
   const router = useRouter();
   useHandleRedirect();
 
+  const [user, setUser] = useState<User | null>(null); // logged-in user
+  const [firstName, setFirstName] = useState(""); // first name
+  const [lastName, setLastName] = useState(""); // last name
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      // updating user state when auth state changes
+      setUser(user);
+
+      if (user) {
+        const firestore = getFirestore();
+
+        // reference to user document in Firestore
+        const userDocRef = doc(firestore, "users", user.uid);
+
+        // snapshot of user document
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          // user data is grabbed from snapshot if user document exists
+          const userData = userDocSnap.data();
+
+          // setting the state with user's first name, last name, and email
+          setFirstName(userData.firstName);
+          setLastName(userData.lastName);
+        }
+      }
+    });
+
+    return () => unsubscribe();
+    }, []);
+
   return (
     <main className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
       {/*navbar begins */}
@@ -22,7 +54,7 @@ export default function ActivitiesPage() {
           Activities
         </h1>
         <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
-            Student Name
+            {firstName} {lastName}
         </h2>
         {/* items-center */}
         <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-2/3">
