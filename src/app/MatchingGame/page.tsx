@@ -1,13 +1,13 @@
 "use client";
-import { auth, handleRedirect } from "@/app/firebase/init_app";
+import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import Footer from "../../../comps/footer";
 import MatchingNavBar from "./MatchingNavBar";
 
 export default function Home() {
-  handleRedirect();
   const router = useRouter();
+  useHandleRedirect();
 
   return (
     <main>

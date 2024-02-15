@@ -61,9 +61,16 @@ export default function ActivitiesPage() {
           <div className="gradient font-family: font-serif leading-normal tracking-normal">
             <h3 className="mb-3 ml-3 text-lg font-semibold">Activities</h3>
             <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
-                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2" >
-                    Activity 1
+            <a href="/MatchingGame">
+                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                    Matching Activity 1
                 </div>
+            </a>
+            <a href="/passwordActivity">
+                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                    Password Activity 1
+                </div>
+            </a>
             </ul>
           </div>
 
@@ -72,6 +79,9 @@ export default function ActivitiesPage() {
               Grades
             </h3>
             <ul className="w-[90px]">
+                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                        N/A
+                </div>
                 <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
                         N/A
                 </div>
