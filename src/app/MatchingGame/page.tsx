@@ -23,8 +23,8 @@ export default function Home() {
             <h1 className="text-4xl font-bold text-center mt-2">Match the Tech!</h1>
             <p className="text-xl text-center mt-4">Instructions: Click on cards to match them.</p>
             
-            <div className="container border-dashed border-4 border-sky-300 bg-sky-200 py-4 mt-8">
-            <section className="grid grid-cols-4 gap-3 justify-items-center ">
+            <div className="container border-dashed border-4 border-sky-300 bg-sky-200 py-2 px-4 mt-8">
+            <section className="tiles grid grid-cols-4 gap-3 justify-items-center ">
             <button className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center memory-card">1</button>
             <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">2</div>
             <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">3</div>
