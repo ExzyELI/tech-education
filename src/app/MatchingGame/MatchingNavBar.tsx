@@ -3,7 +3,7 @@ import {auth} from "@/app/firebase/init_app";
 import {useRouter} from "next/navigation";
 import {signOut} from "firebase/auth";
 
-export default function HomeNavBar() {
+export default function GradesNavBar() {
 
     const router = useRouter();
     const handleSignOut = async () => {
@@ -17,27 +17,27 @@ export default function HomeNavBar() {
       };
     return(
         <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
-        <header className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
+        <header className="font-family: font-serif leading-normal tracking-normal">
           <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
             <span className="text-2xl font-semibold">Tech Education</span>
             {/* tabs */}
             <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
               <nav className="text-2lg">
                 <a
-                  href="/MatchingGame"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+                  href="#"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
                 >
                   Activities
                 </a>
                 <a
                   href="/grades"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
                 >
                   Grade
                 </a>
                 <a
                   href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
                 >
                   Reports
                 </a>
@@ -49,7 +49,7 @@ export default function HomeNavBar() {
                 </a>
                 <a
                   href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
+                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
                 >
                   Profile
                 </a>
