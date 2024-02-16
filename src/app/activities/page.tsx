@@ -112,12 +112,12 @@ export default function ActivitiesPage() {
                 <div className="gradient font-family: font-serif leading-normal tracking-normal">
                     <h3 className="mb-3 ml-3 text-lg font-semibold">1st Grade Activities</h3>
                     <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
-                    <a href="/MatchingGame">
+                    <a href="#">
                         <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
                             Matching Activity 2
                         </div>
                     </a>
-                    <a href="/passwordActivity">
+                    <a href="#">
                         <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
                             Password Activity 2
                         </div>
@@ -156,6 +156,54 @@ export default function ActivitiesPage() {
                 </div>
             </div>
             
+            <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2">
+                
+                <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                    <h3 className="mb-3 ml-3 text-lg font-semibold">2st Grade Activities</h3>
+                    <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Matching Activity 3
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Password Activity 3
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Quiz Activity 3
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Puzzle Activity 3
+                        </div>
+                    </a>
+                    </ul>
+                </div>
+
+                <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
+                    <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
+                    Grades
+                    </h3>
+                    <ul className="w-[90px]">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                    </ul>
+                </div>
+            </div>
             
         </div>
       </section>
