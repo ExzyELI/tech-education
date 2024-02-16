@@ -57,36 +57,106 @@ export default function ActivitiesPage() {
             {firstName} {lastName}
         </h2>
         {/* items-center */}
-        <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-2/3">
-          <div className="gradient font-family: font-serif leading-normal tracking-normal">
-            <h3 className="mb-3 ml-3 text-lg font-semibold">Activities</h3>
-            <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
-            <a href="/MatchingGame">
-                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                    Matching Activity 1
+        <div className ="flex-row justify-center">
+            <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2 float-left">
+                    
+                <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                    <h3 className="mb-3 ml-3 text-lg font-semibold">Kindergarten Activities</h3>
+                    <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
+                    <a href="/MatchingGame">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Matching Activity 1
+                        </div>
+                    </a>
+                    <a href="/passwordActivity">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Password Activity 1
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Quiz Activity 1
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Puzzle Activity 1
+                        </div>
+                    </a>
+                    </ul>
                 </div>
-            </a>
-            <a href="/passwordActivity">
-                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                    Password Activity 1
-                </div>
-            </a>
-            </ul>
-          </div>
 
-          <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-            <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
-              Grades
-            </h3>
-            <ul className="w-[90px]">
-                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                        N/A
+                <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
+                    <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
+                    Grades
+                    </h3>
+                    <ul className="w-[90px]">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                    </ul>
                 </div>
-                <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                        N/A
+            </div>
+
+            <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2 float-right">
+                
+                <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                    <h3 className="mb-3 ml-3 text-lg font-semibold">1st Grade Activities</h3>
+                    <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
+                    <a href="/MatchingGame">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Matching Activity 2
+                        </div>
+                    </a>
+                    <a href="/passwordActivity">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Password Activity 2
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Quiz Activity 2
+                        </div>
+                    </a>
+                    <a href="#">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
+                            Puzzle Activity 2
+                        </div>
+                    </a>
+                    </ul>
                 </div>
-            </ul>
-          </div>
+
+                <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
+                    <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
+                    Grades
+                    </h3>
+                    <ul className="w-[90px]">
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
+                                N/A
+                        </div>
+                    </ul>
+                </div>
+            </div>
+            
+            
         </div>
       </section>
       <Footer />
