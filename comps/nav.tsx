@@ -26,7 +26,7 @@ export default function Nav() {
           <div className="flex items-center justify-center space-x-3 md:space-x-0 rtl:space-x-reverse">
             <nav className="text-md lg:text-lg">
               <a
-                href="#"
+                href="/activities"
                 className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
               >
                 Activities
