@@ -85,26 +85,6 @@ export default function ActivitiesPage() {
                     </a>
                     </ul>
                 </div>
-
-                <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-                    <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
-                    Grades
-                    </h3>
-                    <ul className="w-[90px]">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                    </ul>
-                </div>
             </div>
 
             <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2 float-right">
@@ -134,26 +114,6 @@ export default function ActivitiesPage() {
                     </a>
                     </ul>
                 </div>
-
-                <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-                    <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
-                    Grades
-                    </h3>
-                    <ul className="w-[90px]">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                    </ul>
-                </div>
             </div>
             
             <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2">
@@ -181,26 +141,6 @@ export default function ActivitiesPage() {
                             Puzzle Activity 3
                         </div>
                     </a>
-                    </ul>
-                </div>
-
-                <div className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
-                    <h3 className="mb-3 ml-3 text-left text-lg font-semibold">
-                    Grades
-                    </h3>
-                    <ul className="w-[90px]">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 text-center">
-                                N/A
-                        </div>
                     </ul>
                 </div>
             </div>
