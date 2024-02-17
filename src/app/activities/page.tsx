@@ -62,27 +62,51 @@ export default function ActivitiesPage() {
                     
                 <div className="gradient font-family: font-serif leading-normal tracking-normal">
                     <h3 className="mb-3 ml-3 text-lg font-semibold">Kindergarten Activities</h3>
-                    <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
-                    <a href="/MatchingGame">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Matching Activity 1
-                        </div>
-                    </a>
-                    <a href="/passwordActivity">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Password Activity 1
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Quiz Activity 1
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Puzzle Activity 1
-                        </div>
-                    </a>
+                    <ul className="">
+                    <div className="float-left w-60 ml-5">
+                        <a href="/MatchingGame">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow ">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 1</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Try to find the matching images!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-right w-60 mr-5">
+                        <a href="/passwordActivity">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 1</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Try to create a strong password!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left pt-5 w-60 ml-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Test your computer knowledge!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-right pt-5 w-60 mr-5">
+                        <a href="#">
+                            <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 1</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Solve some puzzles and learn!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                     </ul>
                 </div>
             </div>
@@ -91,27 +115,51 @@ export default function ActivitiesPage() {
                 
                 <div className="gradient font-family: font-serif leading-normal tracking-normal">
                     <h3 className="mb-3 ml-3 text-lg font-semibold">1st Grade Activities</h3>
-                    <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Matching Activity 2
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Password Activity 2
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Quiz Activity 2
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Puzzle Activity 2
-                        </div>
-                    </a>
+                    <ul className="">
+                    <div className="float-left w-60 ml-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 2</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Try to find the matching images!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-right w-60 mr-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 2</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Try to create a strong password!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left pt-5 w-60 ml-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 2</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Test your computer knowledge!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-right pt-5 w-60 mr-5">
+                        <a href="#">
+                            <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 2</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Solve some puzzles and learn!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                     </ul>
                 </div>
             </div>
@@ -120,27 +168,51 @@ export default function ActivitiesPage() {
                 
                 <div className="gradient font-family: font-serif leading-normal tracking-normal">
                     <h3 className="mb-3 ml-3 text-lg font-semibold">2st Grade Activities</h3>
-                    <ul className="w-[250px] md:w-[350px] lg:w-[500px]">
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Matching Activity 3
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Password Activity 3
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Quiz Activity 3
-                        </div>
-                    </a>
-                    <a href="#">
-                        <div className="m-2 rounded-md border bg-[#e1f3ff] p-2 cursor-pointer px-3 font-semibold hover:text-[#ffe08d]" >
-                            Puzzle Activity 3
-                        </div>
-                    </a>
+                    <ul className="">
+                    <div className="float-left w-60 ml-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 3</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Try to find the matching images!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-right w-60 mr-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 3</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Try to create a strong password!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-left pt-5 w-60 ml-5">
+                        <a href="#">
+                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 3</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Test your computer knowledge!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div className="float-right pt-5 w-60 mr-5">
+                        <a href="#">
+                            <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow">
+                                <div className="p-5">
+                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 3</h5>
+                                    <p className="mb-3 font-normal text-gray-700">
+                                        Solve some puzzles and learn!</p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                     </ul>
                 </div>
             </div>
