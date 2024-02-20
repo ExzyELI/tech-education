@@ -3,7 +3,7 @@ import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
 import Footer from "../../../comps/footer";
-import MatchingNavBar from "./MatchingNavBar";
+import Nav from "../../../comps/nav";
 
 export default function Home() {
   const router = useRouter();
@@ -12,8 +12,9 @@ export default function Home() {
   return (
     <main>
       {/*navbar begins */}
-      <MatchingNavBar/>
+      <Nav/>
       {/* navbar ends */}
+      
       <div className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <div className="flex h-screen min-h-screen bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
         <div className="container bg-black">
