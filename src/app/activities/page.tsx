@@ -67,6 +67,7 @@ export default function ActivitiesPage() {
                         <div className="float-left w-60 ml-5">
                             <a href="/MatchingGame">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/kARtwA8.jpeg" />
                                     <div className="p-5">
                                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 1</h5>
                                         <p className="mb-3 font-normal text-gray-700">
@@ -78,6 +79,7 @@ export default function ActivitiesPage() {
                         <div className="float-right w-60 mr-5">
                             <a href="/passwordActivity">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                     <div className="p-5">
                                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 1</h5>
                                         <p className="mb-3 font-normal text-gray-700">
@@ -122,6 +124,7 @@ export default function ActivitiesPage() {
                         <div className="float-left w-60 ml-5">
                             <a href="#">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/kARtwA8.jpeg" />
                                     <div className="p-5">
                                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 2</h5>
                                         <p className="mb-3 font-normal text-gray-700">
@@ -133,6 +136,7 @@ export default function ActivitiesPage() {
                         <div className="float-right w-60 mr-5">
                             <a href="#">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                     <div className="p-5">
                                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 2</h5>
                                         <p className="mb-3 font-normal text-gray-700">
@@ -176,6 +180,7 @@ export default function ActivitiesPage() {
                     <div className="float-left w-60 ml-5">
                         <a href="#">
                             <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                            <img className="rounded-t-lg" src="https://i.imgur.com/kARtwA8.jpeg" />
                                 <div className="p-5">
                                     <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 3</h5>
                                     <p className="mb-3 font-normal text-gray-700">
@@ -187,6 +192,7 @@ export default function ActivitiesPage() {
                     <div className="float-right w-60 mr-5">
                         <a href="#">
                             <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                            <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                 <div className="p-5">
                                     <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 3</h5>
                                     <p className="mb-3 font-normal text-gray-700">
