@@ -12,11 +12,14 @@ import { User } from "firebase/auth";
 import { shuffle } from "lodash";
 
 export default function Home() {
-  const [cards, setCards] = useState(Array.from(Array(16).keys()));
+  
+  const [cards, setCards] = useState(Array.from(Array(16).keys())); 
 
+  
   useEffect(() => {
-    setCards((prevCards) => shuffle(prevCards));
+    setCards((prevCards) => shuffle(prevCards)); 
   }, []);
+
 
   const handleCardClick = (index: any) => {
     console.log("Clicked card:", index);
@@ -45,6 +48,10 @@ export default function Home() {
             <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">6</div>
             <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">7</div>
             <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">8</div>
+            <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">9</div>
+            <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">10</div>
+            <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">11</div>
+            <div className="w-40 h-40 rounded-lg bg-violet-500 hover:bg-violet-600 active:bg-violet-700 focus:outline focus:ring focus:ring-black text-white flex justify-center items-center">12</div>
             </section>
             </div>
             
