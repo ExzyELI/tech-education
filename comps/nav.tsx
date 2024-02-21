@@ -2,10 +2,7 @@
 import { auth } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
-
 import { useState, useEffect } from "react";
-import { sendEmailVerification } from "firebase/auth";
-import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 import { User } from "firebase/auth";
 
