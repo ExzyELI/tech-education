@@ -102,7 +102,7 @@ const PasswordPage = () => {
     setPassword(""); // clear password field
     handleEnd();
   };
-
+  
   return (
     <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
