@@ -14,6 +14,8 @@ const PasswordPage = () => {
   const [user, setUser] = useState<User | null>(null); // store logged in user
 
   useEffect(() => {
+    handleStart();
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when authentication state changes
     });
@@ -50,6 +52,30 @@ const PasswordPage = () => {
   const strength = calculateStrength(); // calculate password strength
   const progressWidth = (strength / 4) * 100; // calculate progress width based on strength
 
+  //Timer
+  var startTime: number;
+  var endTime: number;
+
+  const handleStart = () => {
+    startTime = performance.now();
+    console.log("Timer Starting")
+    console.log(performance.now())
+  };
+
+  const handleEnd = () => {
+    endTime = performance.now();
+    //in milliseconds 
+    var timeDiff = endTime - startTime;
+    
+    // strip the milliseconds 
+    console.log(endTime, startTime)
+    timeDiff /= 1000; 
+      
+    // getting seconds 
+    var seconds = Math.round(timeDiff);
+    console.log(seconds + " seconds");
+  };
+
   // function to handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault(); // prevent default form submission behavior
@@ -74,6 +100,7 @@ const PasswordPage = () => {
       console.error("error: ", error); // log error if any
     }
     setPassword(""); // clear password field
+    handleEnd();
   };
 
   return (
