@@ -7,6 +7,8 @@ import { auth } from "../firebase/init_app";
 import { User } from "firebase/auth";
 import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
@@ -94,7 +96,7 @@ const PasswordPage = () => {
           timestamp: new Date(),
         },
       );
-      alert(`Score submitted successfully!`); // show success message
+      toast.success("Score submitted successfully!"); // show success message
       console.log("logging: ", docRef.id); // log document ID
     } catch (error) {
       console.error("error: ", error); // log error if any
@@ -193,6 +195,10 @@ const PasswordPage = () => {
               >
                 Submit
               </button>
+              <ToastContainer 
+                  className="Toast-position mt-20"
+                  position = "top-center"
+              />
             </div>
           </form>
         </div>
