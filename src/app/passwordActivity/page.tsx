@@ -10,10 +10,14 @@ import {
   getFirestore,
   collection,
   addDoc,
-  doc,
   getDoc,
   setDoc,
   increment,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  limit,
 } from "firebase/firestore";
 
 const PasswordPage = () => {
@@ -24,12 +28,16 @@ const PasswordPage = () => {
   const [isGameStarted, setIsGameStarted] = useState(false); // store game start state
   const [attempts, setAttempts] = useState(0); // store attempts
   const [startTime, setStartTime] = useState<Date | null>(null); // store start time
-  const [elapsedTime, setElapsedTime] = useState<number | null>(null); // store elapsed time
+  const [elapsedTime, setElapsedTime] = useState<number>(0); // store elapsed time
   const timerRef = useRef<number | null>(null); // timer reference
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when auth state changes
+      if (user) {
+        // Fetch the user's most recent activity data from Firestore
+        getRecentActivity(user.uid);
+      }
     });
 
     return () => unsubscribe();
@@ -53,8 +61,27 @@ const PasswordPage = () => {
   const handleStart = () => {
     setIsGameStarted(true);
     setStartTime(new Date()); // timer begins when game starts
-    setElapsedTime(null);
+    setElapsedTime(0);
     startTimer();
+    // attempts counter
+    setAttempts((prevAttempts) => prevAttempts + 1);
+  };
+
+  // function to get most recent activity that is in forestore
+  const getRecentActivity = async (userId: string) => {
+    const firestore = getFirestore();
+    const activityQuery = query(
+      collection(firestore, `users/${userId}/activities`),
+      orderBy("timestamp", "desc"),
+      limit(1),
+    );
+    const querySnapshot = await getDocs(activityQuery);
+    if (!querySnapshot.empty) {
+      const activityData = querySnapshot.docs[0].data();
+      setScore(activityData.score);
+      setAttempts(activityData.attempts);
+      setElapsedTime(activityData.elapsedTime);
+    }
   };
 
   // function to handle form submission
@@ -93,6 +120,7 @@ const PasswordPage = () => {
           score: calculatedScore,
           attempts: currentAttempts + 1,
           timestamp: new Date(),
+          elapsedTime: formatTime(elapsedSeconds),
         });
       }
     }
@@ -100,10 +128,24 @@ const PasswordPage = () => {
 
   // function to format time
   const formatTime = (seconds: number): string => {
+    // checking if seconds is NaN
+    if (isNaN(seconds)) {
+      // if it is NaN, then return "00:00:00"
+      return "00:00:00";
+    }
+
+    // if not, then format the time
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
     const remainingSeconds = seconds % 60;
-    return `${hours}h ${minutes}m ${remainingSeconds}s`;
+
+    // add leading zeroes
+    const formattedHours = hours < 10 ? `0${hours}` : hours;
+    const formattedMinutes = minutes < 10 ? `0${minutes}` : minutes;
+    const formattedSeconds =
+      remainingSeconds < 10 ? `0${remainingSeconds}` : remainingSeconds;
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   };
 
   // function to calculate password strength
@@ -238,7 +280,7 @@ const PasswordPage = () => {
               <div className="mr-4 flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-blue-500 text-2xl font-bold text-white">
                 <div className="mb-2 text-sm">Time</div>
                 <div>
-                  {elapsedTime !== null ? formatTime(elapsedTime) : "0h 0m 0s"}
+                  {elapsedTime !== null ? formatTime(elapsedTime) : "00:00:00"}
                 </div>
               </div>
               <div className="flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-green-500 text-2xl font-bold text-white">
