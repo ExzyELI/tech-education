@@ -1,38 +1,113 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import { getFirestore, collection, addDoc } from "firebase/firestore";
+import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { auth } from "../firebase/init_app";
 import { User } from "firebase/auth";
 import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  doc,
+  getDoc,
+  setDoc,
+  increment,
+} from "firebase/firestore";
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
   const [showPassword, setShowPassword] = useState(false); // track password visibility
   const [user, setUser] = useState<User | null>(null); // store logged in user
+  const [score, setScore] = useState<number | null>(null); // store user's score
+  const [isGameStarted, setIsGameStarted] = useState(false); // store game start state
+  const [attempts, setAttempts] = useState(0); // store attempts
+  const [startTime, setStartTime] = useState<Date | null>(null); // store start time
+  const [elapsedTime, setElapsedTime] = useState<number | null>(null); // store elapsed time
+  const timerRef = useRef<number | null>(null); // timer reference
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user); // update the user state when authentication state changes
+      setUser(user); // update the user state when auth state changes
     });
 
-    return () => unsubscribe(); // cleanup function to unsubscribe from the auth state listener
+    return () => unsubscribe();
   }, []);
 
-  // function to handle password input change
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value.trim()); // trim makes it so no whitespace can be added
+  // function to start timer
+  const startTimer = () => {
+    timerRef.current = window.setInterval(() => {
+      setElapsedTime((prevElapsedTime) =>
+        prevElapsedTime !== null ? prevElapsedTime + 1 : 1,
+      );
+    }, 1000);
   };
 
-  // function to toggle password visibility
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev);
+  // function to stop timer
+  const stopTimer = () => {
+    clearInterval(timerRef.current as number); // stops the timer
+  };
+
+  // function to start game
+  const handleStart = () => {
+    setIsGameStarted(true);
+    setStartTime(new Date()); // timer begins when game starts
+    setElapsedTime(null);
+    startTimer();
+  };
+
+  // function to handle form submission
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    stopTimer();
+    const endTime = new Date();
+    const elapsedMilliseconds = startTime
+      ? endTime.getTime() - startTime.getTime()
+      : 0; // calculate elapsed time
+    const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000); // converting elapsed time to seconds
+    setElapsedTime(elapsedSeconds); // storing elapsed time
+    setIsGameStarted(false);
+
+    // calculate score
+    const calculatedScore = calculateStrength();
+
+    setScore(calculatedScore); // update score state
+    setPassword(""); // reset password field
+
+    const firestore = getFirestore();
+    // get current number of attempts from firestore
+    if (user) {
+      const userDocRef = doc(firestore, `users/${user.uid}`);
+      const userDocSnap = await getDoc(userDocRef);
+      if (userDocSnap.exists()) {
+        const userData = userDocSnap.data();
+        const currentAttempts = userData?.attempts || 0; // 0 if no attempts found
+        // update attempts locally
+        setAttempts(currentAttempts + 1);
+        // update attempts to firestore
+        await setDoc(userDocRef, { attempts: increment(1) }, { merge: true });
+        // save activity data in firestore
+        await addDoc(collection(firestore, `users/${user.uid}/activities`), {
+          activityName: "Password Activity",
+          score: calculatedScore,
+          attempts: currentAttempts + 1,
+          timestamp: new Date(),
+        });
+      }
+    }
+  };
+
+  // function to format time
+  const formatTime = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+    return `${hours}h ${minutes}m ${remainingSeconds}s`;
   };
 
   // function to calculate password strength
-  const calculateStrength = () => {
+  const calculateStrength = (): number => {
     let strength = 0;
     const lowerCaseLetters = /[a-z]/g;
     const upperCaseLetters = /[A-Z]/g;
@@ -50,32 +125,6 @@ const PasswordPage = () => {
   const strength = calculateStrength(); // calculate password strength
   const progressWidth = (strength / 4) * 100; // calculate progress width based on strength
 
-  // function to handle form submission
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault(); // prevent default form submission behavior
-    if (!user) {
-      console.error("User is not logged in."); // log error if user is not logged in
-      return;
-    }
-    const firestore = getFirestore();
-    try {
-      // store the score document in firestore with user's ID
-      const docRef = await addDoc(
-        collection(firestore, `users/${user.uid}/scores`),
-        {
-          // add document to 'scores' collection with score and timestamp
-          score: strength,
-          timestamp: new Date(),
-        },
-      );
-      alert(`Score submitted successfully!`); // show success message
-      console.log("logging: ", docRef.id); // log document ID
-    } catch (error) {
-      console.error("error: ", error); // log error if any
-    }
-    setPassword(""); // clear password field
-  };
-
   return (
     <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
@@ -92,14 +141,15 @@ const PasswordPage = () => {
                 id="psw"
                 name="psw"
                 value={password}
-                onChange={handleChange}
+                onChange={(e) => setPassword(e.target.value.trim())} // trim makes it so no whitespace can be added
                 className="mb-4 w-full rounded-md border border-gray-300 p-2 focus:border-[#fc7f7d] focus:outline-none"
                 required
+                disabled={!isGameStarted} // disable password field until the user clicks start
               />
               {/* button to make password visible */}
               <button
                 type="button"
-                onClick={togglePasswordVisibility}
+                onClick={() => setShowPassword((prev) => !prev)}
                 className="-mt-4 ml-2 rounded-md bg-[#ff6865] px-3 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none"
               >
                 <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
@@ -138,7 +188,7 @@ const PasswordPage = () => {
                 id="length"
                 className={`p-1 ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
               >
-                {password.length >= 8 ? "✔" : "✘"} Minimum <b>8 characters</b>
+                {password.length >= 8 ? "✔" : "✘"} At least <b>8 characters</b>
               </p>
             </div>
 
@@ -158,14 +208,43 @@ const PasswordPage = () => {
               />
             </div>
 
-            {/* submit button */}
+            {/* start and submit buttons */}
             <div className="flex items-center justify-between">
               <button
+                type="button"
+                onClick={handleStart}
+                className={`w-full rounded-md bg-[#ff6865] px-4 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none ${
+                  isGameStarted ? "hidden" : ""
+                }`}
+              >
+                Start
+              </button>
+              <button
                 type="submit"
-                className="w-full rounded-md bg-[#ff6865] px-4 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none"
+                className={`w-full rounded-md bg-[#ff6865] px-4 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none ${
+                  !isGameStarted ? "hidden" : ""
+                }`}
               >
                 Submit
               </button>
+            </div>
+
+            {/* score box */}
+            <div className="mt-4 flex justify-center">
+              <div className="mr-4 flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-red-500 text-2xl font-bold text-white">
+                <div className="mb-2 text-sm">Score</div>
+                <div>{score !== null ? score : "N/A"}</div>
+              </div>
+              <div className="mr-4 flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-blue-500 text-2xl font-bold text-white">
+                <div className="mb-2 text-sm">Time</div>
+                <div>
+                  {elapsedTime !== null ? formatTime(elapsedTime) : "0h 0m 0s"}
+                </div>
+              </div>
+              <div className="flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-green-500 text-2xl font-bold text-white">
+                <div className="mb-2 text-sm">Attempts</div>
+                <div>{attempts}</div>
+              </div>
             </div>
           </form>
         </div>
