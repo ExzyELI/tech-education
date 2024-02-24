@@ -2,6 +2,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { faPlay, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { auth } from "../firebase/init_app";
 import { User } from "firebase/auth";
 import Nav from "../../../comps/nav";
@@ -30,12 +31,15 @@ const PasswordPage = () => {
   const [startTime, setStartTime] = useState<Date | null>(null); // store start time
   const [elapsedTime, setElapsedTime] = useState<number>(0); // store elapsed time
   const timerRef = useRef<number | null>(null); // timer reference
+  const [showSubmit, setShowSubmit] = useState(false); // submit button visibility
+  const formRef = useRef<HTMLFormElement>(null); // referencing form
+  const hiddenSubmitRef = useRef<HTMLButtonElement>(null); // hidden submit button reference
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when auth state changes
       if (user) {
-        // Fetch the user's most recent activity data from Firestore
+        // get most recent user activity
         getRecentActivity(user.uid);
       }
     });
@@ -65,9 +69,10 @@ const PasswordPage = () => {
     startTimer();
     // attempts counter
     setAttempts((prevAttempts) => prevAttempts + 1);
+    setShowSubmit(true); // submit button is visible when game starts
   };
 
-  // function to get most recent activity that is in forestore
+  // function to get most recent activity that is in firestore
   const getRecentActivity = async (userId: string) => {
     const firestore = getFirestore();
     const activityQuery = query(
@@ -82,6 +87,12 @@ const PasswordPage = () => {
       setAttempts(activityData.attempts);
       setElapsedTime(activityData.elapsedTime);
     }
+  };
+
+  // referencing handleSubmit for the submit button
+  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    await handleSubmit(e); // calling handleSubmit with event parameter
   };
 
   // function to handle form submission
@@ -167,128 +178,154 @@ const PasswordPage = () => {
   const strength = calculateStrength(); // calculate password strength
   const progressWidth = (strength / 4) * 100; // calculate progress width based on strength
 
+  // function to handle the submit function outside of the form
+  const handleSubmitButtonClick = () => {
+    if (hiddenSubmitRef.current) {
+      hiddenSubmitRef.current.click(); // trigger click event
+    }
+  };
+
   return (
-    <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
+    <main className="flex min-h-screen flex-col bg-[#ffecde] font-serif text-[#2d2d2d]">
       <title>Tech Education</title>
       <Nav />
-      <div>
-        <div className="mx-auto max-w-sm">
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="psw" className="mb-2 block text-lg font-semibold">
-              Password
-            </label>
-            <div className="flex items-center">
-              <input
-                type={showPassword ? "text" : "password"} // shows or hides password
-                id="psw"
-                name="psw"
-                value={password}
-                onChange={(e) => setPassword(e.target.value.trim())} // trim makes it so no whitespace can be added
-                className="mb-4 w-full rounded-md border border-gray-300 p-2 focus:border-[#fc7f7d] focus:outline-none"
-                required
-                disabled={!isGameStarted} // disable password field until the user clicks start
-              />
-              {/* button to make password visible */}
-              <button
-                type="button"
-                onClick={() => setShowPassword((prev) => !prev)}
-                className="-mt-4 ml-2 rounded-md bg-[#ff6865] px-3 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none"
-              >
-                <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
-              </button>
-            </div>
-
-            {/* password criteria */}
-            <div
-              id="message"
-              className="mb-4 rounded-lg bg-white p-4 text-gray-700 shadow-md"
+      <div className="mx-auto mt-10 max-w-4xl flex-grow px-4 py-8 md:flex md:justify-center md:px-8">
+        <div className="w-full md:flex md:items-start md:justify-center">
+          {/* container for password game */}
+          <div className="w-full md:mr-4 md:w-2/3">
+            <form
+              ref={formRef}
+              id="passwordForm"
+              onSubmit={handleFormSubmit}
+              className="rounded-lg bg-white p-6 shadow-md"
             >
-              <h3 className="mb-2 text-lg font-semibold">
-                Password must contain the following:
-              </h3>
-              <p
-                id="letter"
-                className={`p-1 ${password.match(/[a-z]/g) ? "text-green-500" : "text-red-500"}`}
-              >
-                {password.match(/[a-z]/g) ? "✔" : "✘"} A <b>lowercase</b>{" "}
-                letter
-              </p>
-              <p
-                id="capital"
-                className={`p-1 ${password.match(/[A-Z]/g) ? "text-green-500" : "text-red-500"}`}
-              >
-                {password.match(/[A-Z]/g) ? "✔" : "✘"} A{" "}
-                <b>capital (uppercase)</b> letter
-              </p>
-              <p
-                id="number"
-                className={`p-1 ${password.match(/[0-9]/g) ? "text-green-500" : "text-red-500"}`}
-              >
-                {password.match(/[0-9]/g) ? "✔" : "✘"} A <b>number</b>
-              </p>
-              <p
-                id="length"
-                className={`p-1 ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
-              >
-                {password.length >= 8 ? "✔" : "✘"} At least <b>8 characters</b>
-              </p>
-            </div>
-
-            {/* password strength progress bar */}
-            <div className="relative mb-4 h-4 overflow-hidden rounded-md border border-gray-300 bg-white">
-              <div
-                className="absolute left-0 top-0 h-full transition-all duration-300 ease-in-out"
-                style={{
-                  width: `${progressWidth}%`,
-                  background:
-                    strength === 4
-                      ? "#48bb78" // green
-                      : strength > 0
-                        ? "linear-gradient(to right, #f56565, #ecc94b)" // red to yellow
-                        : "#f56565", // red
-                }}
+              <div className="flex flex-col">
+                <label
+                  htmlFor="psw"
+                  className="text-lg font-semibold text-[#5c93ff]"
+                >
+                  Password
+                </label>
+                <div className="flex items-center">
+                  <input
+                    type={showPassword ? "text" : "password"}
+                    id="psw"
+                    name="psw"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value.trim())}
+                    className="mb-4 w-full rounded-md border border-gray-300 p-2 focus:border-[#5c93ff] focus:outline-none"
+                    required
+                    disabled={!isGameStarted}
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="-mt-4 ml-2 rounded-md bg-[#ff5a5f] px-3 py-2 text-white hover:bg-[#ff914d] focus:outline-none"
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
+                </div>
+                <div id="message" className="mb-4 rounded-lg bg-gray-100 p-4">
+                  <h3 className="mb-2 text-lg font-semibold">
+                    Create a password with the following:
+                  </h3>
+                  <p
+                    className={`p-1 ${password.match(/[a-z]/g) ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {password.match(/[a-z]/g) ? "✔" : "✘"} A <b>lowercase</b>{" "}
+                    letter
+                  </p>
+                  <p
+                    className={`p-1 ${password.match(/[A-Z]/g) ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {password.match(/[A-Z]/g) ? "✔" : "✘"} A{" "}
+                    <b>capital (uppercase)</b> letter
+                  </p>
+                  <p
+                    className={`p-1 ${password.match(/[0-9]/g) ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {password.match(/[0-9]/g) ? "✔" : "✘"} A <b>number</b>
+                  </p>
+                  <p
+                    className={`p-1 ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
+                  >
+                    {password.length >= 8 ? "✔" : "✘"} At least{" "}
+                    <b>8 characters</b>
+                  </p>
+                </div>
+                <div className="relative mb-5 h-4 overflow-hidden rounded-md border border-gray-300 bg-gray-100">
+                  <div
+                    className="absolute left-0 top-0 h-full transition-all duration-300 ease-in-out"
+                    style={{
+                      width: `${progressWidth}%`,
+                      background:
+                        strength === 4
+                          ? "#48bb78"
+                          : strength > 0
+                            ? "linear-gradient(to right, #f56565, #ecc94b)"
+                            : "#f56565",
+                    }}
+                  />
+                </div>
+              </div>
+              <button
+                ref={hiddenSubmitRef}
+                type="submit"
+                style={{ display: "none" }} // hide button
               />
-            </div>
+            </form>
+          </div>
 
-            {/* start and submit buttons */}
-            <div className="flex items-center justify-between">
+          {/* right column: start/submit button and score box */}
+          <div className="mt-4 w-full md:mt-0 md:w-1/3 lg:mt-0">
+            {/* start/submit button */}
+            <div className="mb-4 rounded-lg bg-white p-6 shadow-md">
               <button
                 type="button"
                 onClick={handleStart}
-                className={`w-full rounded-md bg-[#ff6865] px-4 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none ${
-                  isGameStarted ? "hidden" : ""
-                }`}
+                className={`w-full rounded-md bg-[#ff5a5f] px-4 py-2 text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
               >
+                <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
                 Start
               </button>
               <button
-                type="submit"
-                className={`w-full rounded-md bg-[#ff6865] px-4 py-2 text-white hover:bg-[#fc7f7d] focus:outline-none ${
-                  !isGameStarted ? "hidden" : ""
-                }`}
+                type="button"
+                onClick={handleSubmitButtonClick}
+                className={`w-full rounded-md bg-[#5c93ff] px-4 py-2 text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
               >
+                <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                 Submit
               </button>
             </div>
 
             {/* score box */}
-            <div className="mt-4 flex justify-center">
-              <div className="mr-4 flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-red-500 text-2xl font-bold text-white">
-                <div className="mb-2 text-sm">Score</div>
-                <div>{score !== null ? score : "N/A"}</div>
+            <div className="rounded-lg bg-white p-6 shadow-md">
+              <div className="mb-4">
+                <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
+                  Score
+                </div>
+                <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fca5a5] text-2xl font-bold text-white md:w-40">
+                  {score !== null ? score : "N/A"}
+                </div>
               </div>
-              <div className="mr-4 flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-blue-500 text-2xl font-bold text-white">
-                <div className="mb-2 text-sm">Time</div>
-                <div>
+              <div className="mb-4">
+                <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
+                  Time
+                </div>
+                <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fcd34d] text-2xl font-bold text-white md:w-40">
                   {elapsedTime !== null ? formatTime(elapsedTime) : "00:00:00"}
                 </div>
               </div>
-              <div className="flex h-32 w-32 flex-col items-center justify-center rounded-lg bg-green-500 text-2xl font-bold text-white">
-                <div className="mb-2 text-sm">Attempts</div>
-                <div>{attempts}</div>
+              <div>
+                <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
+                  Attempts
+                </div>
+                <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#6cbf73] text-2xl font-bold text-white md:w-40">
+                  {attempts}
+                </div>
               </div>
             </div>
-          </form>
+          </div>
         </div>
       </div>
       <Footer />
