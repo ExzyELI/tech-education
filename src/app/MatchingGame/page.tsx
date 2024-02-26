@@ -14,7 +14,15 @@ export default function Home() {
   const [clickCount, setClickCount] = useState<number>(0);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isGameWon, setIsGameWon] = useState<boolean>(false);
+  const [gameStarted, setGameStarted] = useState(false);
 
+  useEffect(() => {
+    if (gameStarted) {
+      setCards(shuffle(initialCards));
+      setIsDisabled(false);
+    }
+  }, [gameStarted, initialCards]);
+  
   useEffect(() => {
     if (matchedCards.length === cards.length) {
       setIsGameWon(true);
@@ -51,7 +59,7 @@ export default function Home() {
 
         setIsDisabled(false); // Enable clicks again
       } else {
-        // If they don't match, flip them back after a short delay (e.g., 1 second)
+        // If they don't match, flip them back after a short delay
         setTimeout(() => {
           setFlippedCards([]);
           setIsDisabled(false); // Enable clicks again
@@ -69,6 +77,11 @@ export default function Home() {
     setClickCount(0);
     setIsDisabled(false);
     setIsGameWon(false);
+    setGameStarted(false);
+  };
+  
+  const startGame = () => {
+    setGameStarted(true);
   };
 
   return (
@@ -102,8 +115,12 @@ export default function Home() {
               </section>
             </div>
             {isGameWon && (
-              <div className="mt-4 text-center font-bold text-green-600">
-                Congratulations! You've won the game!
+              <div className="absolute inset-0 flex items-center justify-center ">
+              <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
+                <div className="text-4xl font-bold text-center">
+                Congratulations! You Win!
+              </div>
+              </div>
               </div>
             )}
             <div className="mt-4 flex justify-center">
