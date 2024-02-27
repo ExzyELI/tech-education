@@ -5,9 +5,9 @@ import MatchingNavBar from "./MatchingNavBar";
 import Footer from "../../../comps/footer";
 
 export default function Home() {
-  const initialCards: number[] = Array.from(Array(8).keys()).concat(
-    Array.from(Array(8).keys()),
-  );
+  const gridSize = 4;
+  const totalCards = gridSize * gridSize;
+  const initialCards = Array.from(Array(totalCards / 2).keys()).flatMap((num) => [num, num]);
   const [cards, setCards] = useState<number[]>(shuffle(initialCards));
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
@@ -18,18 +18,17 @@ export default function Home() {
 
   useEffect(() => {
     if (gameStarted) {
-      setCards(shuffle(initialCards));
       setIsDisabled(false);
     }
-  }, [gameStarted, initialCards]);
+  }, [gameStarted]);
   
   useEffect(() => {
     if (matchedCards.length === cards.length) {
       setIsGameWon(true);
     }
-  }, [matchedCards, cards]);
+  }, [matchedCards, totalCards]);
 
-  const handleCardClick = (index: number): void => {
+  const handleCardClick = (index :number) => {
     // Ignore clicks on already matched or flipped cards
     if (
       matchedCards.includes(index) ||
@@ -40,7 +39,7 @@ export default function Home() {
     }
 
     // Flip the clicked card
-    const newFlippedCards: number[] = [...flippedCards, index];
+    const newFlippedCards = [...flippedCards, index];
     setFlippedCards(newFlippedCards);
 
     // Check if two cards are flipped over
@@ -63,7 +62,7 @@ export default function Home() {
         setTimeout(() => {
           setFlippedCards([]);
           setIsDisabled(false); // Enable clicks again
-        }, 1000);
+        }, 500);
       }
 
       setClickCount((prevCount) => prevCount + 1); // Increment the click count
@@ -82,8 +81,9 @@ export default function Home() {
   
   const startGame = () => {
     setGameStarted(true);
+    setCards(shuffle(initialCards));
   };
-
+  
   return (
     <main>
       <div className="font-serif leading-normal tracking-normal text-[#132241]">
@@ -96,6 +96,13 @@ export default function Home() {
             <p className="mt-4 text-center text-xl">
               Instructions: Click on cards to match them.
             </p>
+            <div className="mx-[290px]"> 
+            {!gameStarted && (
+        <button className = "rounded-lg bg-[#ffe08d] px-6 py-4 mt-4 text-xl"onClick={startGame}>Start Game</button>
+      )}
+          </div>
+          {gameStarted && (
+            <div>
             <p className="text-center">Click Count: {clickCount}</p>
             <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
               <section className="grid grid-cols-4 justify-items-center gap-4">
@@ -106,14 +113,14 @@ export default function Home() {
                     onClick={() => handleCardClick(index)}
                     disabled={isDisabled || matchedCards.includes(index)}
                   >
-                    {flippedCards.includes(index) ||
-                    matchedCards.includes(index)
+                    {flippedCards.includes(index) || matchedCards.includes(index)
                       ? card
                       : "Tech"}
                   </button>
                 ))}
               </section>
             </div>
+            
             {isGameWon && (
               <div className="absolute inset-0 flex items-center justify-center ">
               <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
@@ -131,6 +138,8 @@ export default function Home() {
                 Reset Game
               </button>
             </div>
+            </div>
+          )}
           </div>
         </div>
       </div>
