@@ -8,7 +8,8 @@ import 'react-toastify/dist/ReactToastify.css';
 export default function ResetPasswordForm() {
   const [email, setEmail] = useState("");
   // use state will be used to keep track of the values the user enters in the form
-  async function handleSubmit() {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
     await sendPasswordResetEmail(auth, email);
     toast.success("Email Sent!");
   }
