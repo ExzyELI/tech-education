@@ -28,8 +28,7 @@ export default function Home() {
     }
   }, [matchedCards, totalCards]);
 
-  const handleCardClick = (index :number) => {
-    // Ignore clicks on already matched or flipped cards
+  const handleCardClick = (index :number) => { // Ignore clicks on matched cards
     if (
       matchedCards.includes(index) ||
       flippedCards.includes(index) ||
@@ -50,7 +49,7 @@ export default function Home() {
 
       // Check if the two flipped cards match
       if (cards[firstCardIndex] === cards[secondCardIndex]) {
-        // If they match, add them to the matched cards array
+        // Matched, add them to the matched cards array
         setMatchedCards([...matchedCards, firstCardIndex, secondCardIndex]);
 
         // Clear the flipped cards array
@@ -69,7 +68,7 @@ export default function Home() {
     }
   };
 
-  const resetGame = (): void => {
+  const resetGame = (): void => { // Reset button fuctions
     setCards(shuffle(initialCards));
     setFlippedCards([]);
     setMatchedCards([]);
@@ -81,7 +80,7 @@ export default function Home() {
   
   const startGame = () => {
     setGameStarted(true);
-    setCards(shuffle(initialCards));
+    setCards(shuffle(initialCards)); // Shuffle cards after game is in star
   };
   
   return (
