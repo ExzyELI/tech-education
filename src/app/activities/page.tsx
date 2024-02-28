@@ -53,10 +53,21 @@ export default function ActivitiesPage() {
         <h1 className="flex flex-col items-center justify-center pt-10 mt-5 text-5xl font-bold tracking-tight">
           Activities
         </h1>
+        <div className="py-4 text-center font-bold text-white">
+            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
+            Kindergarten
+            </button>
+            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
+            1st Grade
+            </button>
+            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
+            2nd Grade
+            </button>
+        </div>
         {/* items-center */}
         <div className ="flex-row justify-center">
             <div className="">
-                <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center p-8 lg:w-[1200px]">
+                <div className="mx-auto mb-2 mt-2 flex w-5/6 justify-center p-8 lg:w-[1200px]">
                         
                     <div className="gradient font-family: font-serif leading-normal tracking-normal">
                         <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
@@ -72,17 +83,6 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
-                            <div className="py-4 text-center font-bold text-white">
-                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
-                            K
-                            </button>
-                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
-                            1
-                            </button>
-                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
-                            2
-                            </button>
-                            </div>
                         </div>
                         <div className="float-right w-60 mr-5 ml-5">
                             <a href="passwordActivity">
@@ -95,17 +95,6 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
-                            <div className="py-4 text-center font-bold text-white">
-                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
-                            K
-                            </button>
-                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
-                            1
-                            </button>
-                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
-                            2
-                            </button>
-                            </div>
                         </div>
                         <div className="float-right w-60 mr-5 ml-5">
                             <a href="/#">
@@ -118,17 +107,6 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
-                            <div className="py-4 text-center font-bold text-white">
-                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
-                            K
-                            </button>
-                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
-                            1
-                            </button>
-                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
-                            2
-                            </button>
-                            </div>
                         </div>
                         <div className="float-right w-60 mr-5 ml-5">
                             <a href="/#">
@@ -141,17 +119,6 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
-                            <div className="py-4 text-center font-bold text-white">
-                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
-                            K
-                            </button>
-                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
-                            1
-                            </button>
-                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
-                            2
-                            </button>
-                            </div>
                         </div>
                         </ul>
                     </div>
