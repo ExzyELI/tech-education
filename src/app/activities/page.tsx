@@ -66,7 +66,7 @@ export default function ActivitiesPage() {
         <h1 className="flex flex-col items-center justify-center pt-10 mt-5 text-5xl font-bold tracking-tight">
           Activities
         </h1>
-        <div className="py-4 text-center font-bold text-white">
+        <div className="pt-7 text-center font-bold text-white">
             <button 
             className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow focus:bg-gray-300"
             onClick={handleKinder}>
