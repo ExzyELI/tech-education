@@ -260,6 +260,7 @@ export default function ActivitiesPage() {
             
         </div>
       </section>
+      <div className="mb-[80px]"> </div>
       <Footer />
     </main>
   );
