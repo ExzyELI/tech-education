@@ -50,21 +50,18 @@ export default function ActivitiesPage() {
       {/* navbar ends */}
 
       <section className="pb-[320px] container mx-auto w-full">
-        <h1 className="flex flex-col items-center justify-center pt-4 text-5xl font-bold tracking-tight">
+        <h1 className="flex flex-col items-center justify-center pt-10 mt-5 text-5xl font-bold tracking-tight">
           Activities
         </h1>
-        <h2 className="font-sm items-center text-center text-2xl text-[#ff6865]">
-            {firstName} {lastName}
-        </h2>
         {/* items-center */}
         <div className ="flex-row justify-center">
-            <div className="pr-10">
-                <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2 float-left">
+            <div className="">
+                <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center p-8 lg:w-[1200px]">
                         
                     <div className="gradient font-family: font-serif leading-normal tracking-normal">
-                        <h3 className="mb-5 text-lg font-semibold text-center">Kindergarten Activities</h3>
+                        <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
                         <ul className="">
-                        <div className="float-left w-60 ml-5">
+                        <div className="float-left w-60 mr-5 ml-5">
                             <a href="/MatchingGame">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
                                 <img className="rounded-t-lg" src="https://i.imgur.com/kARtwA8.jpeg" />
@@ -75,22 +72,45 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
+                            <div className="py-4 text-center font-bold text-white">
+                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
+                            K
+                            </button>
+                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
+                            1
+                            </button>
+                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
+                            2
+                            </button>
+                            </div>
                         </div>
-                        <div className="float-right w-60 mr-5">
-                            <a href="/passwordActivity">
+                        <div className="float-right w-60 mr-5 ml-5">
+                            <a href="passwordActivity">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
                                 <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                     <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 1</h5>
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">Password Activity 1</h5>
                                         <p className="mb-3 font-normal text-gray-700">
                                             Try to create a strong password!</p>
                                     </div>
                                 </div>
                             </a>
+                            <div className="py-4 text-center font-bold text-white">
+                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
+                            K
+                            </button>
+                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
+                            1
+                            </button>
+                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
+                            2
+                            </button>
+                            </div>
                         </div>
-                        <div className="float-left pt-5 w-60 ml-5">
-                            <a href="#">
+                        <div className="float-right w-60 mr-5 ml-5">
+                            <a href="/#">
                                 <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                     <div className="p-5">
                                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
                                         <p className="mb-3 font-normal text-gray-700">
@@ -98,10 +118,22 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
+                            <div className="py-4 text-center font-bold text-white">
+                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
+                            K
+                            </button>
+                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
+                            1
+                            </button>
+                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
+                            2
+                            </button>
+                            </div>
                         </div>
-                        <div className="float-right pt-5 w-60 mr-5">
-                            <a href="#">
+                        <div className="float-right w-60 mr-5 ml-5">
+                            <a href="/#">
                                 <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                     <div className="p-5">
                                         <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 1</h5>
                                         <p className="mb-3 font-normal text-gray-700">
@@ -109,121 +141,20 @@ export default function ActivitiesPage() {
                                     </div>
                                 </div>
                             </a>
+                            <div className="py-4 text-center font-bold text-white">
+                            <button className="px-7 py-2 mr-3 rounded-lg bg-[#FCA5A5] hover:bg-gray-300 shadow">
+                            K
+                            </button>
+                            <button className="px-7 py-2 mx-2 rounded-lg bg-[#FCD34D] hover:bg-gray-300 shadow">
+                            1
+                            </button>
+                            <button className="px-7 py-2 ml-3 rounded-lg bg-[#afce8b] hover:bg-gray-300 shadow">
+                            2
+                            </button>
+                            </div>
                         </div>
                         </ul>
                     </div>
-                </div>
-            </div>
-            
-            <div className="pl-10">
-                <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2 float-right">
-                    
-                    <div className="gradient font-family: font-serif leading-normal tracking-normal">
-                        <h3 className="mb-5 text-lg font-semibold text-center">1st Grade Activities</h3>
-                        <ul className="">
-                        <div className="float-left w-60 ml-5">
-                            <a href="#">
-                                <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                <img className="rounded-t-lg" src="https://i.imgur.com/kARtwA8.jpeg" />
-                                    <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 2</h5>
-                                        <p className="mb-3 font-normal text-gray-700">
-                                            Try to find the matching images!</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div className="float-right w-60 mr-5">
-                            <a href="#">
-                                <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
-                                    <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 2</h5>
-                                        <p className="mb-3 font-normal text-gray-700">
-                                            Try to create a strong password!</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div className="float-left pt-5 w-60 ml-5">
-                            <a href="#">
-                                <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                    <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 2</h5>
-                                        <p className="mb-3 font-normal text-gray-700">
-                                            Test your computer knowledge!</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        <div className="float-right pt-5 w-60 mr-5">
-                            <a href="#">
-                                <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                    <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 2</h5>
-                                        <p className="mb-3 font-normal text-gray-700">
-                                            Solve some puzzles and learn!</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            
-            <div className="mx-auto mb-10 mt-5 flex w-5/6 justify-center rounded border bg-white p-8 lg:w-1/2">
-                
-                <div className="gradient font-family: font-serif leading-normal tracking-normal">
-                    <h3 className="mb-5 text-lg font-semibold text-center">2st Grade Activities</h3>
-                    <ul className="">
-                    <div className="float-left w-60 ml-5">
-                        <a href="#">
-                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                            <img className="rounded-t-lg" src="https://i.imgur.com/kARtwA8.jpeg" />
-                                <div className="p-5">
-                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 3</h5>
-                                    <p className="mb-3 font-normal text-gray-700">
-                                        Try to find the matching images!</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-right w-60 mr-5">
-                        <a href="#">
-                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                            <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
-                                <div className="p-5">
-                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Password Activity 3</h5>
-                                    <p className="mb-3 font-normal text-gray-700">
-                                        Try to create a strong password!</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-left pt-5 w-60 ml-5">
-                        <a href="#">
-                            <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                <div className="p-5">
-                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 3</h5>
-                                    <p className="mb-3 font-normal text-gray-700">
-                                        Test your computer knowledge!</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    <div className="float-right pt-5 w-60 mr-5">
-                        <a href="#">
-                            <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                <div className="p-5">
-                                    <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 3</h5>
-                                    <p className="mb-3 font-normal text-gray-700">
-                                        Solve some puzzles and learn!</p>
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                    </ul>
                 </div>
             </div>
             
