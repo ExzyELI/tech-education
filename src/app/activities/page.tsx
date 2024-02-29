@@ -252,7 +252,59 @@ export default function ActivitiesPage() {
                             </ul>
                             </div>
                     default:
-                        return null
+                        return <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                        <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
+                        <ul className="">
+                        <div className="float-left w-60 mr-5 ml-5">
+                            <a>
+                                <div className="w-75 bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/0XlQMRw.jpeg" />
+                                    <div className="p-5">
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 1</h5>
+                                        <p className="mb-3 font-normal text-gray-700">
+                                            Select a grade to learn more!</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="float-right w-60 mr-5 ml-5">
+                            <a>
+                                <div className="w-75 bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/EUWogLx.jpeg" />
+                                    <div className="p-5">
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">Password Activity 1</h5>
+                                        <p className="mb-3 font-normal text-gray-700">
+                                            Select a grade to learn more!</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="float-right w-60 mr-5 ml-5">
+                            <a>
+                                <div className="w-75 bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/C7uqDLu.jpeg" />
+                                    <div className="p-5">
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
+                                        <p className="mb-3 font-normal text-gray-700">
+                                            Select a grade to learn more!</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div className="float-right w-60 mr-5 ml-5">
+                            <a>
+                                <div className=" bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
+                                <img className="rounded-t-lg" src="https://i.imgur.com/EUWogLx.jpeg" />
+                                    <div className="p-5">
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Keyboard Activity 1</h5>
+                                        <p className="mb-3 font-normal text-gray-700">
+                                            Select a grade to learn more!</p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        </ul>
+                        </div>
                     }
                 })()}   
                 </div>

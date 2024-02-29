@@ -82,6 +82,8 @@ export default function Quiz(){
           </div>
           <p className="mt-2 text-center font-semibold">Score: {score}</p>
         </div>
+        <div className="mb-5">
+        </div>
         <Footer />
       </main>
     );
