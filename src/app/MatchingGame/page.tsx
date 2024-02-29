@@ -92,7 +92,7 @@ export default function Home() {
             <h1 className="mt-2 text-center text-4xl font-bold">
               Match the Tech!
             </h1>
-            <p className="mt-4 text-center text-xl">
+            <p className="mt-2 text-center text-xl">
               Instructions: Click on cards to match them.
             </p>
             <div className="mx-[290px]"> 
@@ -102,7 +102,10 @@ export default function Home() {
           </div>
           {gameStarted && (
             <div>
-            <p className="text-center">Click Count: {clickCount}</p>
+              <div className="mt-4 flex justify-between">
+              <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center mr-4 ">Click Count: {clickCount}</p>
+            <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: 0:00:00</p>
+              </div>
             <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
               <section className="grid grid-cols-4 justify-items-center gap-4">
                 {cards.map((card, index) => (
