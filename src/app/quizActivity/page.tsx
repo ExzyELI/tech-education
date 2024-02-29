@@ -2,6 +2,7 @@
 import {useState} from "react";
 import {questions} from "./questions";
 import Nav from "../../../comps/nav";
+import Footer from "../../../comps/footer";
 
 
 export default function Quiz(){
@@ -81,6 +82,7 @@ export default function Quiz(){
           </div>
           <p className="mt-2 text-center font-semibold">Score: {score}</p>
         </div>
+        <Footer />
       </main>
     );
   };
