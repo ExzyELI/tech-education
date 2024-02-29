@@ -134,9 +134,9 @@ export default function ActivitiesPage() {
                                     <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                         <div className="p-5">
-                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 1</h5>
+                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Keyboard Activity 1</h5>
                                             <p className="mb-3 font-normal text-gray-700">
-                                                Solve some puzzles and learn!</p>
+                                                Test your keyboard matching skills!</p>
                                         </div>
                                     </div>
                                 </a>
@@ -188,9 +188,9 @@ export default function ActivitiesPage() {
                                     <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                         <div className="p-5">
-                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 1</h5>
+                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Keyboard Activity 1</h5>
                                             <p className="mb-3 font-normal text-gray-700">
-                                                Solve some puzzles and learn!</p>
+                                                Test your keyboard matching skills!</p>
                                         </div>
                                     </div>
                                 </a>
@@ -242,9 +242,9 @@ export default function ActivitiesPage() {
                                     <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                         <div className="p-5">
-                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Puzzle Activity 1</h5>
+                                            <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Keyboard Activity 1</h5>
                                             <p className="mb-3 font-normal text-gray-700">
-                                                Solve some puzzles and learn!</p>
+                                                Test your keyboard matching skills!</p>
                                         </div>
                                     </div>
                                 </a>
