@@ -42,15 +42,15 @@ export default function Quiz(){
             <h2 className="text-2xl font-semibold mb-2 mt-5">
               Question {currentQuestion + 1} of {questions.length}
             </h2>
-            <p className="border-4 border-[#afce8b] font-semibold p-3 w-full rounded-lg shadow-xl flex items-center justify-center md:p-5 mb-3">
+            <p className="border-1 bg-white font-semibold p-3 w-full rounded-lg shadow flex items-center justify-center md:p-5 mb-3">
               {questions[currentQuestion].question}
             </p>
           </div>
-          <div>
+          <div className="text-center">
             {questions[currentQuestion].options.map((option, index) => (
               <button
                 key={index}
-                className={`px-12 py-4 mb-2 bg-gray-300 text-black text-lg rounded-lg hover:bg-gray-200 transition w-full ${
+                className={`px-12 py-4 mb-2 bg-[#e1f3ff] text-black text-lg rounded-lg hover:bg-gray-200 transition w-5/6  ${
                   showAnswer && option.isCorrect
                     ? "bg-green-300 hover:bg-green-300"
                     : showAnswer && !option.isCorrect
