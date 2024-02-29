@@ -1,4 +1,5 @@
 "use client";
+import { ReactNode } from 'react';
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash"; // npm run lodash
 import MatchingNavBar from "./MatchingNavBar";
@@ -7,14 +8,53 @@ import Footer from "../../../comps/footer";
 export default function Home() {
   const gridSize = 4;
   const totalCards = gridSize * gridSize;
-  const initialCards = Array.from(Array(totalCards / 2).keys()).flatMap((num) => [num, num]);
-  const [cards, setCards] = useState<number[]>(shuffle(initialCards));
+  const images = [
+    <img src="/CGimages/mouse.jpg" className="mt-2"/>,
+    <img src="/CGimages/keyboard.png" className="mt-2"/>,
+    <img src="/CGimages/monitor.png" className="mt-2"/>,
+    <img src="/CGimages/mouse.png" className="mt-2"/>,
+    <img src="/CGimages/password.png" className="mt-2"/>,
+    //add more
+    <img src="/CGimages/loading." className="mt-2"/>,
+];
+  const initialCards = Array.from(Array(totalCards / 2).keys()).flatMap((num) => [
+    images[num % images.length],
+  ]);
+  const [cards, setCards] = useState<ReactNode[]>(shuffle(initialCards));
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
   const [clickCount, setClickCount] = useState<number>(0);
   const [isDisabled, setIsDisabled] = useState<boolean>(false);
   const [isGameWon, setIsGameWon] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState(false);
+  const [seconds, setSeconds] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+  let interval: string | number | NodeJS.Timeout | undefined;
+
+  useEffect(() => {
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds(prevSeconds => prevSeconds + 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [isActive]);
+
+  const handleStart = () => {
+    setIsActive(true);
+  };
+
+  const handleStop = () => {
+    setIsActive(false);
+  };
+
+  const handleReset = () => {
+    setSeconds(0);
+    setIsActive(false);
+  };
 
   useEffect(() => {
     if (gameStarted) {
@@ -25,6 +65,7 @@ export default function Home() {
   useEffect(() => {
     if (matchedCards.length === cards.length) {
       setIsGameWon(true);
+      handleStop();
     }
   }, [matchedCards, totalCards]);
 
@@ -76,11 +117,14 @@ export default function Home() {
     setIsDisabled(false);
     setIsGameWon(false);
     setGameStarted(false);
+    handleStop();
+    handleReset();
   };
   
   const startGame = () => {
     setGameStarted(true);
     setCards(shuffle(initialCards)); // Shuffle cards after game is in star
+    handleStart();
   };
   
   return (
@@ -104,7 +148,7 @@ export default function Home() {
             <div>
               <div className="mt-4 flex justify-between">
               <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center mr-4 ">Click Count: {clickCount}</p>
-            <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: 0:00:00</p>
+            <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: {seconds} seconds </p>
               </div>
             <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
               <section className="grid grid-cols-4 justify-items-center gap-4">
@@ -115,9 +159,11 @@ export default function Home() {
                     onClick={() => handleCardClick(index)}
                     disabled={isDisabled || matchedCards.includes(index)}
                   >
-                    {flippedCards.includes(index) || matchedCards.includes(index)
-                      ? card
-                      : "Tech"}
+                    {flippedCards.includes(index) || matchedCards.includes(index) ? (
+                      <img src={card} alt ={`Card ${index}`} />
+                      ) : (
+                        "Tech"
+                      )}
                   </button>
                 ))}
               </section>
