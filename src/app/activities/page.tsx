@@ -118,9 +118,9 @@ export default function ActivitiesPage() {
                                 </a>
                             </div>
                             <div className="float-right w-60 mr-5 ml-5">
-                                <a href="/#">
+                                <a href="/quizActivity">
                                     <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                    <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
+                                    <img className="rounded-t-lg" src="https://i.imgur.com/Q2dIe4V.jpeg" />
                                         <div className="p-5">
                                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
                                             <p className="mb-3 font-normal text-gray-700">
@@ -174,7 +174,7 @@ export default function ActivitiesPage() {
                             <div className="float-right w-60 mr-5 ml-5">
                                 <a href="/#">
                                     <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                    <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
+                                    <img className="rounded-t-lg" src="https://i.imgur.com/Q2dIe4V.jpeg" />
                                         <div className="p-5">
                                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
                                             <p className="mb-3 font-normal text-gray-700">
@@ -228,7 +228,7 @@ export default function ActivitiesPage() {
                             <div className="float-right w-60 mr-5 ml-5">
                                 <a href="/#">
                                     <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300">
-                                    <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
+                                    <img className="rounded-t-lg" src="https://i.imgur.com/Q2dIe4V.jpeg" />
                                         <div className="p-5">
                                             <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
                                             <p className="mb-3 font-normal text-gray-700">
