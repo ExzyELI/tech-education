@@ -20,6 +20,7 @@ import {
   query,
   limit,
 } from "firebase/firestore";
+import Stats from "../../../comps/stats";
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
@@ -299,32 +300,11 @@ const PasswordPage = () => {
             </div>
 
             {/* score box */}
-            <div className="rounded-lg bg-white p-6 shadow-md">
-              <div className="mb-4">
-                <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
-                  Score
-                </div>
-                <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fca5a5] text-2xl font-bold text-white md:w-40">
-                  {score !== null ? score : "N/A"}
-                </div>
-              </div>
-              <div className="mb-4">
-                <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
-                  Time
-                </div>
-                <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fcd34d] text-2xl font-bold text-white md:w-40">
-                  {elapsedTime !== null ? formatTime(elapsedTime) : "00:00:00"}
-                </div>
-              </div>
-              <div>
-                <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
-                  Attempts
-                </div>
-                <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#6cbf73] text-2xl font-bold text-white md:w-40">
-                  {attempts}
-                </div>
-              </div>
-            </div>
+            <Stats
+              attempts={attempts}
+              elapsedTime={elapsedTime}
+              score={score}
+            />
           </div>
         </div>
       </div>
