@@ -140,6 +140,13 @@ export default function Home() {
     setCards(shuffle(initialCards)); // Shuffle cards after game is in start
     handleStart();
   };
+  const calculateScore = () => {
+    const totalMoves = clickCount;
+    const elapsedTime = seconds;
+    const score = 10000 - totalMoves * 100 - elapsedTime * 10;
+
+    return Math.max(score,0);
+  }
   
   return (
     <main>
@@ -163,27 +170,26 @@ export default function Home() {
               <div className="mt-4 flex justify-between">
                 <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Click Count: {clickCount}</p>
                 <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: {formatTime(seconds)}</p>
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Score: </p>
               </div>
               <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
         <section className="grid grid-cols-4 justify-items-center gap-4">
           {cards.map((card, index) => (
             <button
-              key={index}
-              className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
-              onClick={() => handleCardClick(index)}
-              disabled={isDisabled || matchedCards.includes(index)}
-            >
-              {flippedCards.includes(index) || matchedCards.includes(index) ? (
+            key={index}
+            className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
+            onClick={() => handleCardClick(index)}
+            disabled={isDisabled || matchedCards.includes(index)}
+        >
+            {flippedCards.includes(index) || matchedCards.includes(index) ? (
                 <img
-                  src={images[card]}
-                  alt={`Card ${index}`}
-                  style={{ width: "100%", height: "100%" }}
+                    src={images[card]}
+                    alt={`Card ${index}`}
+                    style={{ width: "100%", height: "100%" }}
                 />
-              ) : (
+            ) : (
                 "Tech"
-              )}
-            </button>
+            )}
+        </button>
           ))}
         </section>
       </div>
@@ -198,6 +204,8 @@ export default function Home() {
                     <div className="text-4xl font-bold text-center">
                       Congratulations! You Win!
                     </div>
+
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Score: {calculateScore()}</p>
                   </div>
                 </div>
               )}
