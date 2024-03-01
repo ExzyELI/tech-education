@@ -6,21 +6,22 @@ import MatchingNavBar from "./MatchingNavBar";
 import Footer from "../../../comps/footer";
 
 export default function Home() {
-  const gridSize = 4;
-  const totalCards = gridSize * gridSize;
+  const gridSize = 3;
+  const totalCards = gridSize * (gridSize + 1); //amount of squares
+  
   const images = [
-    <img src="/CGimages/mouse.jpg" className="mt-2"/>,
-    <img src="/CGimages/keyboard.png" className="mt-2"/>,
-    <img src="/CGimages/monitor.png" className="mt-2"/>,
-    <img src="/CGimages/mouse.png" className="mt-2"/>,
-    <img src="/CGimages/password.png" className="mt-2"/>,
-    //add more
-    <img src="/CGimages/loading." className="mt-2"/>,
-];
-  const initialCards = Array.from(Array(totalCards / 2).keys()).flatMap((num) => [
-    images[num % images.length],
+    "/CGimages/mouse.png",
+    "/CGimages/keyboard.png",
+    "/CGimages/monitor.png",
+    "/CGimages/password.png",
+    "/CGimages/microphone.png",
+    "/CGimages/cursor.png",
+    
+  ];
+  const initialCards = Array.from(Array(totalCards).keys()).flatMap((num) => [
+    num % images.length // Store the index of the image in the images array
   ]);
-  const [cards, setCards] = useState<ReactNode[]>(shuffle(initialCards));
+  const [cards, setCards] = useState<number[]>(shuffle(initialCards));
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [matchedCards, setMatchedCards] = useState<number[]>([]);
   const [clickCount, setClickCount] = useState<number>(0);
@@ -34,14 +35,27 @@ export default function Home() {
   useEffect(() => {
     if (isActive) {
       interval = setInterval(() => {
-        setSeconds(prevSeconds => prevSeconds + 1);
+        setSeconds((prevSeconds) => prevSeconds + 1);
       }, 1000);
     } else {
-      clearInterval(interval);
+      clearInterval(interval as NodeJS.Timeout);
     }
 
-    return () => clearInterval(interval);
+    return () => clearInterval(interval as NodeJS.Timeout);
   }, [isActive]);
+
+  const formatTime = (time: number) => {
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = Math.floor(time % 60);
+
+    const formattedHours = String(hours).padStart(2, "0");
+    const formattedMinutes = String(minutes).padStart(2, "0");
+    const formattedSeconds = String(seconds).padStart(2, "0");
+
+    return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
+  };
+  
 
   const handleStart = () => {
     setIsActive(true);
@@ -69,7 +83,7 @@ export default function Home() {
     }
   }, [matchedCards, totalCards]);
 
-  const handleCardClick = (index :number) => { // Ignore clicks on matched cards
+  const handleCardClick = (index: number) => { // Ignore clicks on matched cards
     if (
       matchedCards.includes(index) ||
       flippedCards.includes(index) ||
@@ -109,7 +123,7 @@ export default function Home() {
     }
   };
 
-  const resetGame = (): void => { // Reset button fuctions
+  const resetGame = (): void => { // Reset button functions
     setCards(shuffle(initialCards));
     setFlippedCards([]);
     setMatchedCards([]);
@@ -123,7 +137,7 @@ export default function Home() {
   
   const startGame = () => {
     setGameStarted(true);
-    setCards(shuffle(initialCards)); // Shuffle cards after game is in star
+    setCards(shuffle(initialCards)); // Shuffle cards after game is in start
     handleStart();
   };
   
@@ -141,51 +155,50 @@ export default function Home() {
             </p>
             <div className="mx-[290px]"> 
             {!gameStarted && (
-        <button className = "rounded-lg bg-[#ffe08d] px-6 py-4 mt-4 text-xl"onClick={startGame}>Start Game</button>
-      )}
+              <button className="rounded-lg bg-[#ffe08d] px-6 py-4 mt-4 text-xl" onClick={startGame}>Start Game</button>
+            )}
           </div>
           {gameStarted && (
             <div>
               <div className="mt-4 flex justify-between">
-              <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center mr-4 ">Click Count: {clickCount}</p>
-            <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: {seconds} seconds </p>
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center mr-4 ">Click Count: {clickCount}</p>
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: {formatTime(seconds)}</p>
               </div>
-            <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
-              <section className="grid grid-cols-4 justify-items-center gap-4">
-                {cards.map((card, index) => (
-                  <button
-                    key={index}
-                    className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
-                    onClick={() => handleCardClick(index)}
-                    disabled={isDisabled || matchedCards.includes(index)}
-                  >
-                    {flippedCards.includes(index) || matchedCards.includes(index) ? (
-                      <img src={card} alt ={`Card ${index}`} />
+              <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
+                <section className="grid grid-cols-4 justify-items-center gap-4">
+                  {cards.map((card, index) => (
+                    <button
+                      key={index}
+                      className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
+                      onClick={() => handleCardClick(index)}
+                      disabled={isDisabled || matchedCards.includes(index)}
+                    >
+                      {flippedCards.includes(index) || matchedCards.includes(index) ? (
+                        <img src={images[card]} alt={`Card ${index}`} />
                       ) : (
                         "Tech"
                       )}
-                  </button>
-                ))}
-              </section>
-            </div>
-            
-            {isGameWon && (
-              <div className="absolute inset-0 flex items-center justify-center ">
-              <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
-                <div className="text-4xl font-bold text-center">
-                Congratulations! You Win!
+                    </button>
+                  ))}
+                </section>
               </div>
+              {isGameWon && (
+                <div className="absolute inset-0 flex items-center justify-center ">
+                  <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
+                    <div className="text-4xl font-bold text-center">
+                      Congratulations! You Win!
+                    </div>
+                  </div>
+                </div>
+              )}
+              <div className="mt-4 flex justify-center">
+                <button
+                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
+                  onClick={resetGame}
+                >
+                  Reset Game
+                </button>
               </div>
-              </div>
-            )}
-            <div className="mt-4 flex justify-center">
-              <button
-                className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
-                onClick={resetGame}
-              >
-                Reset Game
-              </button>
-            </div>
             </div>
           )}
           </div>
