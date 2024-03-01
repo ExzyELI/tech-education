@@ -161,29 +161,39 @@ export default function Home() {
           {gameStarted && (
             <div>
               <div className="mt-4 flex justify-between">
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center mr-4 ">Click Count: {clickCount}</p>
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Click Count: {clickCount}</p>
                 <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: {formatTime(seconds)}</p>
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Score: </p>
               </div>
               <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
-                <section className="grid grid-cols-4 justify-items-center gap-4">
-                  {cards.map((card, index) => (
-                    <button
-                      key={index}
-                      className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
-                      onClick={() => handleCardClick(index)}
-                      disabled={isDisabled || matchedCards.includes(index)}
-                    >
-                      {flippedCards.includes(index) || matchedCards.includes(index) ? (
-                        <img src={images[card]} alt={`Card ${index}`} />
-                      ) : (
-                        "Tech"
-                      )}
-                    </button>
-                  ))}
-                </section>
+        <section className="grid grid-cols-4 justify-items-center gap-4">
+          {cards.map((card, index) => (
+            <button
+              key={index}
+              className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
+              onClick={() => handleCardClick(index)}
+              disabled={isDisabled || matchedCards.includes(index)}
+            >
+              {flippedCards.includes(index) || matchedCards.includes(index) ? (
+                <img
+                  src={images[card]}
+                  alt={`Card ${index}`}
+                  style={{ width: "100%", height: "100%" }}
+                />
+              ) : (
+                "Tech"
+              )}
+            </button>
+          ))}
+        </section>
+      </div>
+              <div className="mt-4 flex justify-center">
+                <button
+                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
+                  onClick={resetGame}>Reset Game </button>
               </div>
               {isGameWon && (
-                <div className="absolute inset-0 flex items-center justify-center ">
+                <div className="absolute inset-0 flex items-center justify-center">
                   <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
                     <div className="text-4xl font-bold text-center">
                       Congratulations! You Win!
@@ -191,14 +201,6 @@ export default function Home() {
                   </div>
                 </div>
               )}
-              <div className="mt-4 flex justify-center">
-                <button
-                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
-                  onClick={resetGame}
-                >
-                  Reset Game
-                </button>
-              </div>
             </div>
           )}
           </div>
