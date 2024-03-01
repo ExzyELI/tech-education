@@ -154,7 +154,7 @@ export default function Home() {
         <MatchingNavBar />
         <div className="flex min-h-screen bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
-            <h1 className="mt-2 text-center text-4xl font-bold">
+            <h1 className="mt-2 text-center text-7xl font-bold">
               Match the Tech!
             </h1>
             <p className="mt-2 text-center text-xl">
@@ -162,14 +162,14 @@ export default function Home() {
             </p>
             <div className="mx-[290px]"> 
             {!gameStarted && (
-              <button className="rounded-lg bg-[#ffe08d] px-6 py-4 mt-4 text-xl" onClick={startGame}>Start Game</button>
+              <button className="rounded-lg bg-[#ffe08d] px-6 py-4 mt-4 text-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#ffd974]" onClick={startGame}>Start Game</button>
             )}
           </div>
           {gameStarted && (
             <div>
-              <div className="mt-4 flex justify-between">
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Click Count: {clickCount}</p>
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Timer: {formatTime(seconds)}</p>
+              <div className="mt-4 flex justify-evenly">
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-4 border-4 cursor-none">Click Count: {clickCount}</p>
+                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-4 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
               </div>
               <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
         <section className="grid grid-cols-4 justify-items-center gap-4">
@@ -204,8 +204,7 @@ export default function Home() {
                     <div className="text-4xl font-bold text-center">
                       Congratulations! You Win!
                     </div>
-
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-8 text-center">Score: {calculateScore()}</p>
+                    <p className="bg-green-500 bg-opacity-60 text-white text-2xl rounded-lg p-8 text-center">Score: {calculateScore()}</p>
                   </div>
                 </div>
               )}
