@@ -1,15 +1,25 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import { auth } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
-import { useState, useEffect } from "react";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faHome,
+  faMouse,
+  faBookOpen,
+  faClipboardList,
+  faChalkboard,
+  faUser,
+  faBars,
+} from "@fortawesome/free-solid-svg-icons";
 import { User } from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-
-export default function Nav() {
+const Navbar: React.FC = () => {
+  const [showDropdown, setShowDropdown] = useState(false);
   const [user, setUser] = useState<User | null>(null); // logged-in user
-  const [role, setrole] = useState(""); // user role
+  const [role, setRole] = useState<string | null>(null); // user role
 
   const router = useRouter();
   const handleSignOut = async () => {
@@ -21,7 +31,7 @@ export default function Nav() {
       console.error("Error signing out:", error);
     }
   };
-  
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       // updating user state when auth state changes
@@ -41,162 +51,162 @@ export default function Nav() {
           const userData = userDocSnap.data();
 
           // setting the state with user's first name, last name, and email
-          setrole(userData.role);
+          setRole(userData.role);
         }
       }
     });
 
     return () => unsubscribe();
-    }, []);
-  
-if (role == "Student")
+  }, []);
+
+  // objects hold nav items for different user roles
+  const navItems: {
+    [key: string]: { href: string; label: string; icon: any }[];
+  } = {
+    // nav items for each role with icons
+    Student: [
+      { href: "/HomePage", label: "Home", icon: faHome },
+      { href: "/activities", label: "Activities", icon: faMouse },
+      { href: "/grades", label: "Grades", icon: faBookOpen },
+      { href: "/profile", label: "Profile", icon: faUser },
+    ],
+    Teacher: [
+      { href: "/HomePage", label: "Home", icon: faHome },
+      { href: "/activities", label: "Activities", icon: faMouse },
+      { href: "/grades", label: "Grades", icon: faBookOpen },
+      { href: "#", label: "Reports", icon: faClipboardList },
+      { href: "/Classroom", label: "Classroom", icon: faChalkboard },
+      { href: "/profile", label: "Profile", icon: faUser },
+    ],
+    Parent: [
+      { href: "/HomePage", label: "Home", icon: faHome },
+      { href: "/activities", label: "Activities", icon: faMouse },
+      { href: "/grades", label: "Grades", icon: faBookOpen },
+      { href: "#", label: "Reports", icon: faClipboardList },
+      { href: "/Classroom", label: "Classroom", icon: faChalkboard },
+      { href: "/profile", label: "Profile", icon: faUser },
+    ],
+  };
+
   return (
-    <nav className="sticky top-0 w-full border-b border-gray-200 bg-[#afce8b]">
-      <header className="font-serif leading-normal tracking-normal">
-        <div className="mx-auto flex flex-wrap items-center justify-between p-4">
-          <a href="/HomePage" className="cursor-pointer text-2xl font-semibold">
-            Tech Education
-          </a>
-          {/* tabs */}
-          <div className="flex items-center justify-center space-x-4 md:space-x-0 rtl:space-x-reverse">
-            <nav className="text-md lg:text-lg mr-10">
-              <a
-                href="/activities"
-                className="cursor-pointer px-4 font-semibold hover:text-[#ffe08d]"
+    <nav className="flex h-16 items-center justify-between bg-[#3f72af] px-8 font-sans text-white">
+      <div>
+        <a href="/HomePage" className="rounded-md text-xl font-bold">
+          Tech Education
+        </a>
+      </div>
+
+      {/* hamburger menu for small screens */}
+      <div className="relative lg:hidden">
+        <button
+          onClick={() => setShowDropdown(!showDropdown)}
+          className="ml-2 inline-flex rounded-lg p-2 text-lg hover:bg-[#ed6663] focus:outline-none focus:ring-2 focus:ring-[#ed6663]"
+        >
+          <FontAwesomeIcon icon={faBars} className="text-lg" />
+        </button>
+        {showDropdown && (
+          <div className="absolute right-0 mt-2 rounded bg-white shadow-lg">
+            <ul className="flex flex-col space-y-1 p-2">
+              {role && // check if user role is defined
+                navItems[role].map(
+                  (
+                    item,
+                    index, // mapping through nav items related to user's role
+                  ) => (
+                    <li key={index}>
+                      <a
+                        href={item.href}
+                        className={`flex items-center rounded-md px-4 py-2 font-bold ${
+                          window.location.pathname === item.href
+                            ? "text-[#f4a261]"
+                            : "text-[#3f72af] hover:text-[#f4a261]"
+                        }`}
+                        aria-current={
+                          window.location.pathname === item.href // determines if current item is active
+                            ? "page"
+                            : undefined
+                        }
+                      >
+                        {/* render icon */}
+                        <FontAwesomeIcon
+                          icon={item.icon}
+                          className="mr-2 text-lg"
+                        />
+                        {item.label}
+                      </a>
+                    </li>
+                  ),
+                )}
+
+              {/* sign out button */}
+              <button
+                onClick={handleSignOut}
+                className="flex items-center rounded-md bg-[#ed6663] px-4 py-2 font-bold text-[#fff] hover:bg-[#f4a261]"
               >
-                Activities
-              </a>
-              <a
-                href="/grades"
-                className="cursor-pointer px-4 font-semibold hover:text-[#ffe08d]"
-              >
-                Grades
-              </a>
-              <a
-                href="/profile"
-                className="cursor-pointer px-4 font-semibold hover:text-[#ffe08d]"
-              >
-                Profile
-              </a>
-            </nav>
+                <FontAwesomeIcon icon={faUser} className="mr-2 text-lg" />
+                Sign out
+              </button>
+            </ul>
           </div>
-          <button
-            type="button"
-            className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564]"
-            onClick={handleSignOut}
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
+        )}
+      </div>
+
+      {/* navbar for larger screens */}
+      {/* render nav items based on user's role */}
+      <ul className="hidden space-x-2 text-base lg:flex">
+        {role && // check if user role is defined
+          navItems[role].map(
+            (
+              item,
+              index, // mapping through nav items related to user's role
+            ) => (
+              <NavItem
+                key={index}
+                href={item.href}
+                label={item.label}
+                icon={item.icon}
+              />
+            ),
+          )}
+      </ul>
+
+      {/* sign out button */}
+      <button
+        onClick={handleSignOut}
+        className="hidden rounded-full bg-[#ed6663] px-4 py-2 text-base font-semibold transition duration-300 hover:bg-[#f4a261] lg:flex"
+      >
+        Sign out
+      </button>
     </nav>
   );
-else if (role == "Teacher")
-  return (
-    <nav className="sticky top-0 w-full border-b border-gray-200 bg-[#afce8b]">
-      <header className="font-serif leading-normal tracking-normal">
-        <div className="mx-auto flex flex-wrap items-center justify-between p-4">
-          <a href="/HomePage" className="cursor-pointer text-2xl font-semibold">
-            Tech Education
-          </a>
-          {/* tabs */}
-          <div className="flex items-center justify-center space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <nav className="text-md lg:text-lg">
-              <a
-                href="/activities"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Activities
-              </a>
-              <a
-                href="/grades"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Grades
-              </a>
-              <a
-                href="#"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Reports
-              </a>
-              <a
-                href="/Classroom"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Classroom
-              </a>
-              <a
-                href="/profile"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Profile
-              </a>
-            </nav>
-          </div>
-          <button
-            type="button"
-            className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564]"
-            onClick={handleSignOut}
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-    </nav>
-  );
-else if (role == "Parent")
-  return (
-    <nav className="sticky top-0 w-full border-b border-gray-200 bg-[#afce8b]">
-      <header className="font-serif leading-normal tracking-normal">
-        <div className="mx-auto flex flex-wrap items-center justify-between p-4">
-          <a href="/HomePage" className="cursor-pointer text-2xl font-semibold">
-            Tech Education
-          </a>
-          {/* tabs */}
-          <div className="flex items-center justify-center space-x-3 md:space-x-0 rtl:space-x-reverse">
-            <nav className="text-md lg:text-lg">
-              <a
-                href="/activities"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Activities
-              </a>
-              <a
-                href="/grades"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Grades
-              </a>
-              <a
-                href="#"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Reports
-              </a>
-              <a
-                href="/Classroom"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Classroom
-              </a>
-              <a
-                href="/profile"
-                className="cursor-pointer px-3 font-semibold hover:text-[#ffe08d]"
-              >
-                Profile
-              </a>
-            </nav>
-          </div>
-          <button
-            type="button"
-            className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564]"
-            onClick={handleSignOut}
-          >
-            Sign out
-          </button>
-        </div>
-      </header>
-    </nav>
-  );
+};
+
+// prop types for nav items
+interface NavItemProps {
+  href: string; // URL for nav item
+  label: string; // label for nav item
+  icon: any; // icon for nav item
 }
+
+// component to render nav items in the navbar
+const NavItem: React.FC<NavItemProps> = ({ href, label, icon }) => {
+  // checking if current page matches the nav item's href
+  const isActive = window.location.pathname === href;
+
+  return (
+    <li>
+      <a
+        href={href}
+        className={`flex w-24 flex-col items-center rounded-md text-base font-bold ${
+          isActive ? "text-[#f4a261]" : "hover:text-[#f4a261]"
+        }`}
+        aria-current={isActive ? "page" : undefined}
+      >
+        <FontAwesomeIcon icon={icon} className="text-lg" />
+        {label}
+      </a>
+    </li>
+  );
+};
+
+export default Navbar;
