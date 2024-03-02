@@ -162,21 +162,21 @@ export default function Home() {
             </p>
             <div className="mx-[290px]"> 
             {!gameStarted && (
-              <button className="rounded-lg bg-[#ffe08d] px-6 py-4 mt-4 text-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#ffd974]" onClick={startGame}>Start Game</button>
+              <button className="rounded-lg bg-[#ffe08d] shadow-md px-6 py-4 mt-4 text-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#ff914d]" onClick={startGame}>Start Game</button>
             )}
           </div>
           {gameStarted && (
             <div>
               <div className="mt-4 flex justify-evenly">
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-4 border-4 cursor-none">Click Count: {clickCount}</p>
-                <p className="bg-green-500 bg-opacity-60 text-white rounded-lg p-4 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
+                <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 cursor-none">Click Count: {clickCount}</p>
+                <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
               </div>
-              <div className="container mt-8 border-4 border-dashed border-sky-300 bg-sky-200 px-4 py-4">
+              <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-4 py-4">
         <section className="grid grid-cols-4 justify-items-center gap-4">
           {cards.map((card, index) => (
             <button
             key={index}
-            className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-violet-500 text-white hover:bg-violet-600 focus:outline-none focus:ring focus:ring-black active:bg-violet-700 ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
+            className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-[#ff5a5f] text-white hover:bg-[#ff4146] focus:outline-none focus:ring focus:ring-black active:bg-[#ff4146] shadow-lg ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
             onClick={() => handleCardClick(index)}
             disabled={isDisabled || matchedCards.includes(index)}
         >
@@ -184,10 +184,12 @@ export default function Home() {
                 <img
                     src={images[card]}
                     alt={`Card ${index}`}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: "100%", height: "100%"}}
                 />
             ) : (
-                "Tech"
+                <img src="https://cdn.discordapp.com/attachments/1196945767785578598/1205159897663279114/Screen_Shot_2024-02-08_at_9.34.52_AM.png?ex=65f30b1e&is=65e0961e&hm=0f846bd73ee4c0bb03c39dc0488456a41e7ab937acd0f0824327bd152cd18dc7&"
+                
+                style={{ width: "50%", height: "50%"}} />
             )}
         </button>
           ))}
@@ -195,7 +197,7 @@ export default function Home() {
       </div>
               <div className="mt-4 flex justify-center">
                 <button
-                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600"
+                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600 shadow-md"
                   onClick={resetGame}>Reset Game </button>
               </div>
               {isGameWon && (
@@ -204,7 +206,7 @@ export default function Home() {
                     <div className="text-4xl font-bold text-center">
                       Congratulations! You Win!
                     </div>
-                    <p className="bg-green-500 bg-opacity-60 text-white text-2xl rounded-lg p-8 text-center">Score: {calculateScore()}</p>
+                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-8 text-center">Score: {calculateScore()}</p>
                   </div>
                 </div>
               )}
