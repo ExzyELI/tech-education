@@ -58,6 +58,9 @@ export default function ActivitiesPage() {
 
   return (
     <main className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
+        <title>
+            Activities
+        </title>
       {/*navbar begins */}
       <Nav />
       {/* navbar ends */}
