@@ -43,8 +43,11 @@ export default function Quiz(){
               Question {currentQuestion + 1} of {questions.length}
             </h2>
             <p className="border-1 bg-white font-semibold p-3 w-full rounded-lg shadow flex items-center justify-center md:p-5 mb-3">
-              {questions[currentQuestion].question}
+                {questions[currentQuestion].question}
             </p>
+            <div className="flex justify-center mt-8 mb-8">
+                {questions[currentQuestion].image && (<img src={questions[currentQuestion].image}/>)}
+            </div>
           </div>
           <div className="text-center">
             {questions[currentQuestion].options.map((option, index) => (
