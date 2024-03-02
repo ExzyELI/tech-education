@@ -16,7 +16,7 @@ import {
 import { User } from "firebase/auth";
 import { getFirestore, doc, getDoc } from "firebase/firestore";
 
-const Navbar: React.FC = () => {
+const Nav: React.FC = () => {
   const [showDropdown, setShowDropdown] = useState(false);
   const [user, setUser] = useState<User | null>(null); // logged-in user
   const [role, setRole] = useState<string | null>(null); // user role
@@ -209,4 +209,4 @@ const NavItem: React.FC<NavItemProps> = ({ href, label, icon }) => {
   );
 };
 
-export default Navbar;
+export default Nav;
