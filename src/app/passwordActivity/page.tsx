@@ -37,8 +37,6 @@ const PasswordPage = () => {
   const [elapsedTime, setElapsedTime] = useState<number>(0); // store elapsed time
   const timerRef = useRef<number | null>(null); // timer reference
   const [showSubmit, setShowSubmit] = useState(false); // submit button visibility
-  const formRef = useRef<HTMLFormElement>(null); // referencing form
-  const hiddenSubmitRef = useRef<HTMLButtonElement>(null); // hidden submit button reference
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -94,12 +92,6 @@ const PasswordPage = () => {
     }
   };
 
-  // referencing handleSubmit for the submit button
-  const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    await handleSubmit(e); // calling handleSubmit with event parameter
-  };
-
   // function to handle form submission
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -132,7 +124,7 @@ const PasswordPage = () => {
         await setDoc(userDocRef, { attempts: increment(1) }, { merge: true });
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
-          activityName: "Password (2)",
+          activityName: "Password Activity",
           score: calculatedScore,
           attempts: currentAttempts + 1,
           timestamp: new Date(),
@@ -183,13 +175,6 @@ const PasswordPage = () => {
   const strength = calculateStrength(); // calculate password strength
   const progressWidth = (strength / 4) * 100; // calculate progress width based on strength
 
-  // function to handle the submit function outside of the form
-  const handleSubmitButtonClick = () => {
-    if (hiddenSubmitRef.current) {
-      hiddenSubmitRef.current.click(); // trigger click event
-    }
-  };
-
   // calculate the percentage score
   const maxPossibleScore = 4;
   const percentageScore = score !== null ? (score / maxPossibleScore) * 100 : 0;
@@ -218,9 +203,7 @@ const PasswordPage = () => {
           {/* container for password game */}
           <div className="w-full">
             <form
-              ref={formRef}
-              id="passwordForm"
-              onSubmit={handleFormSubmit}
+              onSubmit={handleSubmit}
               className="rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
               <div className="flex flex-col">
@@ -298,24 +281,26 @@ const PasswordPage = () => {
                 </div>
               </div>
               {/* start/submit button */}
-              <button
-                type="button"
-                onClick={handleStart}
-                className={`w-full rounded-md bg-[#ff5a5f] px-4 py-2 font-bold text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
-              >
-                <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
-                Start
-              </button>
-              <button
-                type="submit"
-                onClick={handleSubmitButtonClick}
-                className={`w-full rounded-md bg-[#5c93ff] px-4 py-2 font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
-              >
-                <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
-                Submit
-              </button>
+              <div className="flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={handleStart}
+                  className={`w-full rounded-md bg-[#ff5a5f] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
+                >
+                  <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
+                  Start
+                </button>
+                <button
+                  type="submit"
+                  className={`w-full rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
+                >
+                  <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
+                  Submit
+                </button>
+              </div>
             </form>
           </div>
+
           {/* Stats Box Component */}
           <div className="mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
             <Stats
