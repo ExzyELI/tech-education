@@ -65,7 +65,7 @@ export default function ActivitiesPage() {
       <Nav />
       {/* navbar ends */}
 
-      <section className="pb-[320px] container mx-auto w-full">
+      <section className="container mx-auto w-full">
         <h1 className="flex flex-col items-center justify-center pt-10 mt-5 text-5xl font-bold tracking-tight">
           Activities
         </h1>
