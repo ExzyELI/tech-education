@@ -1,9 +1,17 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
 interface StatsProps {
   score: number | null;
   elapsedTime: number;
   attempts: number;
+  renderStars: () => number;
 }
-export default function Stats({ score, elapsedTime, attempts }: StatsProps) {
+export default function Stats({
+  score,
+  elapsedTime,
+  attempts,
+  renderStars,
+}: StatsProps) {
   // function to format time
   const formatTime = (seconds: number): string => {
     // checking if seconds is NaN
@@ -26,31 +34,58 @@ export default function Stats({ score, elapsedTime, attempts }: StatsProps) {
     return `${formattedHours}:${formattedMinutes}:${formattedSeconds}`;
   };
 
+  // star icons
+  const renderStarIcons = () => {
+    const stars = renderStars();
+    const starIcons = [];
+    for (let i = 0; i < 3; i++) {
+      if (i < stars) {
+        starIcons.push(
+          <FontAwesomeIcon key={i} icon={faStar} className="text-yellow-400" />,
+        );
+      } else {
+        starIcons.push(
+          <FontAwesomeIcon key={i} icon={faStar} className="text-gray-300" />,
+        );
+      }
+    }
+    return starIcons;
+  };
+
   return (
     /* score box */
-    <div className="rounded-lg bg-white p-6 shadow-md">
-      <div className="mb-4">
-        <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
-          Score
+    <div className="flex justify-end">
+      <div className="rounded-lg bg-white p-6 shadow-md">
+        <div className="mb-4 flex flex-row justify-center text-2xl font-bold text-[#ff6865]">
+          Game Stats
         </div>
-        <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fca5a5] text-2xl font-bold text-white md:w-40">
-          {score !== null ? score : "N/A"}
+        {/* Render stars */}
+        <div className="mb-6 ml-1 flex justify-center text-3xl">
+          {renderStarIcons()}
         </div>
-      </div>
-      <div className="mb-4">
-        <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
-          Time
+        <div className="mb-6">
+          <div className="flex flex-row justify-center text-xl font-bold text-[#5c93ff]">
+            Score
+          </div>
+          <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fca5a5] text-2xl font-bold text-white md:w-40">
+            {score !== null ? `${score} / 4` : "N/A"}
+          </div>
         </div>
-        <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fcd34d] text-2xl font-bold text-white md:w-40">
-          {elapsedTime !== null ? formatTime(elapsedTime) : "00:00:00"}
+        <div className="mb-6">
+          <div className="flex flex-row justify-center text-xl font-bold text-[#5c93ff]">
+            Time
+          </div>
+          <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#fcd34d] text-2xl font-bold text-white md:w-40">
+            {elapsedTime !== null ? formatTime(elapsedTime) : "00:00:00"}
+          </div>
         </div>
-      </div>
-      <div>
-        <div className="flex flex-row justify-center text-lg font-semibold text-[#5c93ff]">
-          Attempts
-        </div>
-        <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#6cbf73] text-2xl font-bold text-white md:w-40">
-          {attempts}
+        <div>
+          <div className="flex flex-row justify-center text-xl font-bold text-[#5c93ff]">
+            Attempts
+          </div>
+          <div className="flex h-12 w-full items-center justify-center rounded-lg bg-[#6cbf73] text-2xl font-bold text-white md:w-40">
+            {attempts}
+          </div>
         </div>
       </div>
     </div>

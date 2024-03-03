@@ -1,8 +1,12 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
-import { faPlay, faCheck } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlay,
+  faCheck,
+  faEye,
+  faEyeSlash,
+} from "@fortawesome/free-solid-svg-icons";
 import { auth } from "../firebase/init_app";
 import { User } from "firebase/auth";
 import Nav from "../../../comps/nav";
@@ -128,7 +132,7 @@ const PasswordPage = () => {
         await setDoc(userDocRef, { attempts: increment(1) }, { merge: true });
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
-          activityName: "Password Activity",
+          activityName: "Password (2)",
           score: calculatedScore,
           attempts: currentAttempts + 1,
           timestamp: new Date(),
@@ -186,19 +190,38 @@ const PasswordPage = () => {
     }
   };
 
+  // calculate the percentage score
+  const maxPossibleScore = 4;
+  const percentageScore = score !== null ? (score / maxPossibleScore) * 100 : 0;
+
+  const calculateStars = (percentageScore: number): number => {
+    if (percentageScore >= 80) {
+      return 3; // 3 stars for scores >= 80%
+    } else if (percentageScore >= 60) {
+      return 2; // 2 stars for scores >= 60% and < 80%
+    } else if (percentageScore >= 40) {
+      return 1; // 1 star for scores >= 40% and < 60%
+    } else {
+      return 0; // 0 stars for scores < 40%
+    }
+  };
+
+  // number of stars based on the percentage score
+  const stars = calculateStars(percentageScore);
+
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-serif text-[#2d2d2d]">
+    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-[#2d2d2d]">
       <title>Tech Education</title>
       <Nav />
-      <div className="mx-auto mt-10 max-w-4xl flex-grow px-4 py-8 md:flex md:justify-center md:px-8">
+      <div className="mx-auto mt-10 w-full max-w-3xl flex-grow px-4 py-8 md:flex md:justify-center md:px-8">
         <div className="w-full md:flex md:items-start md:justify-center">
           {/* container for password game */}
-          <div className="w-full md:mr-4 md:w-2/3">
+          <div className="w-full">
             <form
               ref={formRef}
               id="passwordForm"
               onSubmit={handleFormSubmit}
-              className="rounded-lg bg-white p-6 shadow-md"
+              className="rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
               <div className="flex flex-col">
                 <label
@@ -217,6 +240,11 @@ const PasswordPage = () => {
                     className="mb-4 w-full rounded-md border border-gray-300 p-2 focus:border-[#5c93ff] focus:outline-none"
                     required
                     disabled={!isGameStarted}
+                    placeholder={
+                      isGameStarted
+                        ? ""
+                        : "Click the 'Start' button to begin playing"
+                    }
                   />
                   <button
                     type="button"
@@ -269,41 +297,32 @@ const PasswordPage = () => {
                   />
                 </div>
               </div>
-              <button
-                ref={hiddenSubmitRef}
-                type="submit"
-                style={{ display: "none" }} // hide button
-              />
-            </form>
-          </div>
-
-          {/* right column: start/submit button and score box */}
-          <div className="mt-4 w-full md:mt-0 md:w-1/3 lg:mt-0">
-            {/* start/submit button */}
-            <div className="mb-4 rounded-lg bg-white p-6 shadow-md">
+              {/* start/submit button */}
               <button
                 type="button"
                 onClick={handleStart}
-                className={`w-full rounded-md bg-[#ff5a5f] px-4 py-2 text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
+                className={`w-full rounded-md bg-[#ff5a5f] px-4 py-2 font-bold text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
               >
                 <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
                 Start
               </button>
               <button
-                type="button"
+                type="submit"
                 onClick={handleSubmitButtonClick}
-                className={`w-full rounded-md bg-[#5c93ff] px-4 py-2 text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
+                className={`w-full rounded-md bg-[#5c93ff] px-4 py-2 font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
               >
                 <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                 Submit
               </button>
-            </div>
-
-            {/* score box */}
+            </form>
+          </div>
+          {/* Stats Box Component */}
+          <div className="mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
             <Stats
               attempts={attempts}
               elapsedTime={elapsedTime}
               score={score}
+              renderStars={() => stars}
             />
           </div>
         </div>
