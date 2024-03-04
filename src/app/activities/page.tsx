@@ -15,8 +15,6 @@ export default function ActivitiesPage() {
   const [firstName, setFirstName] = useState(""); // first name
   const [lastName, setLastName] = useState(""); // last name
   const [grade, setGrade] = useState("")
-  //const [grade1, setFirst] = useState("")
-  //const [grade2, setSecond] = useState("")
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
