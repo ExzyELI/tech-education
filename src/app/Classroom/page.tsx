@@ -21,7 +21,7 @@ export default function Home() {
   };
 
   // Function to remove a student
-  const handleRemoveStudent = (indexToRemove) => {
+  const handleRemoveStudent = (indexToRemove: number) => {
     const updatedStudents = students.filter((student, index) => index !== indexToRemove);
     setStudents(updatedStudents);
   };
