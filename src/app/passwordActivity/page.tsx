@@ -25,6 +25,9 @@ import {
   limit,
 } from "firebase/firestore";
 import Stats from "../../../comps/stats";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
@@ -39,6 +42,8 @@ const PasswordPage = () => {
   const [showSubmit, setShowSubmit] = useState(false); // submit button visibility
 
   useEffect(() => {
+    handleStart();
+
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when auth state changes
       if (user) {
@@ -203,7 +208,8 @@ const PasswordPage = () => {
           {/* container for password game */}
           <div className="w-full">
             <form
-              onSubmit={handleSubmit}
+              onSubmit={
+              }
               className="rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
               <div className="flex flex-col">
@@ -297,6 +303,10 @@ const PasswordPage = () => {
                   <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                   Submit
                 </button>
+                <ToastContainer 
+                  className="Toast-position mt-20"
+                  position = "top-center"
+              />
               </div>
             </form>
           </div>

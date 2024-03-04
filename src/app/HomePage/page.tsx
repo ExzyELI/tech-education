@@ -1,7 +1,6 @@
 "use client";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
 import Footer from "../../../comps/footer";
 import Nav from "../../../comps/nav";
 import React, { useState, useEffect } from "react";
