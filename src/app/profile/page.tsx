@@ -2,12 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { getFirestore, doc, getDoc, updateDoc } from "firebase/firestore";
 import { auth } from "../firebase/init_app";
-import { User, updatePassword } from "firebase/auth";
+import { User } from "firebase/auth";
 import Footer from "../../../comps/footer";
 import Nav from "../../../comps/nav";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import ConfirmationModal from "./confirmation-modal";
+import ChangePasswordModal from "./change-password-modal";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -17,17 +16,11 @@ const ProfilePage = () => {
   const [role, setRole] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [grade, setGrade] = useState("");
-  const [passwordModalOpen, setPasswordModalOpen] = useState(false);
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [passwordError, setPasswordError] = useState("");
-  const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
+  const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
   const [originalData, setOriginalData] = useState({
     // original data for resetting fields
     firstName: "",
@@ -76,37 +69,47 @@ const ProfilePage = () => {
     return () => unsubscribe();
   }, []);
 
+  // function to save changes
   const saveChanges = async () => {
     try {
       if (!user) {
-        // Handle case where user is null
+        // handles null user
         return;
       }
 
-      // Open the confirmation modal
+      // Check if any field has been modified
+      if (
+        firstName === originalData.firstName &&
+        lastName === originalData.lastName &&
+        email === originalData.email &&
+        role === originalData.role &&
+        birthdate === originalData.birthdate &&
+        grade === originalData.grade
+      ) {
+        // No changes made, return
+        return;
+      }
+
       setConfirmModalOpen(true);
     } catch (error) {
-      // Update error state if there was an error
-      setSuccess(false); // Set success to false
-      setError("An error occurred while saving changes."); // Set error message
-      // Close the confirmation modal in case of error
+      // updates if there was an error
+      setSuccess(false);
+      setError("An error occurred while saving changes."); // set error message
       setConfirmModalOpen(false);
     }
   };
 
+  // function to confirm changes
   const confirmSave = async () => {
-    setConfirmModalOpen(false);
-
+    setConfirmModalOpen(true);
     if (!user) return;
-
-    // Assume the update operation is successful
     setSuccess(true);
 
     try {
       const firestore = getFirestore();
       const userDocRef = doc(firestore, "users", user.uid);
 
-      // Perform the update operation
+      // updates the document
       await updateDoc(userDocRef, {
         firstName: firstName,
         lastName: lastName,
@@ -116,16 +119,16 @@ const ProfilePage = () => {
         grade: grade,
       });
 
-      // If the update operation is successful, set success to true
+      // if success, set to true
       setSuccess(true);
     } catch (error) {
-      // If an error occurs during the update operation, set success to false and display the error message
+      // if errors, set to false and display error message
       setSuccess(false);
       setError("An error occurred while saving changes.");
       console.error("Error updating document:", error);
     }
 
-    // Toggle the edit mode
+    // toggle edit mode
     setEditMode(false);
 
     // update with new values
@@ -139,10 +142,11 @@ const ProfilePage = () => {
       password: originalData.password,
     });
 
-    // Open the confirmation modal
+    // opens confirmation modal
     setConfirmModalOpen(true);
   };
 
+  // function to cancel edits
   const cancelEdit = () => {
     // cancel profile edits
     setEditMode(false);
@@ -157,28 +161,6 @@ const ProfilePage = () => {
     setError("");
   };
 
-  // function to handle password change
-  const handleChangePassword = async () => {
-    try {
-      if (!user) return;
-
-      if (newPassword !== confirmNewPassword) {
-        setPasswordError("Passwords do not match. Please re-enter.");
-        return;
-      }
-
-      await updatePassword(user, newPassword);
-      // toggle the visibility
-      setPasswordModalOpen(false);
-      setNewPassword("");
-      setConfirmNewPassword("");
-      setPasswordError("");
-    } catch (error: any) {
-      console.error("Error changing password:", error.message);
-      setPasswordError("Error changing password. Please try again.");
-    }
-  };
-
   const handleRoleChange = (newRole: string) => {
     // if the new role is Parent or Teacher, set grade to empty
     if (newRole === "Parent" || newRole === "Teacher") {
@@ -188,12 +170,12 @@ const ProfilePage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-serif text-[#0D103E]">
+    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-[#0D103E]">
       <title>Tech Education</title>
       <Nav />
-      <div className="mb-5 mt-5 flex flex-1 items-center justify-center p-8">
+      <div className="mb-5 mt-5 flex min-h-screen flex-1 items-center justify-center p-8">
         {user && (
-          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-[#FFFFFF] shadow-md">
+          <div className="w-full max-w-md rounded-lg border border-gray-200 bg-[#FFFFFF] py-4 shadow-md">
             <div className="flex flex-col items-center px-6 pb-5">
               <img
                 className="mb-3 mt-5 h-24 w-24 rounded-full shadow-md"
@@ -330,8 +312,8 @@ const ProfilePage = () => {
                         Password:
                       </label>
                       <button
-                        className="w-[320px] rounded-md border p-2 text-left text-[#6C94FF]"
-                        onClick={() => setPasswordModalOpen(true)}
+                        className="w-[320px] rounded-md border p-2 text-left text-[#a891ed]"
+                        onClick={() => setChangePasswordModalOpen(true)}
                       >
                         Change Password
                       </button>
@@ -347,80 +329,6 @@ const ProfilePage = () => {
                     </>
                   )}
                 </li>
-
-                {passwordModalOpen && (
-                  <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75">
-                    <div className="w-4/5 max-w-sm rounded-lg bg-white p-6">
-                      <h2 className="mb-4 text-lg font-semibold">
-                        Change Password
-                      </h2>
-                      {passwordError && (
-                        <p className="mt-2 text-red-500">{passwordError}</p>
-                      )}
-                      <div className="relative mb-2">
-                        <input
-                          type={showNewPassword ? "text" : "password"}
-                          value={newPassword}
-                          onChange={(e) =>
-                            setNewPassword(e.target.value.trim())
-                          }
-                          placeholder="Enter new password"
-                          className="w-full rounded-md border border-gray-300 p-2 pr-10"
-                        />
-                        <button
-                          type="button"
-                          onClick={() => setShowNewPassword((prev) => !prev)}
-                          className="absolute inset-y-0 right-0 mr-3 rounded-md text-gray-400 hover:text-gray-600 focus:outline-none"
-                        >
-                          <FontAwesomeIcon
-                            icon={showNewPassword ? faEyeSlash : faEye}
-                          />
-                        </button>
-                      </div>
-                      <div className="relative mb-4">
-                        <input
-                          type={showConfirmPassword ? "text" : "password"}
-                          value={confirmNewPassword}
-                          onChange={(e) =>
-                            setConfirmNewPassword(e.target.value.trim())
-                          }
-                          placeholder="Confirm new password"
-                          className="w-full rounded-md border border-gray-300 p-2 pr-10"
-                        />
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setShowConfirmPassword((prev) => !prev)
-                          }
-                          className="absolute inset-y-0 right-0 mr-3 rounded-md text-gray-400 hover:text-gray-600 focus:outline-none"
-                        >
-                          <FontAwesomeIcon
-                            icon={showConfirmPassword ? faEyeSlash : faEye}
-                          />
-                        </button>
-                      </div>
-                      <div className="flex justify-center">
-                        <button
-                          className="mr-2 rounded-md bg-[#6C94FF] px-4 py-2 text-white hover:bg-[#AEC8FF]"
-                          onClick={handleChangePassword}
-                        >
-                          Change Password
-                        </button>
-                        <button
-                          className="rounded-md bg-gray-300 px-4 py-2 text-gray-700 hover:bg-gray-200"
-                          onClick={() => {
-                            setNewPassword("");
-                            setConfirmNewPassword("");
-                            setPasswordError("");
-                            setPasswordModalOpen(false);
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                )}
 
                 {role === "Student" && (
                   <li
@@ -500,15 +408,27 @@ const ProfilePage = () => {
               </ul>
 
               {editMode && (
-                <div className="flex space-x-4 pb-4">
+                <div className="-ml-2 flex space-x-4 pb-4">
                   <button
-                    className="rounded-md bg-[#6C94FF] px-4 py-2 text-white hover:bg-[#AEC8FF]"
+                    className={`ms-3 w-32 rounded-lg border border-gray-200 px-5 py-2.5 text-sm font-bold ${
+                      !(
+                        firstName !== originalData.firstName ||
+                        lastName !== originalData.lastName ||
+                        email !== originalData.email ||
+                        role !== originalData.role ||
+                        birthdate !== originalData.birthdate ||
+                        grade !== originalData.grade
+                      )
+                        ? "cursor-not-allowed bg-gray-400 text-gray-600"
+                        : "bg-[#ffe08d] text-gray-900 hover:bg-[#ffd564]"
+                    }`}
                     onClick={saveChanges}
                   >
-                    Save Changes
+                    Save
                   </button>
+
                   <button
-                    className="rounded-md bg-gray-300 px-4 py-2 text-gray-500 hover:bg-gray-200"
+                    className="ms-3 w-32 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-gray-100 hover:text-red-700"
                     onClick={cancelEdit}
                   >
                     Cancel
@@ -517,7 +437,7 @@ const ProfilePage = () => {
               )}
               {!editMode && (
                 <div
-                  className="mt-2 cursor-pointer items-center rounded-lg bg-[#6C94FF] px-4 py-2 text-center text-sm font-bold text-white hover:bg-[#AEC8FF]"
+                  className="ms-3 mt-3 w-32 cursor-pointer items-center rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-center text-sm font-bold text-gray-900 hover:bg-[#ffd564]"
                   onClick={() => setEditMode(true)}
                 >
                   Edit
@@ -528,11 +448,22 @@ const ProfilePage = () => {
         )}
       </div>
       <Footer />
+
+      {/* confirmation modal */}
       {confirmModalOpen && (
         <ConfirmationModal
           message="Are you sure you want to save changes?"
           onConfirm={confirmSave}
           onCancel={() => setConfirmModalOpen(false)}
+        />
+      )}
+
+      {/* change password modal */}
+      {changePasswordModalOpen && (
+        <ChangePasswordModal
+          isOpen={changePasswordModalOpen}
+          onClose={() => setChangePasswordModalOpen(false)}
+          user={user} // passing user object
         />
       )}
     </main>

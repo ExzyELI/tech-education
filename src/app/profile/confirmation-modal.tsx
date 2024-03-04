@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faTimes,
+  faCheckCircle,
   faExclamationCircle,
 } from "@fortawesome/free-solid-svg-icons";
 
@@ -33,49 +34,73 @@ const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75">
+    <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75 font-sans">
       {/* dialog */}
       <div className="relative max-h-full w-full max-w-md p-4">
-        <div className="relative rounded-lg bg-white shadow">
+        <div className="relative rounded-lg bg-white shadow-xl">
           <button
             type="button"
-            className="absolute end-2.5 top-3 ms-auto inline-flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
+            className="absolute right-2 top-3 flex h-8 w-8 items-center justify-center rounded-lg bg-transparent text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900"
             onClick={onCancel}
           >
             <FontAwesomeIcon icon={faTimes} />
-            <span className="sr-only">Close modal</span>
+            <span className="sr-only">Close</span>
           </button>
           <div className="p-4 text-center md:p-5">
-            <FontAwesomeIcon
-              icon={faExclamationCircle}
-              className="mx-auto mb-4 h-12 w-12 text-gray-400"
-            />
-            {/* display error message */}
+            {/* display success or error message */}
             {error ? (
-              <h3 className="mb-5 text-lg font-normal text-red-500">{error}</h3>
+              <div className="mb-4 flex flex-col items-center justify-center text-red-500">
+                <FontAwesomeIcon
+                  icon={faExclamationCircle}
+                  className="mx-auto mb-2 h-12 w-12 text-gray-400"
+                />
+                <h3 className="mb-2 text-lg font-normal">{error}</h3>
+              </div>
             ) : (
-              <h3 className="mb-5 text-lg font-normal text-gray-500">
-                {confirmed ? "Changes successful" : message}
-              </h3>
+              <div className="mb-4 flex flex-col items-center justify-center text-gray-500">
+                {confirmed ? (
+                  <>
+                    <FontAwesomeIcon
+                      icon={faCheckCircle}
+                      className="mx-auto mb-2 h-12 w-12 text-[#DDD6F3]"
+                    />
+                    <h3 className="text-lg font-bold">Changes successful</h3>
+                  </>
+                ) : (
+                  <div>
+                    <FontAwesomeIcon
+                      icon={faExclamationCircle}
+                      className="mx-auto mb-2 h-12 w-12 text-gray-400"
+                    />
+                    <h3 className="text-lg font-normal">{message}</h3>
+                  </div>
+                )}
+              </div>
             )}
+
+            {/* don't show yes button if confirmed */}
             {!confirmed && (
               <button
                 data-modal-hide="popup-modal"
                 type="button"
-                className="inline-flex items-center rounded-lg bg-green-600 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-green-800"
+                className="ms-3 w-32 rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-[#ffd564]"
                 onClick={handleConfirm}
               >
-                Yes, I'm sure
+                Yes
               </button>
             )}
-            <button
-              data-modal-hide="popup-modal"
-              type="button"
-              className="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-red-700"
-              onClick={onCancel}
-            >
-              No, cancel
-            </button>
+
+            {/* don't show no button if confirmed */}
+            {!confirmed && (
+              <button
+                data-modal-hide="popup-modal"
+                type="button"
+                className="ms-3 w-32 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-gray-100 hover:text-red-700"
+                onClick={onCancel}
+              >
+                No
+              </button>
+            )}
           </div>
         </div>
       </div>
