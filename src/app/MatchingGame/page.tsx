@@ -4,6 +4,19 @@ import { useState, useEffect } from "react";
 import { shuffle } from "lodash"; // npm run lodash
 import MatchingNavBar from "./MatchingNavBar";
 import Footer from "../../../comps/footer";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  getDoc,
+  setDoc,
+  increment,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+  limit,
+} from "firebase/firestore";
 
 export default function Home() {
   const gridSize = 3;
@@ -189,7 +202,7 @@ export default function Home() {
             ) : (
                 <img src="https://cdn.discordapp.com/attachments/1196945767785578598/1205159897663279114/Screen_Shot_2024-02-08_at_9.34.52_AM.png?ex=65f30b1e&is=65e0961e&hm=0f846bd73ee4c0bb03c39dc0488456a41e7ab937acd0f0824327bd152cd18dc7&"
                 
-                style={{ width: "50%", height: "50%"}} />
+                style={{ width: "75%", height: "75%"}} />
             )}
         </button>
           ))}
