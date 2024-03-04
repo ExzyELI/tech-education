@@ -32,7 +32,7 @@ const PasswordPage = () => {
   const [user, setUser] = useState<User | null>(null); // store logged in user
   const [score, setScore] = useState<number | null>(null); // store user's score
   const [isGameStarted, setIsGameStarted] = useState(false); // store game start state
-  const [attempts, setAttempts] = useState(0); // store attempts
+  const [password1_attempts, setAttempts] = useState(0); // store attempts
   const [startTime, setStartTime] = useState<Date | null>(null); // store start time
   const [elapsedTime, setElapsedTime] = useState<number>(0); // store elapsed time
   const timerRef = useRef<number | null>(null); // timer reference
@@ -87,7 +87,7 @@ const PasswordPage = () => {
     if (!querySnapshot.empty) {
       const activityData = querySnapshot.docs[0].data();
       setScore(activityData.score);
-      setAttempts(activityData.attempts);
+      setAttempts(activityData.password1_attempts);
       setElapsedTime(activityData.elapsedTime);
     }
   };
@@ -117,16 +117,16 @@ const PasswordPage = () => {
       const userDocSnap = await getDoc(userDocRef);
       if (userDocSnap.exists()) {
         const userData = userDocSnap.data();
-        const currentAttempts = userData?.attempts || 0; // 0 if no attempts found
+        const currentAttempts = userData?.password1_attempts || 0; // 0 if no attempts found
         // update attempts locally
         setAttempts(currentAttempts + 1);
         // update attempts to firestore
-        await setDoc(userDocRef, { attempts: increment(1) }, { merge: true });
+        await setDoc(userDocRef, { password1_attempts: increment(1) }, { merge: true });
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
           activityName: "Password Activity",
           score: calculatedScore,
-          attempts: currentAttempts + 1,
+          password1_attempts: currentAttempts + 1,
           timestamp: new Date(),
           elapsedTime: formatTime(elapsedSeconds),
         });
@@ -304,7 +304,7 @@ const PasswordPage = () => {
           {/* Stats Box Component */}
           <div className="mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
             <Stats
-              attempts={attempts}
+              attempts={password1_attempts}
               elapsedTime={elapsedTime}
               score={score}
               renderStars={() => stars}
