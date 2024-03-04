@@ -128,7 +128,7 @@ const ProfilePage = () => {
     // Toggle the edit mode
     setEditMode(false);
 
-    // Update the original data
+    // update with new values
     setOriginalData({
       firstName: firstName,
       lastName: lastName,
