@@ -7,6 +7,7 @@ import Footer from "../../../comps/footer";
 import Nav from "../../../comps/nav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import ConfirmationModal from "./confirmation-modal";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -23,6 +24,10 @@ const ProfilePage = () => {
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [editMode, setEditMode] = useState(false);
   const [passwordError, setPasswordError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+  const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [originalData, setOriginalData] = useState({
     // original data for resetting fields
     firstName: "",
@@ -72,23 +77,58 @@ const ProfilePage = () => {
   }, []);
 
   const saveChanges = async () => {
+    try {
+      if (!user) {
+        // Handle case where user is null
+        return;
+      }
+
+      // Open the confirmation modal
+      setConfirmModalOpen(true);
+    } catch (error) {
+      // Update error state if there was an error
+      setSuccess(false); // Set success to false
+      setError("An error occurred while saving changes."); // Set error message
+      // Close the confirmation modal in case of error
+      setConfirmModalOpen(false);
+    }
+  };
+
+  const confirmSave = async () => {
+    setConfirmModalOpen(false);
+
     if (!user) return;
 
-    const firestore = getFirestore();
-    const userDocRef = doc(firestore, "users", user.uid);
+    // Assume the update operation is successful
+    setSuccess(true);
 
-    await updateDoc(userDocRef, {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      role: role,
-      birthdate: birthdate,
-      grade: grade,
-    });
+    try {
+      const firestore = getFirestore();
+      const userDocRef = doc(firestore, "users", user.uid);
 
+      // Perform the update operation
+      await updateDoc(userDocRef, {
+        firstName: firstName,
+        lastName: lastName,
+        email: email,
+        role: role,
+        birthdate: birthdate,
+        grade: grade,
+      });
+
+      // If the update operation is successful, set success to true
+      setSuccess(true);
+    } catch (error) {
+      // If an error occurs during the update operation, set success to false and display the error message
+      setSuccess(false);
+      setError("An error occurred while saving changes.");
+      console.error("Error updating document:", error);
+    }
+
+    // Toggle the edit mode
     setEditMode(false);
 
-    // update with new values
+    // Update the original data
     setOriginalData({
       firstName: firstName,
       lastName: lastName,
@@ -98,6 +138,9 @@ const ProfilePage = () => {
       grade: grade,
       password: originalData.password,
     });
+
+    // Open the confirmation modal
+    setConfirmModalOpen(true);
   };
 
   const cancelEdit = () => {
@@ -110,6 +153,8 @@ const ProfilePage = () => {
     setRole(originalData.role);
     setBirthdate(originalData.birthdate);
     setGrade(originalData.grade);
+    setSuccess(false);
+    setError("");
   };
 
   // function to handle password change
@@ -483,6 +528,13 @@ const ProfilePage = () => {
         )}
       </div>
       <Footer />
+      {confirmModalOpen && (
+        <ConfirmationModal
+          message="Are you sure you want to save changes?"
+          onConfirm={confirmSave}
+          onCancel={() => setConfirmModalOpen(false)}
+        />
+      )}
     </main>
   );
 };
