@@ -218,7 +218,7 @@ export default function Quiz(){
                     <h2 className="text-2xl font-semibold mb-2 mt-5">
                       Question {currentQuestion + 1} of {questions.length}
                     </h2>
-                    <p className="border-1 bg-white font-semibold p-3 w-full rounded-lg shadow flex items-center justify-center md:p-5 mb-3">
+                    <p className="border-1 bg-white font-semibold p-3 w-full rounded-lg shadow flex items-center justify-center md:p-5 mb-3 text-[#5c93ff]">
                         {questions[currentQuestion].question}
                     </p>
                     <div className="flex justify-center mb-8">
@@ -270,9 +270,9 @@ export default function Quiz(){
                   </div>
                   </div>
                   case false:
-                    return <div className="w-[500px] mt-[180px] mb-[200px] px-5 py-5 bg-white border border-gray-200 rounded-lg shadow">
-                    <h5 className="mb-2 text-center text-xl font-bold tracking-tight text-gray-900">Ready to take your quiz now?</h5>
-                    <h5 className="mb-2 text-center text-xl font-bold tracking-tight text-gray-900">Click start to begin!</h5>
+                    return <div className="w-[500px] mt-[180px] mb-[200px] px-5 py-5 bg-white border border-gray-200 rounded-lg shadow text-[#5c93ff]">
+                    <h5 className="mb-2 text-center text-xl font-bold tracking-tight">Ready to take your quiz now?</h5>
+                    <h5 className="mb-2 text-center text-xl font-bold tracking-tight">Click start to begin!</h5>
                     <div className="mx-[130px]">
                       <button
                         type="button"
