@@ -54,7 +54,7 @@ export default function Home() {
       {/*navbar begins */}
       <Nav />
       {/* navbar ends */}
-
+      
       {/* banner begins */}
       <section className="border-b bg-[#ffecde]">
         <div className="px-6 pb-10 text-center md:px-12 lg:text-left">

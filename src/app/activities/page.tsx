@@ -55,7 +55,7 @@ export default function ActivitiesPage() {
     }
 
   return (
-    <main className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
+    <main className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-sans leading-normal tracking-normal text-[#132241]">
         <title>
             Activities
         </title>
@@ -64,8 +64,8 @@ export default function ActivitiesPage() {
       {/* navbar ends */}
 
       <section className="container mx-auto w-full">
-        <h1 className="flex flex-col items-center justify-center pt-10 mt-5 text-5xl font-bold tracking-tight">
-          Activities
+        <h1 className="flex flex-col font-sans items-center justify-center pt-10 mt-5 text-5xl font-bold tracking-tight">
+          Choose a grade
         </h1>
         <div className="pt-7 text-center font-bold text-white">
             <button 
@@ -91,7 +91,7 @@ export default function ActivitiesPage() {
                 {(() => {
                     switch (grade) {
                     case 'Kindergarten':
-                        return <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                        return <div className="gradient font-family: font-sans leading-normal tracking-normal">
                             <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
                             <ul className="">
                             <div className="float-left w-60 mr-5 ml-5">
@@ -145,7 +145,7 @@ export default function ActivitiesPage() {
                             </ul>
                             </div>
                     case 'First':
-                        return <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                        return <div className="gradient font-family: font-sans leading-normal tracking-normal">
                             <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
                             <ul className="">
                             <div className="float-left w-60 mr-5 ml-5">
@@ -199,7 +199,7 @@ export default function ActivitiesPage() {
                             </ul>
                             </div>
                     case 'Second':
-                        return <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                        return <div className="gradient font-family: font-sans leading-normal tracking-normal">
                             <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
                             <ul className="">
                             <div className="float-left w-60 mr-5 ml-5">
@@ -253,7 +253,7 @@ export default function ActivitiesPage() {
                             </ul>
                             </div>
                     default:
-                        return <div className="gradient font-family: font-serif leading-normal tracking-normal">
+                        return <div className="gradient font-family: font-sans leading-normal tracking-normal">
                         <h3 className="mb-5 text-lg font-semibold text-center"> </h3>
                         <ul className="">
                         <div className="float-left w-60 mr-5 ml-5">
