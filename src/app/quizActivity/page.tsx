@@ -41,6 +41,7 @@ export default function Quiz(){
     const [elapsedTime, setElapsedTime] = useState<number>(0); // store elapsed time
     const timerRef = useRef<number | null>(null); // timer reference
     const [isGameStarted, setIsGameStarted] = useState(false); // store game start state
+    const [lastQuestion, setLastQuestion] = useState(false); // store last question state
     const [startTime, setStartTime] = useState<Date | null>(null); // store start time
     const [quiz1_attempts, setAttempts] = useState(0); // store attempts
 
@@ -72,7 +73,9 @@ export default function Quiz(){
   
     // function to start game
     const handleStart = () => {
+      console.log(isGameStarted);
       setIsGameStarted(true);
+      console.log(isGameStarted);
       setStartTime(new Date()); // timer begins when game starts
       setElapsedTime(0);
       startTimer();
@@ -90,6 +93,7 @@ export default function Quiz(){
       const elapsedSeconds = Math.floor(elapsedMilliseconds / 1000); // converting elapsed time to seconds
       setElapsedTime(elapsedSeconds); // storing elapsed time
       setIsGameStarted(false);
+      console.log(isGameStarted);
   
       const firestore = getFirestore();
       // get current number of attempts from firestore
@@ -167,15 +171,20 @@ export default function Quiz(){
         if (isCorrect) {
             setScore(score + 1);
         }
-    
-        const nextQuestion = currentQuestion + 1;
-        if (nextQuestion < questions.length) {
-            setTimeout(() => {
-            setCurrentQuestion(nextQuestion);
-            setShowAnswer(false);
-            }, 1000); // Delaying for 1 second before moving to the next question
-        }
     };
+    const handleNext = async () => {
+
+      const nextQuestion = currentQuestion + 1;
+        if (nextQuestion < questions.length) {
+          setShowAnswer(false);
+          setCurrentQuestion(nextQuestion);
+        }
+        if (nextQuestion >= questions.length){
+          setLastQuestion(true);
+          console.log(lastQuestion);
+        }
+      
+    }
 
     return (
       <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
@@ -183,52 +192,91 @@ export default function Quiz(){
         <Nav />
         <div className="flex justify-center">
           <div className="flex-child w-[500px] ml-[200px]">
-            <div className="mb-4">
-              <h2 className="text-2xl font-semibold mb-2 mt-5">
-                Question {currentQuestion + 1} of {questions.length}
-              </h2>
-              <p className="border-1 bg-white font-semibold p-3 w-full rounded-lg shadow flex items-center justify-center md:p-5 mb-3">
-                  {questions[currentQuestion].question}
-              </p>
-              <div className="flex justify-center mb-8">
-                  {questions[currentQuestion].image && (<img src={questions[currentQuestion].image}/>)}
-              </div>
+          {(() => {
+                  switch (isGameStarted) {
+                  case true: 
+                    return <div>
+                    <div className="mb-4">
+                    <h2 className="text-2xl font-semibold mb-2 mt-5">
+                      Question {currentQuestion + 1} of {questions.length}
+                    </h2>
+                    <p className="border-1 bg-white font-semibold p-3 w-full rounded-lg shadow flex items-center justify-center md:p-5 mb-3">
+                        {questions[currentQuestion].question}
+                    </p>
+                    <div className="flex justify-center mb-8">
+                        {questions[currentQuestion].image && (<img src={questions[currentQuestion].image}/>)}
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    {questions[currentQuestion].options.map((option, index) => (
+                      <button
+                        key={index}
+                        className={`px-12 py-4 mb-2 bg-[#e1f3ff] text-black text-lg rounded-lg hover:bg-gray-200 transition w-5/6  ${
+                          showAnswer && option.isCorrect
+                            ? "bg-green-300 hover:bg-green-300"
+                            : showAnswer && !option.isCorrect
+                            ? "bg-red-300 hover:bg-red-300"
+                            : ""
+                        }`}
+                        onClick={() => handleButtonClick(option.isCorrect)}
+                        disabled={!isGameStarted || showAnswer}
+                      >
+                        {option.text}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="mt-4">
+                  <div className="flex justify-center my-4">
+                    {questions.map((question, i) => (
+                      <div
+                        key={i}
+                        className={`w-5 h-5 rounded text-white mx-1 text-center text-xs flex items-center justify-center ${
+                        guessedRight[i] === true
+                            ? "bg-green-300"
+                            : guessedRight[i] === false
+                            ? "bg-red-300"
+                            : "bg-gray-200"
+                        }`}
+                      ></div>
+                    ))}
+                  </div>
+                  </div>
+                  </div>
+                  case false:
+                    return <div className="w-[500px] mt-[180px] mb-[200px] px-5 py-5 bg-white border border-gray-200 rounded-lg shadow">
+                    <h5 className="mb-2 text-center text-xl font-bold tracking-tight text-gray-900">Ready to take your quiz now?</h5>
+                    <h5 className="mb-2 text-center text-xl font-bold tracking-tight text-gray-900">Click start to begin!</h5>
+                    <div className="mx-[130px]">
+                      <button
+                        type="button"
+                        onClick={handleStart}
+                        className={`w-[200px] rounded-md bg-[#ff5a5f] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
+                        >
+                        <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
+                        Start
+                      </button>
+                    </div>
+                  </div>
+                  }
+              })()}  
+            <div className="mx-[150px] mt-10">
+              <button
+                type="button"
+                onClick={handleNext}
+                className={`w-[200px] mb-2 rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
+              >
+                <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
+                Next
+              </button>
+              <button
+                type="submit"
+                onClick={handleSubmit}
+                className={`w-[200px] rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!lastQuestion || !isGameStarted ? "hidden" : ""}`}
+              >
+                <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
+                Get Score
+              </button>
             </div>
-            <div className="text-center">
-              {questions[currentQuestion].options.map((option, index) => (
-                <button
-                  key={index}
-                  className={`px-12 py-4 mb-2 bg-[#e1f3ff] text-black text-lg rounded-lg hover:bg-gray-200 transition w-5/6  ${
-                    showAnswer && option.isCorrect
-                      ? "bg-green-300 hover:bg-green-300"
-                      : showAnswer && !option.isCorrect
-                      ? "bg-red-300 hover:bg-red-300"
-                      : ""
-                  }`}
-                  onClick={() => handleButtonClick(option.isCorrect)}
-                  disabled={!isGameStarted || showAnswer}
-                >
-                  {option.text}
-                </button>
-              ))}
-            </div>
-            <div className="mt-4">
-            <div className="flex justify-center my-4">
-              {questions.map((question, i) => (
-                <div
-                  key={i}
-                  className={`w-5 h-5 rounded text-white mx-1 text-center text-xs flex items-center justify-center ${
-                  guessedRight[i] === true
-                      ? "bg-green-300"
-                      : guessedRight[i] === false
-                      ? "bg-red-300"
-                      : "bg-gray-200"
-                  }`}
-                ></div>
-              ))}
-            </div>
-            </div>
-            <p className="mt-2 text-center font-semibold">Score: {score}</p>
           </div>
           <div className="float ml-20 mt-[70px]">
               <Stats
@@ -239,24 +287,6 @@ export default function Quiz(){
               />
           </div>
         </div>
-        <div className="flex items-center justify-center">
-                <button
-                  type="button"
-                  onClick={handleStart}
-                  className={`w-[200px] rounded-md bg-[#ff5a5f] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
-                >
-                  <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
-                  Start
-                </button>
-                <button
-                  type="submit"
-                  onClick={handleSubmit}
-                  className={`w-[200px] rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
-                >
-                  <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
-                  Submit
-                </button>
-          </div>
         <Footer />
       </main>
     );
