@@ -77,6 +77,13 @@ const ProfilePage = () => {
         return;
       }
 
+      // check for email errors
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // if there is email error exists, do not save changes
+        setError("Invalid email format");
+        return;
+      }
+
       // Check if any field has been modified
       if (
         firstName === originalData.firstName &&
@@ -311,6 +318,7 @@ const ProfilePage = () => {
                         }`}
                         placeholder="Email"
                       />
+                      {error && <div className="text-red-500">{error}</div>}
                     </div>
                   ) : (
                     <>
