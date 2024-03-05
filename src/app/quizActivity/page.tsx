@@ -20,8 +20,7 @@ import {
 import {
   faPlay,
   faCheck,
-  faEye,
-  faEyeSlash,
+  faArrowRight,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ToastContainer, toast } from 'react-toastify';
@@ -81,6 +80,8 @@ export default function Quiz(){
       startTimer();
       // attempts counter
       setAttempts((prevAttempts) => prevAttempts + 1);
+      setScore(0);
+      setCurrentQuestion(0);
     };
   
     // function to handle form submission
@@ -265,8 +266,8 @@ export default function Quiz(){
                 onClick={handleNext}
                 className={`w-[200px] mb-2 rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
               >
-                <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                 Next
+                <FontAwesomeIcon icon={faArrowRight} className="h-4 w-5 ml-1" />
               </button>
               <button
                 type="submit"
@@ -276,6 +277,10 @@ export default function Quiz(){
                 <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                 Get Score
               </button>
+              <ToastContainer 
+                  className="Toast-position mt-[130px]"
+                  position = "top-center"
+              />
             </div>
           </div>
           <div className="float ml-20 mt-[70px]">
