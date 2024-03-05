@@ -273,10 +273,10 @@ export default function Quiz(){
                       <button
                         type="button"
                         onClick={handleStart}
-                        className={`w-[200px] rounded-md bg-[#ff5a5f] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${isGameStarted ? "hidden" : ""}`}
+                        className={`w-[200px] rounded-md bg-[#ff5a5f] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] hover:scale-110 focus:outline-none ${isGameStarted ? "hidden" : ""}`}
                         >
                         <FontAwesomeIcon icon={faPlay} className="mr-2 text-lg" />
-                        Start
+                        Start Quiz
                       </button>
                     </div>
                   </div>
@@ -286,7 +286,7 @@ export default function Quiz(){
               <button
                 type="button"
                 onClick={handleNext}
-                className={`w-[200px] mb-2 rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
+                className={`w-[200px] mb-2 rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] hover:scale-110 focus:outline-none ${!isGameStarted ? "hidden" : ""}`}
               >
                 Next
                 <FontAwesomeIcon icon={faArrowRight} className="h-4 w-5 ml-1" />
@@ -294,7 +294,7 @@ export default function Quiz(){
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className={`w-[200px] rounded-md bg-[#5c93ff] mb-3 px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!lastQuestion || !isGameStarted ? "hidden" : ""}`}
+                className={`w-[200px] rounded-md bg-[#5c93ff] mb-3 px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] hover:scale-110 focus:outline-none ${!lastQuestion || !isGameStarted ? "hidden" : ""}`}
               >
                 <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                 Get Score
