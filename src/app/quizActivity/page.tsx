@@ -43,6 +43,8 @@ export default function Quiz(){
     const [lastQuestion, setLastQuestion] = useState(false); // store last question state
     const [startTime, setStartTime] = useState<Date | null>(null); // store start time
     const [quiz1_attempts, setAttempts] = useState(0); // store attempts
+    const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
+
 
     useEffect(() => {
   
@@ -78,6 +80,7 @@ export default function Quiz(){
       setGuessedRight(Array(questions.length).fill(null));
       setLastQuestion(false);
       setElapsedTime(0);
+      setSelectedAnswerIndex(null);
   };
   
     // function to start game
@@ -171,23 +174,27 @@ export default function Quiz(){
     // number of stars based on the percentage score
     const stars = calculateStars(percentageScore);
 
-    const handleButtonClick = (isCorrect: boolean) => {
-        const updatedGuessedRight = guessedRight.map((value, index) =>
-            index === currentQuestion ? isCorrect : value
-        );
-        setGuessedRight(updatedGuessedRight);
-        setShowAnswer(true);
-  
-        if (isCorrect) {
-            setScore(score + 1);
-        }
+    // function to handle button click
+    const handleButtonClick = (isCorrect: boolean, index: number) => {
+      setSelectedAnswerIndex(index); // Update selected answer index
+      const updatedGuessedRight = guessedRight.map((value, i) =>
+          i === currentQuestion ? isCorrect : value
+      );
+      setGuessedRight(updatedGuessedRight);
+      setShowAnswer(true);
+
+      if (isCorrect) {
+          setScore(score + 1);
+      }
     };
+
     const handleNext = async () => {
 
       const nextQuestion = currentQuestion + 1;
         if (nextQuestion < questions.length) {
           setShowAnswer(false);
           setCurrentQuestion(nextQuestion);
+          setSelectedAnswerIndex(null);
         }
         if (nextQuestion >= questions.length){
           setLastQuestion(true);
@@ -200,7 +207,7 @@ export default function Quiz(){
       <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
         <title>Tech Education</title>
         <Nav />
-        <div className="flex justify-center">
+        <div className="flex justify-center mx-[200px] //rounded-lg //bg-white //border border-gray-200">
           <div className="flex-child w-[500px] ml-[200px]">
           {(() => {
                   switch (isGameStarted) {
@@ -221,14 +228,20 @@ export default function Quiz(){
                     {questions[currentQuestion].options.map((option, index) => (
                       <button
                         key={index}
-                        className={`px-12 py-4 mb-2 bg-[#e1f3ff] text-black text-lg rounded-lg hover:bg-gray-200 transition w-5/6  ${
+                        className={`px-12 py-4 mb-2 text-black text-lg rounded-lg hover:bg-gray-200 transition w-5/6  ${
                           showAnswer && option.isCorrect
-                            ? "bg-green-300 hover:bg-green-300"
-                            : showAnswer && !option.isCorrect
-                            ? "bg-red-300 hover:bg-red-300"
-                            : ""
+                          ? "bg-green-300 hover:bg-green-300"
+                          : showAnswer && !option.isCorrect
+                          ? "bg-red-300 hover:bg-red-300"
+                          : "bg-white"
+                          } ${
+                          selectedAnswerIndex === index && option.isCorrect
+                          ? "border-4 border-green-500 border-dashed"
+                          : selectedAnswerIndex === index && !option.isCorrect
+                          ? "border-4 border-red-500 border-dashed"
+                          : ""
                         }`}
-                        onClick={() => handleButtonClick(option.isCorrect)}
+                        onClick={() => handleButtonClick(option.isCorrect, index)}
                         disabled={!isGameStarted || showAnswer}
                       >
                         {option.text}
@@ -281,13 +294,13 @@ export default function Quiz(){
               <button
                 type="submit"
                 onClick={handleSubmit}
-                className={`w-[200px] rounded-md bg-[#5c93ff] px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!lastQuestion || !isGameStarted ? "hidden" : ""}`}
+                className={`w-[200px] rounded-md bg-[#5c93ff] mb-3 px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] focus:outline-none ${!lastQuestion || !isGameStarted ? "hidden" : ""}`}
               >
                 <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                 Get Score
               </button>
               <ToastContainer 
-                  className="Toast-position mt-[130px]"
+                  className="Toast-position mt-[85px]"
                   position = "top-center"
               />
             </div>
