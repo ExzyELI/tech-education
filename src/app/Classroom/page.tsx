@@ -3,6 +3,8 @@ import { ReactNode } from 'react';
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import Footer from "../../../comps/footer";
+import Nav from "../../../comps/nav";
 
 export default function Home() {
 
@@ -49,54 +51,13 @@ export default function Home() {
     <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       {/*navbar begins */}
-      <nav className="sticky w-full border-b border-gray-200 bg-[#afce8b]">
-        <header className="font-family: font-serif leading-normal tracking-normal">
-          <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-            <span className="self-center whitespace-nowrap text-2xl font-semibold">
-              {" "}
-              Tech Education
-            </span>
-            {/* tabs */}
-            <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-              <nav className="text-2lg">
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Activities
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Grade
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Reports
-                </a>
-                <a
-                  href="#"
-                  className="cursor-pointer px-3 text-lg font-semibold hover:text-[#ffe08d]"
-                >
-                  Profile
-                </a>
-              </nav>
-            </div>
-          </div>
-        </header>
-      </nav>
+      <Nav />
       {/* navbar ends */}
 
       {/* banner begins */}
       <section className="border-b bg-[#ffecde]">
         <div className="px-6 pb-10 text-center md:px-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-            <header className="flex w-full items-center justify-center py-3 font-serif text-6xl leading-normal tracking-normal">
-              My Classroom
-            </header>
 
             <div className="col-span-1 row-span-1 mb-10">
               <div className="flex items-center justify-center object-center">
@@ -105,15 +66,6 @@ export default function Home() {
                   src="https://i.imgur.com/1EDuUBO.png"
                 />
               </div>
-
-              <p className="text-center text-xs text-[#ff6865]">
-                <a
-                  href="https://www.vectorstock.com/royalty-free-vector/teacher-sitting-classroom-with-chalkboard-vector-43444042"
-                  target="_blank"
-                >
-                  img source
-                </a>
-              </p>
             </div>
 
             {/* three sections */}
@@ -206,15 +158,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* footer begins */}
-      <footer className="sticky w-full bg-[#afce8b]">
-        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
-          <span className="text-sm sm:text-center ">
-            © 2024 Tech Education™
-          </span>
-        </div>
-      </footer>
-      {/* footer ends */}
+      <Footer />
     </main>
   );
 }
