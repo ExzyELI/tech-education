@@ -131,7 +131,7 @@ export default function ActivitiesPage() {
                                 </a>
                             </div>
                             <div className="float-right w-60 mr-5 ml-5">
-                                <a href="/#">
+                                <a href="KeyboardActivity-kindergarten/KeyboardActivity-alt">
                                     <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300 hover:scale-110">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                         <div className="p-5">
@@ -185,7 +185,7 @@ export default function ActivitiesPage() {
                                 </a>
                             </div>
                             <div className="float-right w-60 mr-5 ml-5">
-                                <a href="/#">
+                                <a href="/KeyboardActivity-firstGrade/KeyboardActivity-0">
                                     <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300 hover:scale-110">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                         <div className="p-5">
@@ -239,7 +239,7 @@ export default function ActivitiesPage() {
                                 </a>
                             </div>
                             <div className="float-right w-60 mr-5 ml-5">
-                                <a href="/#">
+                                <a href="/KeyboardActivity-secondGrade/KeyboardActivity-apple">
                                     <div className=" bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300 hover:scale-110">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/xBa77tk.jpeg" />
                                         <div className="p-5">
@@ -261,7 +261,7 @@ export default function ActivitiesPage() {
                                 <div className="w-75 bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
                                 <img className="rounded-t-lg" src="https://i.imgur.com/0XlQMRw.jpeg" />
                                     <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity 1</h5>
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Matching Activity</h5>
                                         <p className="mb-3 font-normal text-gray-700">
                                             Select a grade to learn more!</p>
                                     </div>
@@ -273,7 +273,7 @@ export default function ActivitiesPage() {
                                 <div className="w-75 bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
                                 <img className="rounded-t-lg" src="https://i.imgur.com/EUWogLx.jpeg" />
                                     <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">Password Activity 1</h5>
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900 ">Password Activity</h5>
                                         <p className="mb-3 font-normal text-gray-700">
                                             Select a grade to learn more!</p>
                                     </div>
@@ -285,7 +285,7 @@ export default function ActivitiesPage() {
                                 <div className="w-75 bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
                                 <img className="rounded-t-lg" src="https://i.imgur.com/C7uqDLu.jpeg" />
                                     <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity 1</h5>
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Quiz Activity</h5>
                                         <p className="mb-3 font-normal text-gray-700">
                                             Select a grade to learn more!</p>
                                     </div>
@@ -297,7 +297,7 @@ export default function ActivitiesPage() {
                                 <div className=" bg-[#D3D3D3] border border-gray-200 rounded-lg shadow">
                                 <img className="rounded-t-lg" src="https://i.imgur.com/EUWogLx.jpeg" />
                                     <div className="p-5">
-                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Keyboard Activity 1</h5>
+                                        <h5 className="mb-2 text-xl font-bold tracking-tight text-gray-900">Keyboard Activity</h5>
                                         <p className="mb-3 font-normal text-gray-700">
                                             Select a grade to learn more!</p>
                                     </div>

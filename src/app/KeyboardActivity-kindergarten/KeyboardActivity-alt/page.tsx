@@ -77,6 +77,10 @@ const altKeyPressPage = () => {
                     </button>
                 )}
             </div>
+            <div className="mb-5">
+            </div>
+            <div className="mb-5">
+            </div>
             <Footer />
         </main>
     );
