@@ -19,6 +19,7 @@ import {
   query,
   limit,
 } from "firebase/firestore";
+import { User } from "firebase/auth";
 
 export default function Home() {
   const gridSize = 3;
@@ -45,8 +46,20 @@ export default function Home() {
   const [gameStarted, setGameStarted] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [user, setUser] = useState<User | null>(null); // store logged in user
+  const [matching1_attempts, setAttempts] = useState(0); // store attempts
   let interval: string | number | NodeJS.Timeout | undefined;
 
+  useEffect(() => {
+  
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user); // update the user state when auth state changes
+      console.log("Can you see this?")
+    });
+
+    return () => unsubscribe();
+  }, []);
+  
   useEffect(() => {
     if (isActive) {
       interval = setInterval(() => {
@@ -90,11 +103,40 @@ export default function Home() {
       setIsDisabled(false);
     }
   }, [gameStarted]);
+
+  const handleSave = async () => {
+    console.log(user);
+    const firestore = getFirestore();
+      if (user) {
+        const userDocRef = doc(firestore, `users/${user.uid}`);
+        const userDocSnap = await getDoc(userDocRef);
+        if (userDocSnap.exists()) {
+          const userData = userDocSnap.data();
+          const currentAttempts = userData?.matching1_attempts || 0; // 0 if no attempts found
+          // update attempts locally
+          setAttempts(currentAttempts + 1);
+          // update attempts to firestore
+          await setDoc(userDocRef, { matching1_attempts: increment(1) }, { merge: true });
+          // save activity data in firestore
+          await addDoc(collection(firestore, `users/${user.uid}/activities`), {
+            activityName: "Matching Activity",
+            score: finalScore,
+            matching1_attempts: currentAttempts + 1,
+            timestamp: new Date(),
+            elapsedTime: formatTime(seconds),
+          });
+          console.log("worked");
+        }
+      }
+      //toast.success("Score submitted successfully!"); // show success message
+  }
   
   useEffect(() => {
     if (matchedCards.length === cards.length) {
       setIsGameWon(true);
       handleStop();
+      handleSave();
+      console.log("hello1");
     }
   }, [matchedCards, totalCards]);
 
@@ -182,6 +224,7 @@ export default function Home() {
     }
     //return Math.max(score,0);
   }
+  const finalScore = calculateScore()
   
   return (
     <main>
@@ -243,7 +286,7 @@ export default function Home() {
                     <div className="text-4xl font-bold text-center">
                       Congratulations! You Win!
                     </div>
-                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-8 text-center">Score: {calculateScore()}</p>
+                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-8 text-center">Score: {finalScore}</p>
                   </div>
                 </div>
               )}

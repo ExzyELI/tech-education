@@ -109,7 +109,7 @@ export default function Quiz(){
       console.log(isGameStarted);
   
       const firestore = getFirestore();
-      // get current number of attempts from firestore
+      // submit activity data to the database
       if (user) {
         const userDocRef = doc(firestore, `users/${user.uid}`);
         const userDocSnap = await getDoc(userDocRef);
@@ -297,7 +297,7 @@ export default function Quiz(){
                 className={`w-[200px] rounded-md bg-[#5c93ff] mb-3 px-4 py-2 text-lg font-bold text-white hover:bg-[#ff914d] hover:scale-110 focus:outline-none ${!lastQuestion || !isGameStarted ? "hidden" : ""}`}
               >
                 <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
-                Get Score
+                Submit Quiz
               </button>
               <ToastContainer 
                   className="Toast-position mt-[120px]"
