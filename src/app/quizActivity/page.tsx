@@ -300,7 +300,7 @@ export default function Quiz(){
                 Get Score
               </button>
               <ToastContainer 
-                  className="Toast-position mt-[85px]"
+                  className="Toast-position mt-[120px]"
                   position = "top-center"
               />
             </div>
