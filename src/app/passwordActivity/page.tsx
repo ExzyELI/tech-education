@@ -128,7 +128,7 @@ const PasswordPage = () => {
         await setDoc(userDocRef, { password1_attempts: increment(1) }, { merge: true });
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
-          activityName: "Password Activity",
+          activityName: "Password Activity 1",
           score: calculatedScore,
           password1_attempts: currentAttempts + 1,
           timestamp: new Date(),

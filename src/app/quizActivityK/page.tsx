@@ -42,7 +42,7 @@ export default function Quiz(){
     const [isGameStarted, setIsGameStarted] = useState(false); // store game start state
     const [lastQuestion, setLastQuestion] = useState(false); // store last question state
     const [startTime, setStartTime] = useState<Date | null>(null); // store start time
-    const [quiz1_attempts, setAttempts] = useState(0); // store attempts
+    const [quizK_attempts, setAttempts] = useState(0); // store attempts
     const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
 
 
@@ -115,16 +115,16 @@ export default function Quiz(){
         const userDocSnap = await getDoc(userDocRef);
         if (userDocSnap.exists()) {
           const userData = userDocSnap.data();
-          const currentAttempts = userData?.quiz1_attempts || 0; // 0 if no attempts found
+          const currentAttempts = userData?.quizK_attempts || 0; // 0 if no attempts found
           // update attempts locally
           setAttempts(currentAttempts + 1);
           // update attempts to firestore
-          await setDoc(userDocRef, { quiz1_attempts: increment(1) }, { merge: true });
+          await setDoc(userDocRef, { quizK_attempts: increment(1) }, { merge: true });
           // save activity data in firestore
           await addDoc(collection(firestore, `users/${user.uid}/activities`), {
-            activityName: "Quiz Activity",
+            activityName: "Quiz Activity K",
             score: score,
-            quiz1_attempts: currentAttempts + 1,
+            quizK_attempts: currentAttempts + 1,
             timestamp: new Date(),
             elapsedTime: formatTime(elapsedSeconds),
           });
@@ -303,7 +303,7 @@ export default function Quiz(){
           </div>
           <div className="float ml-20 mt-[60px]">
               <Stats
-                attempts={quiz1_attempts}
+                attempts={quizK_attempts}
                 elapsedTime={elapsedTime}
                 score={score}
                 renderStars={() => stars}

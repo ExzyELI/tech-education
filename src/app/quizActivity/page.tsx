@@ -122,7 +122,7 @@ export default function Quiz(){
           await setDoc(userDocRef, { quiz1_attempts: increment(1) }, { merge: true });
           // save activity data in firestore
           await addDoc(collection(firestore, `users/${user.uid}/activities`), {
-            activityName: "Quiz Activity",
+            activityName: "Quiz Activity 1",
             score: score,
             quiz1_attempts: currentAttempts + 1,
             timestamp: new Date(),
