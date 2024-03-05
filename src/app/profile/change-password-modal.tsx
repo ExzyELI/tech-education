@@ -79,7 +79,6 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         setConfirmNewPassword("");
         return;
       }
-
       // confirm new password
       if (newPassword !== confirmNewPassword) {
         setPasswordError("Passwords do not match");
@@ -88,13 +87,11 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
         return;
       }
 
-      // update password
       await updatePassword(user, newPassword);
 
       console.log("Password updated successfully.");
       setPasswordError("");
       setChangeSuccessful(true);
-      onCancel();
     } catch (error: any) {
       console.error("Error updating password:", error.message);
       setPasswordError("Incorrect current password");
@@ -108,27 +105,32 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
     <>
       {isOpen && (
         <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75">
-          <div className="w-4/5 max-w-sm rounded-lg bg-white p-6">
+          <div className="relative w-4/5 max-w-sm rounded-lg bg-white p-6">
             <button
               type="button"
-              className="absolute right-0 top-0 mr-2 mt-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+              className="absolute right-0 top-0 mr-2 mt-2 pr-2 pt-2 text-gray-400 hover:text-gray-600 focus:outline-none"
               onClick={onCancel}
             >
               <FontAwesomeIcon icon={faTimes} />
             </button>
-            <h2 className="mb-4 text-lg font-semibold">Change Password</h2>
-            {passwordError && (
+            {!changeSuccessful && (
+              <h2 className="mb-4 text-lg font-semibold">Change Password</h2>
+            )}
+            {!changeSuccessful && passwordError && (
               <p className="mt-2 text-red-500">{passwordError}</p>
             )}
-            {changeSuccessful ? (
-              <div className="mb-4 flex flex-col items-center justify-center text-[#DDD6F3]">
+            {changeSuccessful && (
+              <div className="flex flex-col items-center justify-center text-[#DDD6F3]">
                 <FontAwesomeIcon
                   icon={faCheckCircle}
                   className="mx-auto mb-2 h-12 w-12"
                 />
-                <h3 className="text-lg font-bold">Changes successful</h3>
+                <h3 className="text-lg font-bold text-gray-600">
+                  Changes successful
+                </h3>
               </div>
-            ) : (
+            )}
+            {!changeSuccessful && (
               <>
                 <div className="relative mb-2">
                   <input
@@ -195,13 +197,7 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                   </button>
                   <button
                     className="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-gray-100 hover:text-red-700"
-                    onClick={() => {
-                      setCurrentPassword("");
-                      setNewPassword("");
-                      setConfirmNewPassword("");
-                      setPasswordError("");
-                      onCancel();
-                    }}
+                    onClick={onCancel}
                   >
                     Cancel
                   </button>
