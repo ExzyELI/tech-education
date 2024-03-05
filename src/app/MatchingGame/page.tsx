@@ -228,7 +228,7 @@ export default function Home() {
   
   return (
     <main>
-      <div className="font-serif leading-normal tracking-normal text-[#132241]">
+      <div className="font-sans leading-normal tracking-normal text-[#132241]">
         {/*navbar begins */}
         <Nav/>
         {/* navbar ends */}
