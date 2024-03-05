@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import { shuffle } from "lodash"; // npm run lodash
 import MatchingNavBar from "./MatchingNavBar";
 import Footer from "../../../comps/footer";
+import { auth, useHandleRedirect } from "@/app/firebase/init_app";
+import Nav from "../../../comps/nav";
 import {
   getFirestore,
   collection,
@@ -164,7 +166,9 @@ export default function Home() {
   return (
     <main>
       <div className="font-serif leading-normal tracking-normal text-[#132241]">
-        <MatchingNavBar />
+        {/*navbar begins */}
+        <Nav/>
+        {/* navbar ends */}
         <div className="flex min-h-screen bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
             <h1 className="mt-2 text-center text-7xl font-bold">
