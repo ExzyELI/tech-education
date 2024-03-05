@@ -205,7 +205,7 @@ export default function Quiz(){
     }
 
     return (
-      <main className="font-family: flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
+      <main className="font-family: flex min-h-screen flex-col space-y-[60px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
         <title>Tech Education</title>
         <Nav />
         <div className="flex justify-center mx-[200px] //rounded-lg //bg-white //border border-gray-200">
@@ -245,7 +245,10 @@ export default function Quiz(){
                         onClick={() => handleButtonClick(option.isCorrect, index)}
                         disabled={!isGameStarted || showAnswer}
                       >
+                        <div className="flex items-center justify-center">
+                        {option.image && <img src={option.image} className="mr-2" />}
                         {option.text}
+                        </div>
                       </button>
                     ))}
                   </div>
