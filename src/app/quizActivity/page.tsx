@@ -69,6 +69,16 @@ export default function Quiz(){
     const stopTimer = () => {
       clearInterval(timerRef.current as number); // stops the timer
     };
+
+    // function to reset quiz
+    const resetQuizState = () => {
+      setCurrentQuestion(0);
+      setScore(0);
+      setShowAnswer(false);
+      setGuessedRight(Array(questions.length).fill(null));
+      setLastQuestion(false);
+      setElapsedTime(0);
+  };
   
     // function to start game
     const handleStart = () => {
@@ -80,8 +90,7 @@ export default function Quiz(){
       startTimer();
       // attempts counter
       setAttempts((prevAttempts) => prevAttempts + 1);
-      setScore(0);
-      setCurrentQuestion(0);
+      resetQuizState();
     };
   
     // function to handle form submission
