@@ -158,9 +158,29 @@ export default function Home() {
   const calculateScore = () => {
     const totalMoves = clickCount;
     const elapsedTime = seconds;
-    const score = 10000 - totalMoves * 100 - elapsedTime * 10;
-
-    return Math.max(score,0);
+    const score = (12000 - totalMoves * 100 - elapsedTime * 10)/2500;
+    if (score >= 4){
+      return 4 
+    }
+    else if (score >= 3.5){
+      return 3.5
+    }
+    else if (score >= 3){
+      return 3
+    }
+    else if (score >= 2.5){
+      return 2.5
+    }
+    else if (score >= 2){
+      return 2
+    }
+    else if (score >= 1.5){
+      return 1.5
+    }
+    else if (score >= 1){
+      return 1
+    }
+    //return Math.max(score,0);
   }
   
   return (
