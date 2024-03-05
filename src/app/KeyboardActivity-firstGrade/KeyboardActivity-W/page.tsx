@@ -2,6 +2,8 @@
 import Nav from "../../../../comps/nav";
 import Footer from "../../../../comps/footer";
 import React, { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
 
 const KeyWKeyPressPage = () => {
     //store the last key pressed
@@ -10,6 +12,7 @@ const KeyWKeyPressPage = () => {
     const [correctPress, setCorrectPress] = useState(false);
     //track if the marks should be shown 
     const [showMarks, setShowMarks] = useState(false);
+    const router = useRouter(); 
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
@@ -33,6 +36,11 @@ const KeyWKeyPressPage = () => {
         };
     }, []);
 
+    // path to next task
+    const goToNextTask = () => {
+        router.push("/KeyboardActivity-firstGrade/KeyboardActivity-X");
+    };
+
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
             <title>Press KeyW Activity</title>
@@ -51,6 +59,15 @@ const KeyWKeyPressPage = () => {
                             <span className="text-red-500">✗ You pressed {keyPressed}. Please press the KeyW button.</span>
                         )}
                     </p>
+                )}
+                {/* display next activity button */}
+                {correctPress && (
+                    <button 
+                        className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out"
+                        onClick={goToNextTask} 
+                    >
+                        Next Activity
+                    </button>
                 )}
             </div>
             <Footer />

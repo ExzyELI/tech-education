@@ -3,19 +3,23 @@ import Nav from "../../../../comps/nav";
 import Footer from "../../../../comps/footer";
 import React, { useState, useEffect } from "react";
 
-const backspaceKeyPressPage = () => {
-    //store the last key pressed
+import { useRouter } from "next/navigation"; 
+
+const BackspaceKeyPressPage = () => {
+        //store the last key pressed
     const [keyPressed, setKeyPressed] = useState("");
-    //track if the correct key was pressed
+        //track if the correct key was pressed
     const [correctPress, setCorrectPress] = useState(false);
-    //track if the marks should be shown 
+        //track if the marks should be shown 
     const [showMarks, setShowMarks] = useState(false);
+
+    const router = useRouter(); 
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            //check if the backspace button is pressed
-            if (e.code === "backspace") {
-                setKeyPressed("backspace");
+            //check if the Backspace button is pressed
+            if (e.code === "Backspace") {
+                setKeyPressed("Backspace");
                 setCorrectPress(true);
                 setShowMarks(true);
             } else {
@@ -33,24 +37,38 @@ const backspaceKeyPressPage = () => {
         };
     }, []);
 
+    // path to next task
+    const goToNextTask = () => {
+        router.push("/KeyboardActivity-kindergarten/KeyboardActivity-tab");
+    };
+
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
-            <title>Press backspace Activity</title>
+            <title>Press Backspace Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">
                 <h1 className="text-2xl font-bold">Press the Backspace Button</h1>
                 {/* image path */}
-                <img src="/images/backspace-key-press.gif" alt="Press backspace" className="mt-4" />
+                <img src="/images/backspace-key-press.gif" alt="Press Backspace" className="mt-4" />
                 {showMarks && (
                     <p className="mt-4 text-lg">
                         {/* display if right key is pressed */}
                         {correctPress ? (
-                            <span className="text-green-500">✓ Correct! You pressed the backspace button.</span>
+                            <span className="text-green-500">✓ Correct! You pressed the Backspace button.</span>
                         ) : (
                             //display any other key pressed */}
-                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the backspace button.</span>
+                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Backspace button.</span>
                         )}
                     </p>
+                )}
+                {/* display next activity button */}
+                {correctPress && (
+                    <button 
+                        className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out"
+                        onClick={goToNextTask} 
+                    >
+                        Next Activity
+                    </button>
                 )}
             </div>
             <Footer />
@@ -58,4 +76,4 @@ const backspaceKeyPressPage = () => {
     );
 };
 
-export default backspaceKeyPressPage;
+export default BackspaceKeyPressPage;
