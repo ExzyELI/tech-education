@@ -161,7 +161,7 @@ const GradesPage = () => {
                       {grade.elapsedTime}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
-                      {grade.quiz1_attempts || grade.password1_attempts}
+                      {grade.quiz1_attempts || grade.password1_attempts || grade.quizK_attempts || grade.matching1_attempts}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
                       {grade.timestamp
