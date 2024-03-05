@@ -462,8 +462,7 @@ const ProfilePage = () => {
       {changePasswordModalOpen && (
         <ChangePasswordModal
           isOpen={changePasswordModalOpen}
-          onClose={() => setChangePasswordModalOpen(false)}
-          user={user} // passing user object
+          onCancel={() => setChangePasswordModalOpen(false)}
         />
       )}
     </main>

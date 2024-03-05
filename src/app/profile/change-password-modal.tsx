@@ -1,61 +1,106 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  User,
+  updatePassword,
+  reauthenticateWithCredential,
+  EmailAuthProvider,
+} from "firebase/auth";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { auth } from "../firebase/init_app";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEye,
   faEyeSlash,
   faCheckCircle,
+  faTimes,
 } from "@fortawesome/free-solid-svg-icons";
-import { updatePassword } from "firebase/auth";
 
 interface ChangePasswordModalProps {
   isOpen: boolean;
-  onClose: () => void;
-  user: any; // Adjust the type based on your user object type
+  onCancel: () => void;
 }
 
 const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   isOpen,
-  onClose,
-  user,
+  onCancel,
 }) => {
-  const [showNewPassword, setShowNewPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [user, setUser] = useState<User | null>(null); // set user
+  const [passwordError, setPasswordError] = useState(""); // set errors
+  const [changeSuccessful, setChangeSuccessful] = useState(false); // success
+
+  // password fields
+  const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-  const [passwordError, setPasswordError] = useState("");
-  const [changeSuccessful, setChangeSuccessful] = useState(false);
 
-  // function to handle password change
-  const handleChangePassword = async () => {
+  // toggle visibility
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      setUser(user);
+
+      if (user) {
+        const firestore = getFirestore();
+        const userDocRef = doc(firestore, "users", user.uid);
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+        }
+      }
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleConfirmPassword = async () => {
+    if (!user || !user.email) return;
+
     try {
-      if (!user) return;
+      // authenticate user
+      const credential = EmailAuthProvider.credential(
+        user.email,
+        currentPassword,
+      );
+      await reauthenticateWithCredential(user, credential);
 
-      // password criteria
-      const passwordRegex =
-        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/;
-
-      if (!newPassword.match(passwordRegex)) {
+      // validate new password
+      if (
+        newPassword.length < 8 ||
+        !/\d/.test(newPassword) ||
+        !/[A-Z]/.test(newPassword)
+      ) {
         setPasswordError(
-          "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, and one number.",
+          "Password must be at least 8 characters long and contain at least one number/uppercase letter",
         );
+        setNewPassword("");
+        setConfirmNewPassword("");
         return;
       }
 
+      // confirm new password
       if (newPassword !== confirmNewPassword) {
-        setPasswordError("Passwords do not match. Please re-enter.");
+        setPasswordError("Passwords do not match");
+        setNewPassword("");
+        setConfirmNewPassword("");
         return;
       }
 
+      // update password
       await updatePassword(user, newPassword);
-      // toggle the visibility
-      onClose();
+
+      console.log("Password updated successfully.");
+      setPasswordError("");
       setChangeSuccessful(true);
+      onCancel();
+    } catch (error: any) {
+      console.error("Error updating password:", error.message);
+      setPasswordError("Incorrect current password");
+      setCurrentPassword("");
       setNewPassword("");
       setConfirmNewPassword("");
-      setPasswordError("");
-    } catch (error: any) {
-      console.error("Error changing password:", error.message);
-      setPasswordError("Error changing password. Please try again.");
     }
   };
 
@@ -64,6 +109,13 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
       {isOpen && (
         <div className="fixed inset-0 z-10 flex items-center justify-center overflow-y-auto bg-gray-500 bg-opacity-75">
           <div className="w-4/5 max-w-sm rounded-lg bg-white p-6">
+            <button
+              type="button"
+              className="absolute right-0 top-0 mr-2 mt-2 text-gray-400 hover:text-gray-600 focus:outline-none"
+              onClick={onCancel}
+            >
+              <FontAwesomeIcon icon={faTimes} />
+            </button>
             <h2 className="mb-4 text-lg font-semibold">Change Password</h2>
             {passwordError && (
               <p className="mt-2 text-red-500">{passwordError}</p>
@@ -78,6 +130,24 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
               </div>
             ) : (
               <>
+                <div className="relative mb-2">
+                  <input
+                    type={showCurrentPassword ? "text" : "password"}
+                    value={currentPassword}
+                    onChange={(e) => setCurrentPassword(e.target.value.trim())}
+                    placeholder="Enter current password"
+                    className="w-full rounded-md border border-gray-300 p-2 pr-10"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowCurrentPassword((prev) => !prev)}
+                    className="absolute inset-y-0 right-0 mr-3 rounded-md text-gray-400 hover:text-gray-600 focus:outline-none"
+                  >
+                    <FontAwesomeIcon
+                      icon={showCurrentPassword ? faEyeSlash : faEye}
+                    />
+                  </button>
+                </div>
                 <div className="relative mb-2">
                   <input
                     type={showNewPassword ? "text" : "password"}
@@ -119,17 +189,18 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                 <div className="flex items-center justify-center">
                   <button
                     className="ms-3 rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-[#ffd564]"
-                    onClick={handleChangePassword}
+                    onClick={handleConfirmPassword}
                   >
                     Change Password
                   </button>
                   <button
                     className="ms-3 rounded-lg border border-gray-200 bg-white px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-gray-100 hover:text-red-700"
                     onClick={() => {
+                      setCurrentPassword("");
                       setNewPassword("");
                       setConfirmNewPassword("");
                       setPasswordError("");
-                      onClose();
+                      onCancel();
                     }}
                   >
                     Cancel
