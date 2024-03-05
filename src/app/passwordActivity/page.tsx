@@ -25,9 +25,8 @@ import {
   limit,
 } from "firebase/firestore";
 import Stats from "../../../comps/stats";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
@@ -126,7 +125,11 @@ const PasswordPage = () => {
         // update attempts locally
         setAttempts(currentAttempts + 1);
         // update attempts to firestore
-        await setDoc(userDocRef, { password1_attempts: increment(1) }, { merge: true });
+        await setDoc(
+          userDocRef,
+          { password1_attempts: increment(1) },
+          { merge: true },
+        );
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
           activityName: "Password Activity",
@@ -208,8 +211,7 @@ const PasswordPage = () => {
           {/* container for password game */}
           <div className="w-full">
             <form
-              onSubmit={
-              }
+              onSubmit={handleSubmit}
               className="rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
               <div className="flex flex-col">
@@ -303,10 +305,10 @@ const PasswordPage = () => {
                   <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                   Submit
                 </button>
-                <ToastContainer 
+                <ToastContainer
                   className="Toast-position mt-20"
-                  position = "top-center"
-              />
+                  position="top-center"
+                />
               </div>
             </form>
           </div>
