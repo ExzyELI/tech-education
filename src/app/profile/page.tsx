@@ -99,6 +99,30 @@ const ProfilePage = () => {
     }
   };
 
+  const isValidName = (name: string) => {
+    // Regular expression to match only letters, hyphen, and apostrophe
+    const regex = /^[a-zA-Z'-]+$/;
+    return regex.test(name);
+  };
+
+  const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    if (isValidName(value)) {
+      setFirstName(value);
+    } else {
+      setError("Invalid characters used in the first name field");
+    }
+  };
+
+  const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    if (isValidName(value)) {
+      setLastName(value);
+    } else {
+      setError("Invalid characters used in the last name field");
+    }
+  };
+
   // function to confirm changes
   const confirmSave = async () => {
     setConfirmModalOpen(true);
@@ -197,7 +221,7 @@ const ProfilePage = () => {
                         id="firstName"
                         type="text"
                         value={firstName}
-                        onChange={(e) => setFirstName(e.target.value.trim())}
+                        onChange={handleFirstNameChange}
                         className={`mb-2 w-full rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
                           editMode && firstName !== originalData.firstName
                             ? "bg-yellow-100"
@@ -217,7 +241,7 @@ const ProfilePage = () => {
                         id="lastName"
                         type="text"
                         value={lastName}
-                        onChange={(e) => setLastName(e.target.value.trim())}
+                        onChange={handleLastNameChange}
                         className={`mb-2 w-full rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
                           editMode && lastName !== originalData.lastName
                             ? "bg-yellow-100"
