@@ -205,7 +205,7 @@ export default function Quiz(){
     }
 
     return (
-      <main className="font-family: flex min-h-screen flex-col space-y-[60px] bg-[#ffecde] font-sans leading-normal tracking-normal text-[#132241]">
+      <main className="font-family: flex min-h-screen flex-col space-y-[60px] bg-[#FAF9F6] font-sans leading-normal tracking-normal text-[#132241]">
         <title>Tech Education</title>
         <Nav />
         <div className="flex justify-center mx-[200px] //rounded-lg //bg-white //border border-gray-200">

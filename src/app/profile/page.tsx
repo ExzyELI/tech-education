@@ -209,7 +209,7 @@ const ProfilePage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-[#0D103E]">
+    <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#0D103E]">
       <title>Tech Education</title>
       <Nav />
       <div className="mb-5 mt-5 flex min-h-screen flex-1 items-center justify-center p-8">

@@ -232,7 +232,7 @@ export default function Home() {
         {/*navbar begins */}
         <Nav/>
         {/* navbar ends */}
-        <div className="flex min-h-screen bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
+        <div className="flex min-h-screen bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
             <h1 className="mt-2 text-center text-7xl font-bold">
               Match the Tech!

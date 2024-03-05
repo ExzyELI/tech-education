@@ -200,7 +200,7 @@ const PasswordPage = () => {
   const stars = calculateStars(percentageScore);
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-[#2d2d2d]">
+    <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#2d2d2d]">
       <title>Tech Education</title>
       <Nav />
       <div className="mx-auto mt-10 w-full max-w-3xl flex-grow px-4 py-8 md:flex md:justify-center md:px-8">

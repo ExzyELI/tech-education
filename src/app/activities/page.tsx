@@ -55,7 +55,7 @@ export default function ActivitiesPage() {
     }
 
   return (
-    <main className="font-family: flex min-h-screen flex-col bg-[#ffecde] font-sans leading-normal tracking-normal text-[#132241]">
+    <main className="font-family: flex min-h-screen flex-col bg-[#FAF9F6] font-sans leading-normal tracking-normal text-[#132241]">
         <title>
             Activities
         </title>

@@ -8,7 +8,7 @@ export default function Home() {
       <title>Tech Education</title>
       <Nav />
       {/* banner begins */}
-      <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-12">
+      <section className="-mb-[105px] border-b bg-[#FAF9F6] lg:-mt-12">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2">

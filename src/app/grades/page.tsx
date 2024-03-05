@@ -77,7 +77,7 @@ const GradesPage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-gray-800">
+    <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-gray-800">
       <title>Grades</title>
       <Nav />
       <div className="mx-auto my-5 min-h-screen max-w-screen-xl px-4 sm:px-8">
