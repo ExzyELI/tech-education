@@ -42,13 +42,12 @@ const PasswordPage = () => {
   const [showSubmit, setShowSubmit] = useState(false); // submit button visibility
 
   useEffect(() => {
-    handleStart();
 
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when auth state changes
       if (user) {
         // get most recent user activity
-        getRecentActivity(user.uid);
+        //getRecentActivity(user.uid);
       }
     });
 
@@ -137,6 +136,7 @@ const PasswordPage = () => {
         });
       }
     }
+    toast.success("Score submitted successfully!"); // show success message
   };
 
   // function to format time
@@ -208,8 +208,7 @@ const PasswordPage = () => {
           {/* container for password game */}
           <div className="w-full">
             <form
-              onSubmit={
-              }
+              onSubmit={handleSubmit}
               className="rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
               <div className="flex flex-col">
@@ -304,7 +303,7 @@ const PasswordPage = () => {
                   Submit
                 </button>
                 <ToastContainer 
-                  className="Toast-position mt-20"
+                  className="Toast-position mt-12"
                   position = "top-center"
               />
               </div>
