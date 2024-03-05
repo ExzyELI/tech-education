@@ -21,6 +21,7 @@ const ProfilePage = () => {
   const [error, setError] = useState("");
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
+  const [emailFieldTyped, setEmailFieldTyped] = useState(false);
   const [originalData, setOriginalData] = useState({
     // original data for resetting fields
     firstName: "",
@@ -77,14 +78,14 @@ const ProfilePage = () => {
         return;
       }
 
-      // check for email errors
-      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        // if there is email error exists, do not save changes
+      // checks email errors only if typed in email field
+      if (emailFieldTyped && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // if email error, do not save changes
         setError("Invalid email format");
         return;
       }
 
-      // Check if any field has been modified
+      // check if any field has been modified
       if (
         firstName === originalData.firstName &&
         lastName === originalData.lastName &&
@@ -93,7 +94,7 @@ const ProfilePage = () => {
         birthdate === originalData.birthdate &&
         grade === originalData.grade
       ) {
-        // No changes made, return
+        // no changes made, return
         return;
       }
 
@@ -106,27 +107,34 @@ const ProfilePage = () => {
     }
   };
 
+  // error handling for email
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    setEmail(value);
+    setEmailFieldTyped(true);
+    setError(""); // clear error message
+  };
+
+  // checks for a valid name
   const isValidName = (name: string) => {
-    // Regular expression to match only letters, hyphen, and apostrophe
+    // match name to letters, hyphen, and apostrophe
     const regex = /^[a-zA-Z'-]+$/;
     return regex.test(name);
   };
 
+  // error handling for first name
   const handleFirstNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     if (isValidName(value)) {
       setFirstName(value);
-    } else {
-      setError("Invalid characters used in the first name field");
     }
   };
 
+  // error handling for last name
   const handleLastNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     if (isValidName(value)) {
       setLastName(value);
-    } else {
-      setError("Invalid characters used in the last name field");
     }
   };
 
@@ -310,7 +318,7 @@ const ProfilePage = () => {
                         id="email"
                         type="text"
                         value={email}
-                        onChange={(e) => setEmail(e.target.value.trim())}
+                        onChange={handleEmailChange}
                         className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
                           editMode && email !== originalData.email
                             ? "bg-yellow-100"
