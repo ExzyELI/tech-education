@@ -41,13 +41,11 @@ const PasswordPage = () => {
   const [showSubmit, setShowSubmit] = useState(false); // submit button visibility
 
   useEffect(() => {
-    handleStart();
-
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when auth state changes
       if (user) {
         // get most recent user activity
-        getRecentActivity(user.uid);
+        //getRecentActivity(user.uid);
       }
     });
 
@@ -132,7 +130,7 @@ const PasswordPage = () => {
         );
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
-          activityName: "Password Activity",
+          activityName: "Password Activity 1",
           score: calculatedScore,
           password1_attempts: currentAttempts + 1,
           timestamp: new Date(),
@@ -140,6 +138,7 @@ const PasswordPage = () => {
         });
       }
     }
+    toast.success("Score submitted successfully!"); // show success message
   };
 
   // function to format time
@@ -203,7 +202,7 @@ const PasswordPage = () => {
   const stars = calculateStars(percentageScore);
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-[#2d2d2d]">
+    <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#2d2d2d]">
       <title>Tech Education</title>
       <Nav />
       <div className="mx-auto mt-10 w-full max-w-3xl flex-grow px-4 py-8 md:flex md:justify-center md:px-8">
@@ -211,6 +210,7 @@ const PasswordPage = () => {
           {/* container for password game */}
           <div className="w-full">
             <form
+              onSubmit={handleSubmit}
               onSubmit={handleSubmit}
               className="rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
