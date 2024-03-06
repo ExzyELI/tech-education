@@ -6,7 +6,11 @@ import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
 import Radio from "./radio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Sign_up_form() {
   const [email, setEmail] = useState("");
@@ -102,8 +106,16 @@ export default function Sign_up_form() {
       <title>Tech Education | Sign Up</title>
       <div className="flex min-h-screen items-center bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
         <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-5xl">
-          <div className="w-full px-4 py-1 pb-8 md:px-8 lg:w-1/2">
-            <p className="pt-5 text-center text-xl font-bold text-[#ff6865]">
+          <div className="relative w-full px-4 py-8 md:px-8 lg:w-1/2">
+            <div className="absolute left-0 top-0 ml-4 mt-4">
+              <button
+                onClick={() => router.push("/")}
+                className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+              </button>
+            </div>
+            <p className="text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
             </p>
             <p className="mt-2 pb-5 text-center font-medium">Welcome!</p>
