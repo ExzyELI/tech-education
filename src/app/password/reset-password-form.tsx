@@ -17,7 +17,7 @@ export default function ResetPasswordForm() {
   return (
     <div>
       <title>Tech Education | Sign In</title>
-      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
+      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
         {/* container */}
         <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-3xl">
           {/* left column */}

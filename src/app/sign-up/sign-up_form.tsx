@@ -85,7 +85,7 @@ export default function Sign_up_form() {
   return (
     <div>
       <title>Tech Education | Sign Up</title>
-      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
+      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
         <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-5xl">
           <div className="w-full px-4 py-1 pb-8 md:px-8 lg:w-1/2">
             <p className="pt-5 text-center text-xl font-bold text-[#ff6865]">
