@@ -10,7 +10,7 @@ const Radio: React.FC<Radioroles> = ({ role, setradioButton }) => {
 
   return (
     <>
-      <div className="mb-4 flex items-center">
+      <div className="flex items-center">
         <input
           id="student-radio"
           type="radio"
@@ -40,7 +40,7 @@ const Radio: React.FC<Radioroles> = ({ role, setradioButton }) => {
         />
         <label
           htmlFor="parent-radio"
-          className="ml-3 ms-2 text-sm font-medium text-gray-600 dark:text-gray-300"
+          className="ml-3 ms-2 text-sm font-medium text-gray-600"
         >
           Parent
         </label>
@@ -58,7 +58,7 @@ const Radio: React.FC<Radioroles> = ({ role, setradioButton }) => {
         />
         <label
           htmlFor="teacher-radio"
-          className="ml-3 ms-2 text-sm font-medium text-gray-600 dark:text-gray-300"
+          className="ml-3 ms-2 text-sm font-medium text-gray-600"
         >
           Teacher
         </label>
