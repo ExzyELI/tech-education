@@ -99,7 +99,7 @@ export default function ActivitiesPage() {
                         </h3>
                         <ul className="">
                           <div className="float-left ml-5 mr-5 w-60">
-                            <a href="/#">
+                            <a href="/MatchingGameK">
                               <div className="w-75 rounded-lg border border-gray-200 bg-[#e1f3ff] shadow hover:scale-110 hover:bg-gray-300">
                                 <img
                                   className="rounded-t-lg"
@@ -263,7 +263,7 @@ export default function ActivitiesPage() {
                         </h3>
                         <ul className="">
                           <div className="float-left ml-5 mr-5 w-60">
-                            <a href="/#">
+                            <a href="/MatchingGame2nd">
                               <div className="w-75 rounded-lg border border-gray-200 bg-[#e1f3ff] shadow hover:scale-110 hover:bg-gray-300">
                                 <img
                                   className="rounded-t-lg"
