@@ -9,7 +9,7 @@ import {
   faEyeSlash,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { User } from "firebase/auth";
 
@@ -19,7 +19,6 @@ export default function Sign_in_form() {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
-
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -31,7 +30,7 @@ export default function Sign_in_form() {
       if (res !== undefined && res.user.emailVerified) {
         router.push("/HomePage");
       }
-      if(res !== undefined && !res.user.emailVerified){
+      if (res !== undefined && !res.user.emailVerified) {
         toast.error("Please check your email and verify to sign in."); // show messages for email verification if the user email is not verified
       }
     } catch (error) {
@@ -150,11 +149,11 @@ export default function Sign_in_form() {
                 </p>
               </form>
             </div>
-            <ToastContainer 
-                  className="Toast-position mt-[20px]"
-                  style={{ width: "400px" }}
-                  position = "top-center"
-              />
+            <ToastContainer
+              className="Toast-position mt-[20px]"
+              style={{ width: "450px" }}
+              position="top-center"
+            />
           </div>
         </div>
       </div>
