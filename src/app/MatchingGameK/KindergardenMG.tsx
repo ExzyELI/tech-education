@@ -2,6 +2,7 @@
 import { ReactNode } from 'react';
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash"; // npm run lodash
+import MatchingNavBar from "../MatchingGame/MatchingNavBar";
 import Footer from "../../../comps/footer";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import Nav from "../../../comps/nav";
@@ -21,16 +22,13 @@ import {
 import { User } from "firebase/auth";
 
 export default function Home() {
-  const gridSize = 3;
+  const gridSize = 2;
   const totalCards = gridSize * (gridSize + 1); //amount of squares
   
   const images = [
     "/CGimages/mouse.png",
     "/CGimages/keyboard.png",
     "/CGimages/monitor.png",
-    "/CGimages/password.png",
-    "/CGimages/microphone.png",
-    "/CGimages/cursor.png",
     
   ];
   const initialCards = Array.from(Array(totalCards).keys()).flatMap((num) => [
@@ -250,8 +248,8 @@ export default function Home() {
                 <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 cursor-none">Click Count: {clickCount}</p>
                 <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
               </div>
-              <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-4 py-4">
-        <section className="grid grid-cols-4 justify-items-center gap-4">
+              <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-3 py-2">
+        <section className="grid grid-cols-3 justify-items-center gap-3">
           {cards.map((card, index) => (
             <button
             key={index}
@@ -276,21 +274,21 @@ export default function Home() {
       </div>
               <div className="mt-4 flex justify-center">
                 <button
-                  className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600 shadow-md"
+                  className="rounded bg-red-500 px-4 py-2 z-10 font-bold text-white hover:bg-red-600 shadow-md"
                   onClick={resetGame}>Reset Game </button>
               </div>
               {isGameWon && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
-                  <div className="text-6xl font-bold text-center">
-                    Great Job!
-                    <div className="flex items-center justify-center animate-bounce"> {/* Flex container */}
-                      <img src="/CGimages/goodjob-man (1).png" style={{ width: "350px", height: "350px" }} />
+                  <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
+                    <div className="text-6xl font-bold text-center">
+                      Great Job!
+                      <div className="flex items-center justify-center animate-bounce"> {/* Flex container */}
+                        <img src="/CGimages/goodjob-man (1).png" style={{ width: "350px", height: "350px" }} />
+                      </div>
                     </div>
+                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-1 text-center">Score: {finalScore}</p>
                   </div>
-                  <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-1 text-center">Score: {finalScore}</p>
                 </div>
-              </div>
               )}
             </div>
           )}

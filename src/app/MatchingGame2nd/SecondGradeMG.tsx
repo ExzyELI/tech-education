@@ -21,8 +21,8 @@ import {
 import { User } from "firebase/auth";
 
 export default function Home() {
-  const gridSize = 3;
-  const totalCards = gridSize * (gridSize + 1); //amount of squares
+  const gridSize = 4;
+  const totalCards = gridSize * (gridSize); //amount of squares
   
   const images = [
     "/CGimages/mouse.png",
@@ -31,6 +31,8 @@ export default function Home() {
     "/CGimages/password.png",
     "/CGimages/microphone.png",
     "/CGimages/cursor.png",
+    "/CGimages/headphones.png",
+    "/CGimages/usb.png",
     
   ];
   const initialCards = Array.from(Array(totalCards).keys()).flatMap((num) => [
