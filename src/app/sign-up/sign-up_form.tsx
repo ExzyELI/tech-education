@@ -4,7 +4,15 @@ import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, db } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { doc, setDoc } from "firebase/firestore";
-import Radio from "../../../comps/radio";
+import Radio from "./radio";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faEye,
+  faEyeSlash,
+  faArrowLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Sign_up_form() {
   const [email, setEmail] = useState("");
@@ -20,6 +28,10 @@ export default function Sign_up_form() {
   const [emailError, setEmailError] = useState("");
   //password length error state
   const [passwordLengthError, setPasswordLengthError] = useState("");
+  // password visibility
+  const [passwordVisible, setPasswordVisible] = useState(false);
+  // confirm password visibility
+  const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
 
   const [firstName, setfirstName] = useState("");
   const [lastName, setlastName] = useState("");
@@ -33,10 +45,10 @@ export default function Sign_up_form() {
     e.preventDefault();
     //if passwords do not match, set error message here
     if (password !== confirmPassword) {
-      setPasswordError("Passwords do not match."); 
-      return; 
+      setPasswordError("Passwords do not match.");
+      return;
     } else {
-      setPasswordError(""); 
+      setPasswordError("");
     }
     //if role is not selected
     if (!role) {
@@ -64,17 +76,20 @@ export default function Sign_up_form() {
       setConfirmPassword("");
 
       //if (setPassword.length <= 7){
-        //setPasswordLengthError("Password must be at least 8 Characters, please use a different password!");
+      //setPasswordLengthError("Password must be at least 8 Characters, please use a different password!");
       //}
 
       if (res !== undefined) {
-        router.push("/HomePage");
+        toast.success("Account created! Please check your email to verify and then sign in."); // show email verification has been sent message
+        //router.push("/HomePage");
+        (document.getElementById('myform') as HTMLFormElement).reset();
       }
-      if (res == undefined){
+      if (res == undefined) {
         //If the user attempts to sign up with the same email, they are thrown an error
-        setEmailError("Account already created with this email, please reload and try a new email or sign in!");
-      }
-      else{
+        setEmailError(
+          "Account already created with this email, please reload and try a new email or sign in!",
+        );
+      } else {
         setEmailError("");
       }
     } catch (error) {
@@ -82,25 +97,41 @@ export default function Sign_up_form() {
     }
   };
 
+  const togglePasswordVisibility = () => {
+    setPasswordVisible((prev) => !prev);
+  };
+
+  const toggleConfirmPasswordVisibility = () => {
+    setConfirmPasswordVisible((prev) => !prev);
+  };
+
   return (
     <div>
       <title>Tech Education | Sign Up</title>
-      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
+      <div className="flex min-h-screen items-center bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
         <div className="mx-auto flex w-full max-w-lg rounded-lg bg-white shadow-lg lg:max-w-5xl">
-          <div className="w-full px-4 py-1 pb-8 md:px-8 lg:w-1/2">
-            <p className="pt-5 text-center text-xl font-bold text-[#ff6865]">
+          <div className="relative w-full px-4 py-8 md:px-8 lg:w-1/2">
+            <div className="absolute left-0 top-0 ml-4 mt-4">
+              <button
+                onClick={() => router.push("/")}
+                className="flex items-center text-gray-500 hover:text-gray-700 focus:outline-none"
+              >
+                <FontAwesomeIcon icon={faArrowLeft} className="mr-2" />
+              </button>
+            </div>
+            <p className="text-center text-xl font-bold text-[#ff6865]">
               TECH EDUCATION
             </p>
             <p className="mt-2 pb-5 text-center font-medium">Welcome!</p>
-            <form className="space-y-2" onSubmit={handleSignup}>
-              <div>
-                <label
-                  htmlFor="firstName"
-                  className="mb-1 block text-sm font-medium"
-                >
-                  First name
-                </label>
-                <div>
+            <form id="myform" className="space-y-2" onSubmit={handleSignup}>
+              <div className="flex space-x-3">
+                <div className="flex-1">
+                  <label
+                    htmlFor="firstName"
+                    className="block text-sm font-medium"
+                  >
+                    First name
+                  </label>
                   <input
                     id="firstName"
                     name="firstName"
@@ -111,16 +142,13 @@ export default function Sign_up_form() {
                     className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
                 </div>
-              </div>
-
-              <div className="pt-3">
-                <label
-                  htmlFor="lastName"
-                  className="mb-1 block text-sm font-medium"
-                >
-                  Last name
-                </label>
-                <div>
+                <div className="flex-1">
+                  <label
+                    htmlFor="lastName"
+                    className="block text-sm font-medium"
+                  >
+                    Last name
+                  </label>
                   <input
                     id="lastName"
                     name="lastName"
@@ -134,86 +162,115 @@ export default function Sign_up_form() {
               </div>
 
               <div className="pt-3">
-                <label
-                  htmlFor="email"
-                  className="mb-1 block text-sm font-medium"
-                >
+                <label htmlFor="email" className="block text-sm font-medium">
                   Email address
                 </label>
-                <div>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    autoComplete="email"
-                    required
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
-                  />
-                  {/*error message here if there is one for the email section*/}
-                  {emailError && <p className="mt-2 text-sm text-red-500">{emailError}</p>}
-                </div>
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                />
+                {/*error message here if there is one for the email section*/}
+                {emailError && (
+                  <p className="mt-2 text-sm text-red-500">{emailError}</p>
+                )}
               </div>
 
               <div>
                 <div className="flex items-center justify-between pt-3">
                   <label
                     htmlFor="password"
-                    className="mb-1 block text-sm font-medium"
+                    className="block text-sm font-medium"
                   >
                     Password
                   </label>
                 </div>
-                <div>
+                <div className="relative">
                   <input
                     id="password"
                     name="password"
-                    type="password"
+                    type={passwordVisible ? "text" : "password"}
                     autoComplete="current-password"
                     required
                     onChange={(e) => setPassword(e.target.value)}
                     className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
-                  {/*error message here if there is one*/}
-                  {/*{passwordLengthError && <p className="mt-2 text-sm text-red-500">{passwordLengthError}</p>}*/}
+                  <button
+                    type="button"
+                    onClick={togglePasswordVisibility}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    <FontAwesomeIcon
+                      icon={passwordVisible ? faEyeSlash : faEye}
+                      className="text-gray-400 hover:text-gray-600"
+                    />
+                  </button>
                 </div>
+                {/*error message here if there is one*/}
+                {/*{passwordLengthError && <p className="mt-2 text-sm text-red-500">{passwordLengthError}</p>}*/}
               </div>
 
               <div className="pt-3">
-                <label htmlFor="confirmPassword" className="mb-1 block text-sm font-medium">
-                  Confirm Password
+                <label
+                  htmlFor="confirmPassword"
+                  className="block text-sm font-medium"
+                >
+                  Confirm password
                 </label>
-                <input
-                  id="confirmPassword"
-                  name="confirmPassword"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
-                />
-                {/*error message here if there is one*/}
-                {passwordError && <p className="mt-2 text-sm text-red-500">{passwordError}</p>}
+                <div className="relative">
+                  <input
+                    id="confirmPassword"
+                    name="confirmPassword"
+                    type={confirmPasswordVisible ? "text" : "password"}
+                    autoComplete="new-password"
+                    required
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                  />
+                  <button
+                    type="button"
+                    onClick={toggleConfirmPasswordVisibility}
+                    className="absolute inset-y-0 right-0 flex items-center pr-3"
+                  >
+                    <FontAwesomeIcon
+                      icon={confirmPasswordVisible ? faEyeSlash : faEye}
+                      className="text-gray-400 hover:text-gray-600"
+                    />
+                  </button>
+                </div>
+                {/* error message here if there is one */}
+                {passwordError && (
+                  <p className="mt-2 text-sm text-red-500">{passwordError}</p>
+                )}
               </div>
 
-              <div className="py-3">
-                <div className="flex items-center justify-between">
-                  <label className="mb-1 block text-sm font-medium">
-                    Select a role:
-                  </label>
-                </div>
+              <div className="pt-3">
+                <label htmlFor="roles" className="block text-sm font-medium">
+                  Select a role:
+                </label>
                 <Radio role={role} setradioButton={selectedRole} />
                 {/*error message here if there is one*/}
-                {roleError && <p className="mt-2 text-sm text-red-500">{roleError}</p>}
+                {roleError && (
+                  <p className="mt-2 text-sm text-red-500">{roleError}</p>
+                )}
               </div>
 
-              <div>
+              <div className="mt-5">
                 <button
                   type="submit"
                   className="w-full transform rounded-lg bg-[#ffe08d] px-6 py-3 text-sm font-medium tracking-wide transition-colors duration-300 hover:bg-[#ffe9b0] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50"
                 >
                   Sign up
                 </button>
+                <ToastContainer
+                  className="Toast-position -mt-[15px]"
+                  style={{ width: "600px" }}
+                  position = "top-center"
+                />
               </div>
               <p className="mt-10 text-center text-sm text-gray-500">
                 Already have an account?{" "}
@@ -226,11 +283,10 @@ export default function Sign_up_form() {
               </p>
             </form>
           </div>
-
           <div
             className="rounded-r-lg bg-cover object-center lg:block lg:w-1/2"
             style={{
-              backgroundImage: 'url("https://i.imgur.com/Peuslv2.jpg")',
+              backgroundImage: 'url("https://i.imgur.com/LZZApNB.jpeg")',
             }}
           />
         </div>

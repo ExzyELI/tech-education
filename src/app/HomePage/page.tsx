@@ -1,7 +1,6 @@
 "use client";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
-import { signOut } from "firebase/auth";
 import Footer from "../../../comps/footer";
 import Nav from "../../../comps/nav";
 import React, { useState, useEffect } from "react";
@@ -52,7 +51,7 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="min-h-screen bg-[#ffecde] pt-10">
+      <section className="min-h-screen bg-[#FAF9F6] pt-10">
         <div className="text-center md:px-12 lg:text-left">
           <div>
             <div className="flex flex-col items-center justify-center">
