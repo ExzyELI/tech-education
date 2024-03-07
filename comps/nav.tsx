@@ -239,7 +239,7 @@ const NavItem: React.FC<NavItemProps> = ({ href, label, icon }) => {
     <li>
       <a
         href={href}
-        className={`flex w-24 flex-col items-center rounded-md text-base font-bold ${
+        className={`mt-1 flex w-24 flex-col items-center rounded-md text-base font-bold ${
           isActive ? "text-[#f4a261]" : "hover:text-[#f4a261]"
         }`}
         aria-current={isActive ? "page" : undefined}

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
@@ -9,6 +9,9 @@ import {
   faEyeSlash,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { User } from "firebase/auth";
 
 export default function Sign_in_form() {
   const [email, setEmail] = useState("");
@@ -24,8 +27,11 @@ export default function Sign_in_form() {
       const res = await signInWithEmailAndPassword(email, password);
       console.log("signed in", { res });
 
-      if (res !== undefined) {
+      if (res !== undefined && res.user.emailVerified) {
         router.push("/HomePage");
+      }
+      if (res !== undefined && !res.user.emailVerified) {
+        toast.error("Please check your email and verify to sign in."); // show messages for email verification if the user email is not verified
       }
     } catch (error) {
       console.error(error);
@@ -143,6 +149,11 @@ export default function Sign_in_form() {
                 </p>
               </form>
             </div>
+            <ToastContainer
+              className="Toast-position mt-[20px]"
+              style={{ width: "450px" }}
+              position="top-center"
+            />
           </div>
         </div>
       </div>
