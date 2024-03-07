@@ -42,10 +42,6 @@ const EnterKeyPressPage = () => {
         router.push("/KeyboardActivity-kindergarten/KeyboardActivity-backspace");
     };
 
-    const goBack = () => {
-        router.back(); // Uses the router's back function to go to the previous page
-    };
-
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
             <title>Press Enter Activity</title>
@@ -68,12 +64,6 @@ const EnterKeyPressPage = () => {
                 {/* display next activity button */}
                 {correctPress && (
                     <div>
-                        <button
-                            className="mt-4 px-4 py-2 bg-red-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out"
-                            onClick={goBack}
-                        >
-                            Backward
-                        </button>
                         <button 
                             className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out"
                             onClick={goToNextTask} 
