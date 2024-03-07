@@ -27,21 +27,21 @@ export const questions: Question[] = [
         ],
     },
     {
-        question: "True or False? This is a power button",
-        image:"https://i.imgur.com/akxY9Dq.png",
+        question: "What are the buttons on a keyboard called?",
         options: [
-            {text: "True", isCorrect: true},
-            {text: "False", isCorrect: false},
+            {text: "Arrows", isCorrect: false},
+            {text: "Numbers", isCorrect: false},
+            {text: "Letters", isCorrect: false},
+            {text: "Keys", isCorrect: true},
         ],
     },
     {
-        question: "What is this called?",
-        image: "https://i.imgur.com/bouAlsV.png",
+        question: "Parts of a computer that you can touch are called?",
         options: [
-            {text: "TV", isCorrect: false},
-            {text: "Window", isCorrect: false},
-            {text: "Monitor", isCorrect: true},
-            {text: "Phone", isCorrect: false},
+            {text: "Software", isCorrect: false},
+            {text: "Hardware", isCorrect: true},
+            {text: "Internet", isCorrect: false},
+            {text: "Netflix", isCorrect: false},
         ],
     },
   ];
