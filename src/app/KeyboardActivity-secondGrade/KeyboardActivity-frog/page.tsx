@@ -17,29 +17,31 @@ const WordInputPage = () => {
             if (!e.key.match(/^[A-Za-z]$/)) return;
 
             const newWord = (typedWord + e.key).toLowerCase();
+        setShowMarks(true);
+
+        if (newWord === targetWord) {
             setTypedWord(newWord);
-            setShowMarks(true);
-
-            if (newWord === targetWord) {
-                setCorrectPress(true);
-            } else {
-                setCorrectPress(false);
+            setCorrectPress(true);
+        } else {
+            setTypedWord(newWord);
+            setCorrectPress(false);
+            if (newWord.length >= targetWord.length) {
+                setTimeout(() => {
+                    if (!correctPress) { 
+                        setTypedWord("");
+                        setShowMarks(false);
+                    }
+                }, 3000); //reset after 3 seconds
             }
-        };
-
-        window.addEventListener("keydown", handleKeyDown);
-
-        if (typedWord.length === targetWord.length || correctPress) {
-            setTimeout(() => {
-                setTypedWord("");
-                setShowMarks(false);
-            }, 3000); // Reset after 3seconds
         }
+    };
 
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [typedWord, correctPress]);
+    window.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+        window.removeEventListener("keydown", handleKeyDown);
+    };
+}, [typedWord, correctPress, targetWord]);
 
     // path to next task
     const goToNextTask = () => {

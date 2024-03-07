@@ -10,38 +10,40 @@ const WordInputPage = () => {
     const [typedWord, setTypedWord] = useState(""); //store key presses as a word
     const [correctPress, setCorrectPress] = useState(false);
     const [showMarks, setShowMarks] = useState(false);
-    
-    const router = useRouter(); 
+
+    const router = useRouter();
 
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
-            
+
             if (!e.key.match(/^[A-Za-z]$/)) return;
 
             const newWord = (typedWord + e.key).toLowerCase();
-            setTypedWord(newWord);
             setShowMarks(true);
 
             if (newWord === targetWord) {
+                setTypedWord(newWord);
                 setCorrectPress(true);
             } else {
+                setTypedWord(newWord);
                 setCorrectPress(false);
+                if (newWord.length >= targetWord.length) {
+                    setTimeout(() => {
+                        if (!correctPress) {
+                            setTypedWord("");
+                            setShowMarks(false);
+                        }
+                    }, 3000); //reset after 3 seconds
+                }
             }
         };
 
         window.addEventListener("keydown", handleKeyDown);
 
-        if (typedWord.length === targetWord.length || correctPress) {
-            setTimeout(() => {
-                setTypedWord("");
-                setShowMarks(false);
-            }, 3000); // Reset after 3seconds
-        }
-
         return () => {
             window.removeEventListener("keydown", handleKeyDown);
         };
-    }, [typedWord, correctPress]);
+    }, [typedWord, correctPress, targetWord]);
 
     // path to next task
     const goToNextTask = () => {
@@ -67,9 +69,9 @@ const WordInputPage = () => {
                 )}
                 {/* display next activity button */}
                 {correctPress && (
-                    <button 
+                    <button
                         className="mt-4 px-4 py-2 bg-green-500 text-white rounded hover:bg-blue-600 transition duration-150 ease-in-out"
-                        onClick={goToNextTask} 
+                        onClick={goToNextTask}
                     >
                         Next Activity
                     </button>
