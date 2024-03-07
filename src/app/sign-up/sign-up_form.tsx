@@ -11,6 +11,8 @@ import {
   faEyeSlash,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 export default function Sign_up_form() {
   const [email, setEmail] = useState("");
@@ -78,7 +80,9 @@ export default function Sign_up_form() {
       //}
 
       if (res !== undefined) {
-        router.push("/HomePage");
+        toast.success("Account created! Please check your email to verify and then sign in."); // show email verification has been sent message
+        //router.push("/HomePage");
+        (document.getElementById('myform') as HTMLFormElement).reset();
       }
       if (res == undefined) {
         //If the user attempts to sign up with the same email, they are thrown an error
@@ -119,7 +123,7 @@ export default function Sign_up_form() {
               TECH EDUCATION
             </p>
             <p className="mt-2 pb-5 text-center font-medium">Welcome!</p>
-            <form className="space-y-2" onSubmit={handleSignup}>
+            <form id="myform" className="space-y-2" onSubmit={handleSignup}>
               <div className="flex space-x-3">
                 <div className="flex-1">
                   <label
@@ -262,6 +266,11 @@ export default function Sign_up_form() {
                 >
                   Sign up
                 </button>
+                <ToastContainer
+                  className="Toast-position -mt-[15px]"
+                  style={{ width: "600px" }}
+                  position = "top-center"
+                />
               </div>
               <p className="mt-10 text-center text-sm text-gray-500">
                 Already have an account?{" "}
@@ -274,7 +283,6 @@ export default function Sign_up_form() {
               </p>
             </form>
           </div>
-
           <div
             className="rounded-r-lg bg-cover object-center lg:block lg:w-1/2"
             style={{
