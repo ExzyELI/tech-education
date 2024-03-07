@@ -21,8 +21,8 @@ import {
 import { User } from "firebase/auth";
 
 export default function Home() {
-  const gridSize = 3;
-  const totalCards = gridSize * (gridSize + 1); //amount of squares
+  const gridSize = 4;
+  const totalCards = gridSize * (gridSize); //amount of squares
   
   const images = [
     "/CGimages/mouse.png",
@@ -31,6 +31,8 @@ export default function Home() {
     "/CGimages/password.png",
     "/CGimages/microphone.png",
     "/CGimages/cursor.png",
+    "/CGimages/headphones.png",
+    "/CGimages/usb.png",
     
   ];
   const initialCards = Array.from(Array(totalCards).keys()).flatMap((num) => [
@@ -281,13 +283,16 @@ export default function Home() {
               </div>
               {isGameWon && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
-                    <div className="text-4xl font-bold text-center">
-                      Congratulations! You Win!
+                <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
+                  <div className="text-6xl font-bold text-center">
+                    Great Job!
+                    <div className="flex items-center justify-center animate-bounce"> {/* Flex container */}
+                      <img src="/CGimages/goodjob-man (1).png" style={{ width: "350px", height: "350px" }} />
                     </div>
-                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-8 text-center">Score: {finalScore}</p>
                   </div>
+                  <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-1 text-center">Score: {finalScore}</p>
                 </div>
+              </div>
               )}
             </div>
           )}
