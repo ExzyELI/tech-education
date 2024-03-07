@@ -227,7 +227,7 @@ export default function ActivitiesPage() {
                                 </a>
                             </div>
                             <div className="float-right w-60 mr-5 ml-5">
-                                <a href="/#">
+                                <a href="/quizActivity2">
                                     <div className="w-75 bg-[#e1f3ff] border border-gray-200 rounded-lg shadow hover:bg-gray-300 hover:scale-110">
                                     <img className="rounded-t-lg" src="https://i.imgur.com/Q2dIe4V.jpeg" />
                                         <div className="p-5">
