@@ -1,50 +1,14 @@
 "use client";
-import { useRouter } from "next/navigation";
 import Footer from "../../comps/footer";
+import Nav from "../../comps/nav";
 
 export default function Home() {
-  const router = useRouter();
-
-  const handleSignInButton = async () => {
-    router.push("/sign-in");
-  };
-
-  const handleSignUpButton = async () => {
-    router.push("/sign-up");
-  };
-
   return (
-    <main className="gradient font-family: font-serif leading-normal tracking-normal text-[#132241]">
+    <main className="gradient font-sans leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
-      {/* navbar begins */}
-      <nav className="fixed start-0 top-0 z-20 w-full border-b border-gray-200 bg-[#afce8b]">
-        <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-          <span className="self-center whitespace-nowrap text-2xl font-semibold">
-            Tech Education
-          </span>
-          {/* buttons */}
-          <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
-            <button
-              type="button"
-              className="rounded-lg bg-[#ffe08d] px-6 py-2 text-center text-sm font-medium hover:bg-[#ffd564] md:me-2 lg:me-2"
-              onClick={handleSignInButton}
-            >
-              Login
-            </button>
-            <button
-              type="button"
-              className="rounded-lg bg-[#f78b51] px-5 py-2 text-center text-sm font-medium hover:bg-[#f87a36]"
-              onClick={handleSignUpButton}
-            >
-              Sign Up
-            </button>
-          </div>
-        </div>
-      </nav>
-      {/* navbar ends */}
-
+      <Nav />
       {/* banner begins */}
-      <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-5">
+      <section className="-mb-[105px] border-b bg-[#ffecde] lg:-mt-12">
         <div className="px-6 py-12 text-center md:px-12 lg:my-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -52,7 +16,7 @@ export default function Home() {
               <div className="mt-12 lg:mt-[100px]">
                 <h1 className="text-5xl font-bold tracking-tight md:text-5xl lg:mb-16 lg:ml-[80px] lg:text-5xl">
                   Technology education <br />
-                  <span className="text-primary">for grades k-2</span>
+                  <span className="text-primary">for grades K-2</span>
                   <p className="mt-5 whitespace-normal text-2xl font-medium">
                     Join us today to gain exclusive access to educational
                     material for your student or child

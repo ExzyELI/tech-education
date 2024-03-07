@@ -24,7 +24,7 @@ export default function HomeNavBar() {
             <div className="flex space-x-3 md:order-2 md:space-x-0 rtl:space-x-reverse">
               <nav className="text-2lg">
                 <a
-                  href="#"
+                  href="/MatchingGame"
                   className="cursor-pointer px-3 text-lg font-semibold text-[#132241] hover:text-[#5c6ac4]"
                 >
                   Activities
