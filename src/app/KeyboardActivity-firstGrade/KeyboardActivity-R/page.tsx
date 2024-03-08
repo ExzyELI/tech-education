@@ -42,20 +42,20 @@ const KeyRKeyPressPage = () => {
 
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
-            <title>Press KeyR Activity</title>
+            <title>Press Key R Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">Press the KeyR Button</h1>
+                <h1 className="text-2xl font-bold">Press the Key R Button</h1>
                 {/* image path */}
                 <img src="/images/KeyR-key-press.gif" alt="Press KeyR" className="mt-4" />
                 {showMarks && (
                     <p className="mt-4 text-lg">
                         {/* display if right key is pressed */}
                         {correctPress ? (
-                            <span className="text-green-500">✓ Correct! You pressed the KeyR button.</span>
+                            <span className="text-green-500">✓ Correct! You pressed the Key R button.</span>
                         ) : (
                             //display any other key pressed */}
-                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the KeyR button.</span>
+                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Key R button.</span>
                         )}
                     </p>
                 )}
