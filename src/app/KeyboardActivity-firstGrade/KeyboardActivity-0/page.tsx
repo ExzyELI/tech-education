@@ -56,7 +56,7 @@ const Digit0KeyPressPage = () => {
                             <span className="text-green-500">✓ Correct! You pressed the Digit 0 button.</span>
                         ) : (
                             //display any other key pressed */}
-                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Digit0 button.</span>
+                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Digit 0 button.</span>
                         )}
                     </p>
                 )}

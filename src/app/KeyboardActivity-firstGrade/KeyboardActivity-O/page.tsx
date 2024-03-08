@@ -42,20 +42,20 @@ const KeyOKeyPressPage = () => {
 
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
-            <title>Press KeyO Activity</title>
+            <title>Press Key O Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">Press the KeyO Button</h1>
+                <h1 className="text-2xl font-bold">Press the Key O Button</h1>
                 {/* image path */}
                 <img src="/images/KeyO-key-press.gif" alt="Press KeyO" className="mt-4" />
                 {showMarks && (
                     <p className="mt-4 text-lg">
                         {/* display if right key is pressed */}
                         {correctPress ? (
-                            <span className="text-green-500">✓ Correct! You pressed the KeyO button.</span>
+                            <span className="text-green-500">✓ Correct! You pressed the Key O button.</span>
                         ) : (
                             //display any other key pressed */}
-                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the KeyO button.</span>
+                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Key O button.</span>
                         )}
                     </p>
                 )}

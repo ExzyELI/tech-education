@@ -41,20 +41,20 @@ const KeyXKeyPressPage = () => {
 
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
-            <title>Press KeyX Activity</title>
+            <title>Press Key X Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">Press the KeyX Button</h1>
+                <h1 className="text-2xl font-bold">Press the Key X Button</h1>
                 {/* image path */}
                 <img src="/images/KeyX-key-press.gif" alt="Press KeyX" className="mt-4" />
                 {showMarks && (
                     <p className="mt-4 text-lg">
                         {/* display if right key is pressed */}
                         {correctPress ? (
-                            <span className="text-green-500">✓ Correct! You pressed the KeyX button.</span>
+                            <span className="text-green-500">✓ Correct! You pressed the Key X button.</span>
                         ) : (
                             //display any other key pressed */}
-                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the KeyX button.</span>
+                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Key X button.</span>
                         )}
                     </p>
                 )}
