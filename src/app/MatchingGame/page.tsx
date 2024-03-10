@@ -239,9 +239,9 @@ export default function Home() {
             <p className="mt-2 text-center text-xl">
               Instructions: Click on cards to match them.
             </p>
-            <div className="mx-[290px]"> 
+            <div className="mx-auto max-w-[400px] sm:max-w-[600px]"> 
             {!gameStarted && (
-              <button className="rounded-lg bg-[#ffe08d] shadow-md px-6 py-4 mt-4 text-xl transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#ff914d]" onClick={startGame}>Start Game</button>
+              <button className="mt-4 rounded-lg bg-[#ffe08d] px-6 py-4 text-xl shadow-md transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#ff914d] block mx-auto" onClick={startGame}>Start Game</button>
             )}
           </div>
           {gameStarted && (
@@ -263,12 +263,12 @@ export default function Home() {
                 <img
                     src={images[card]}
                     alt={`Card ${index}`}
-                    style={{ width: "100%", height: "100%"}}
+                    className="w-full h-full"
                 />
             ) : (
                 <img src="https://cdn.discordapp.com/attachments/1196945767785578598/1205159897663279114/Screen_Shot_2024-02-08_at_9.34.52_AM.png?ex=65f30b1e&is=65e0961e&hm=0f846bd73ee4c0bb03c39dc0488456a41e7ab937acd0f0824327bd152cd18dc7&"
                 
-                style={{ width: "75%", height: "75%"}} />
+                className="w-3/4 h-3/4" />
             )}
         </button>
           ))}
@@ -282,10 +282,12 @@ export default function Home() {
               {isGameWon && (
                 <div className="absolute inset-0 flex items-center justify-center">
                 <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
-                  <div className="text-6xl font-bold text-center">
+                  <div className="text-6xl font-bold text-center sm:text-7xl lg:text-8xl">
                     Great Job!
                     <div className="flex items-center justify-center animate-bounce"> {/* Flex container */}
-                      <img src="/CGimages/goodjob-man (1).png" style={{ width: "350px", height: "350px" }} />
+                      <img src="/CGimages/goodjob-man (1).png" 
+                      className='w-48 h-48 sm:w-64 sm:h-64 lg:w-72 lg:h-72'
+                      />
                     </div>
                   </div>
                   <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-1 text-center">Score: {finalScore}</p>
