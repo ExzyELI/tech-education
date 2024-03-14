@@ -51,7 +51,7 @@ export default function Home() {
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="min-h-screen bg-[#ffecde] pt-10">
+      <section className="min-h-screen bg-[#FAF9F6] pt-10">
         <div className="text-center md:px-12 lg:text-left">
           <div>
             <div className="flex flex-col items-center justify-center">

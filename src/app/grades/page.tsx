@@ -77,7 +77,7 @@ const GradesPage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col bg-[#ffecde] font-sans text-gray-800">
+    <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-gray-800">
       <title>Grades</title>
       <Nav />
       <div className="mx-auto my-5 min-h-screen max-w-screen-xl px-4 sm:px-8">
@@ -161,7 +161,13 @@ const GradesPage = () => {
                       {grade.elapsedTime}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
-                      {grade.quiz1_attempts || grade.password1_attempts}
+                      {grade.quiz1_attempts ||
+                        grade.password1_attempts ||
+                        grade.quizK_attempts ||
+                        grade.matching1_attempts ||
+                        grade.quiz2_attempts ||
+                        grade.matchingK_attempts ||
+                        grade.matching2_attempts}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
                       {grade.timestamp

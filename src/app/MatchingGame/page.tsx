@@ -2,7 +2,6 @@
 import { ReactNode } from 'react';
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash"; // npm run lodash
-import MatchingNavBar from "./MatchingNavBar";
 import Footer from "../../../comps/footer";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import Nav from "../../../comps/nav";
@@ -228,11 +227,11 @@ export default function Home() {
   
   return (
     <main>
-      <div className="font-serif leading-normal tracking-normal text-[#132241]">
+      <div className="font-sans leading-normal tracking-normal text-[#132241]">
         {/*navbar begins */}
         <Nav/>
         {/* navbar ends */}
-        <div className="flex min-h-screen bg-gradient-to-br from-[#fdf4ed] to-[#ffecde] text-[#434343]">
+        <div className="flex min-h-screen bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
             <h1 className="mt-2 text-center text-7xl font-bold">
               Match the Tech!
@@ -282,13 +281,16 @@ export default function Home() {
               </div>
               {isGameWon && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
-                    <div className="text-4xl font-bold text-center">
-                      Congratulations! You Win!
+                <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
+                  <div className="text-6xl font-bold text-center">
+                    Great Job!
+                    <div className="flex items-center justify-center animate-bounce"> {/* Flex container */}
+                      <img src="/CGimages/goodjob-man (1).png" style={{ width: "350px", height: "350px" }} />
                     </div>
-                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-8 text-center">Score: {finalScore}</p>
                   </div>
+                  <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-1 text-center">Score: {finalScore}</p>
                 </div>
+              </div>
               )}
             </div>
           )}
