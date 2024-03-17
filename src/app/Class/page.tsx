@@ -85,6 +85,7 @@ export default function ClassPage() {
           await updateDoc(doc(db, "users", user.uid), {
             classCode: classCode,
           });
+          console.log("Done");
         } else {
           // No user with the specified role and class code exists
           console.log("No user with role 'Teacher' and class code:", classCode);
@@ -129,7 +130,9 @@ export default function ClassPage() {
                   <input
                     id="Class Code"
                     name="Class Code"
-                    type="Class Code"
+                    type="text"
+                    placeholder="5-Digit Code"
+                    maxLength={5}
                     required
                     onChange={(e) => setClassCode(e.target.value)}
                     className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
