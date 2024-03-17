@@ -32,30 +32,15 @@ function generateClassCode(): string {
   return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
 }
 
-// async function getStudents() {
-//   const q = query(collection(db, "users"), where("role", "==", "Student"));
-//   const students = await getDocs(q);
-//   return students.docs.map((doc) => {
-//     const data = doc.data();
-//     return {
-//       firstName: data.firstName,
-//       lastName: data.lastName,
-//       email: data.email,
-//       role: data.role,
-//       id: doc.id,
-//     } satisfies Student;
-//   });
-// }
-
 export default function Home() {
   const [user, setUser] = useState<User | null>(null); // logged-in user
   const [classCode, setClassCode] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
   const [codeExists, setCodeExists] = useState(false);
-  //const students = await getStudents();
+  const [students, setStudents] = useState<Student[]>([]);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+    const fetchUser = auth.onAuthStateChanged(async (user) => {
       // updating user state when auth state changes
       setUser(user);
 
@@ -76,13 +61,53 @@ export default function Home() {
             console.log("Class code already exists:", userData.classCode);
             setClassCode(userData.classCode);
             setCodeExists(true);
+            const q = query(
+              collection(db, "users"),
+              where("role", "==", "Student"),
+              where("classCode", "==", userData.classCode),
+            );
+            const querySnapshot = await getDocs(q);
+            const studentData = querySnapshot.docs.map((doc) => ({
+              firstName: doc.data().firstName,
+              lastName: doc.data().lastName,
+              email: doc.data().email,
+              role: doc.data().role,
+              id: doc.id,
+            }));
+            setStudents(studentData);
+            console.log("Gottem");
           }
           setUserRole(userData.role);
         }
       }
     });
 
-    return () => unsubscribe();
+    // const getStudents = async () => {
+    //   try {
+    //     const q = query(
+    //       collection(db, "users"),
+    //       where("role", "==", "Student"),
+    //       where("classCode", "==", classCode),
+    //     );
+    //     const querySnapshot = await getDocs(q);
+    //     const studentData = querySnapshot.docs.map((doc) => ({
+    //       firstName: doc.data().firstName,
+    //       lastName: doc.data().lastName,
+    //       email: doc.data().email,
+    //       role: doc.data().role,
+    //       id: doc.id,
+    //     }));
+    //     setStudents(studentData);
+    //     console.log("Gottem");
+    //     console.log(userData.classCode);
+    //   } catch (error) {
+    //     console.error("Error fetching students:", error);
+    //   }
+    // };
+
+    return () => {
+      fetchUser();
+    };
   }, []);
 
   // Function to create a classroom collection with a random 5-digit class code
@@ -237,7 +262,47 @@ export default function Home() {
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-gray-200 bg-white">
-                            {/* Student map */}
+                            {students.map((student, index) => (
+                              <tr
+                                key={index}
+                                className={
+                                  index % 2 == 0 ? "bg-white" : "bg-gray-100"
+                                }
+                              >
+                                <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
+                                  {student.firstName + " " + student.lastName}
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  M
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  Off
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  Off
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  Off
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  English
+                                </td>
+                                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                  {student.id}
+                                </td> */}
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  1 Academic Year
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                                  <a
+                                    href="#"
+                                    className="text-indigo-600 hover:text-indigo-900"
+                                  >
+                                    Edit
+                                  </a>
+                                </td>
+                              </tr>
+                            ))}
                           </tbody>
                         </table>
                       </div>
