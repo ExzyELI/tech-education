@@ -32,68 +32,75 @@ function generateClassCode(): string {
   return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
 }
 
-async function getStudents() {
-  const q = query(collection(db, "users"), where("role", "==", "Student"));
-  const students = await getDocs(q);
-  return students.docs.map((doc) => {
-    const data = doc.data();
-    return {
-      firstName: data.firstName,
-      lastName: data.lastName,
-      email: data.email,
-      role: data.role,
-      id: doc.id,
-    } satisfies Student;
-  });
-}
+// async function getStudents() {
+//   const q = query(collection(db, "users"), where("role", "==", "Student"));
+//   const students = await getDocs(q);
+//   return students.docs.map((doc) => {
+//     const data = doc.data();
+//     return {
+//       firstName: data.firstName,
+//       lastName: data.lastName,
+//       email: data.email,
+//       role: data.role,
+//       id: doc.id,
+//     } satisfies Student;
+//   });
+// }
 
-export default async function Home() {
+export default function Home() {
   const [user, setUser] = useState<User | null>(null); // logged-in user
   const [classCode, setClassCode] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
-  const students = await getStudents();
+  const [codeExists, setCodeExists] = useState(false);
+  //const students = await getStudents();
 
-  //useEffect(() => {
-  //const unsubscribe = auth.onAuthStateChanged(async (user) => {
-  //// updating user state when auth state changes
-  //setUser(user);
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      // updating user state when auth state changes
+      setUser(user);
 
-  //if (user) {
-  //const firestore = getFirestore();
+      if (user) {
+        const firestore = getFirestore();
 
-  //// reference to user document in Firestore
-  //const userDocRef = doc(firestore, "users", user.uid);
+        // reference to user document in Firestore
+        const userDocRef = doc(firestore, "users", user.uid);
 
-  //// snapshot of user document
-  //const userDocSnap = await getDoc(userDocRef);
+        // snapshot of user document
+        const userDocSnap = await getDoc(userDocRef);
 
-  //if (userDocSnap.exists()) {
-  //// user data is grabbed from snapshot if user document exists
-  //const userData = userDocSnap.data();
+        if (userDocSnap.exists()) {
+          // user data is grabbed from snapshot if user document exists
+          const userData = userDocSnap.data();
 
-  //setUserRole(userData.role);
-  //}
-  //}
-  //});
+          if (userData.classCode) {
+            console.log("Class code already exists:", userData.classCode);
+            setClassCode(userData.classCode);
+            setCodeExists(true);
+          }
+          setUserRole(userData.role);
+        }
+      }
+    });
 
-  //return () => unsubscribe();
-  // }, []);
+    return () => unsubscribe();
+  }, []);
 
   // Function to create a classroom collection with a random 5-digit class code
   async function createClassroom() {
     const code = generateClassCode();
     if (user && userRole === "Teacher") {
       // Only allow teachers to create classes
-      await addDoc(collection(db, "classrooms"), { classCode: code });
+      //await addDoc(collection(db, "classrooms"), { classCode: code });
       // Update the user's document with the class code
       await updateDoc(doc(db, "users", user.uid), {
         classCode: code,
       });
       setClassCode(code);
+      setCodeExists(true);
     }
     console.log(code);
   }
-
+  function classroomCheck() {}
   return (
     <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
@@ -135,7 +142,7 @@ export default async function Home() {
                 <div className="px-4 sm:px-6 lg:px-8">
                   <div className="flex items-center py-4">
                     <button
-                      className="mr-10 rounded-lg bg-[#afce8b] px-4 py-2 font-semibold text-white shadow-md hover:bg-[#ffe08d]"
+                      className={`mr-10 rounded-lg bg-[#afce8b] px-4 py-2 font-semibold text-white shadow-md hover:bg-[#ffe08d] ${codeExists ? "hidden" : ""} `}
                       onClick={createClassroom}
                     >
                       Create Class
@@ -230,47 +237,7 @@ export default async function Home() {
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-gray-200 bg-white">
-                            {students.map((student, index) => (
-                              <tr
-                                key={index}
-                                className={
-                                  index % 2 == 0 ? "bg-white" : "bg-gray-100"
-                                }
-                              >
-                                <td className="whitespace-nowrap px-6 py-4 text-sm font-medium text-gray-900">
-                                  {student.firstName + " " + student.lastName}
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  F
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  Off
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  Off
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  Off
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  English
-                                </td>
-                                {/* <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                  {student.id}
-                                </td> */}
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  1 Academic Year
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                  <a
-                                    href="#"
-                                    className="text-indigo-600 hover:text-indigo-900"
-                                  >
-                                    Edit
-                                  </a>
-                                </td>
-                              </tr>
-                            ))}
+                            {/* Student map */}
                           </tbody>
                         </table>
                       </div>
