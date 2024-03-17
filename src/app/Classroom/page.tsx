@@ -100,10 +100,10 @@ export default function Home() {
     }
     console.log(code);
   }
-  function classroomCheck() {}
+
   return (
     <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
-      <title>Tech Education</title>
+      <title>Classroom Page</title>
       {/*navbar begins */}
       <Nav />
       {/* navbar ends */}
