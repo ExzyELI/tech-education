@@ -322,7 +322,7 @@ export default function Quiz() {
             />
           </div>
         </div>
-        <div className="float ml-20 mt-[60px] flex md:flex">
+        <div className="float ml-20 mt-[60px]">
           <Stats
             attempts={quizK_attempts}
             elapsedTime={elapsedTime}
