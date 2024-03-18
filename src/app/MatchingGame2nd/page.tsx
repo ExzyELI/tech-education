@@ -22,8 +22,9 @@ import { User } from "firebase/auth";
 
 export default function Home() {
   const gridSize = 4;
-  const totalCards = gridSize * gridSize; //amount of squares
+  const totalCards = gridSize * gridSize; //grid cards set up
 
+  //card images
   const images = [
     "/CGimages/mouse.png",
     "/CGimages/keyboard.png",
@@ -37,15 +38,15 @@ export default function Home() {
   const initialCards = Array.from(Array(totalCards).keys()).flatMap((num) => [
     num % images.length, // Store the index of the image in the images array
   ]);
-  const [cards, setCards] = useState<number[]>(shuffle(initialCards));
-  const [flippedCards, setFlippedCards] = useState<number[]>([]);
-  const [matchedCards, setMatchedCards] = useState<number[]>([]);
-  const [clickCount, setClickCount] = useState<number>(0);
-  const [isDisabled, setIsDisabled] = useState<boolean>(false);
-  const [isGameWon, setIsGameWon] = useState<boolean>(false);
-  const [gameStarted, setGameStarted] = useState(false);
-  const [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
+  const [cards, setCards] = useState<number[]>(shuffle(initialCards)); //initial cards with a number
+  const [flippedCards, setFlippedCards] = useState<number[]>([]); // card flipper
+  const [matchedCards, setMatchedCards] = useState<number[]>([]); // set matched cards aside
+  const [clickCount, setClickCount] = useState<number>(0); // store clicks
+  const [isDisabled, setIsDisabled] = useState<boolean>(false); // disable cards when matched
+  const [isGameWon, setIsGameWon] = useState<boolean>(false); // all Cards are matched 
+  const [gameStarted, setGameStarted] = useState(false); // preform SetCards and start timer
+  const [seconds, setSeconds] = useState(0); // timer
+  const [isActive, setIsActive] = useState(false); // card is live
   const [user, setUser] = useState<User | null>(null); // store logged in user
   const [matching2_attempts, setAttempts] = useState(0); // store attempts
   let interval: string | number | NodeJS.Timeout | undefined;
@@ -71,7 +72,7 @@ export default function Home() {
     return () => clearInterval(interval as NodeJS.Timeout);
   }, [isActive]);
 
-  const formatTime = (time: number) => {
+  const formatTime = (time: number) => { // Timer format
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = Math.floor(time % 60);
@@ -201,7 +202,7 @@ export default function Home() {
     setCards(shuffle(initialCards)); // Shuffle cards after game is in start
     handleStart();
   };
-  const calculateScore = () => {
+  const calculateScore = () => { // create score based on clicks and time elapsed
     const totalMoves = clickCount;
     const elapsedTime = seconds;
     const score = (12000 - totalMoves * 100 - elapsedTime * 10) / 2500;
