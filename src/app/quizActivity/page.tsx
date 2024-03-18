@@ -210,7 +210,7 @@ export default function Quiz() {
       <title>Tech Education</title>
       <Nav />
       <div className="//rounded-lg //bg-white //border mx-[200px] flex justify-center border-gray-200 py-8">
-        <div className="flex-child ml-[200px] w-[500px] md:flex">
+        <div className="flex-child ml-[200px] w-[500px]">
           {(() => {
             switch (isGameStarted) {
               case true:
@@ -220,7 +220,7 @@ export default function Quiz() {
                       <h2 className="mb-2 mt-5 text-2xl font-semibold">
                         Question {currentQuestion + 1} of {questions.length}
                       </h2>
-                      <p className="border-1 mb-3 flex w-full items-center justify-center rounded-lg bg-white p-3 font-semibold text-[#5c93ff] shadow md:p-5">
+                      <p className="border-1 mb-3 flex w-full items-center justify-center rounded-lg bg-white p-3 font-semibold text-[#5c93ff] shadow md:p-5 ">
                         {questions[currentQuestion].question}
                       </p>
                       <div className="mb-8 flex justify-center">
