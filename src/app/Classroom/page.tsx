@@ -167,7 +167,7 @@ export default function Home() {
                 <div className="px-4 sm:px-6 lg:px-8">
                   <div className="flex items-center py-4">
                     <button
-                      className={`mr-10 rounded-lg bg-[#afce8b] px-4 py-2 font-semibold text-white shadow-md hover:bg-[#ffe08d] ${codeExists ? "hidden" : ""} `}
+                      className={`mr-10 rounded-lg bg-[#afce8b] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ffe08d] ${codeExists ? "hidden" : ""} `}
                       onClick={createClassroom}
                     >
                       Create Class
@@ -184,10 +184,10 @@ export default function Home() {
                 {/* Actions Bar */}
                 <div className="mb-6 flex justify-between">
                   <div className="flex space-x-4">
-                    <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:bg-[#ff9795]">
+                    <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]">
                       Add Student
                     </button>
-                    <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:bg-[#ff9795]">
+                    <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]">
                       Edit Class
                     </button>
                   </div>
@@ -206,29 +206,29 @@ export default function Home() {
                     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                       <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                         <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-[#e1f3ff]">
+                          <thead className="bg-[#3f72af]">
                             <tr>
                               <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-white"
                               >
                                 Student
                               </th>
                               <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-white"
                               >
                                 M/F
                               </th>
                               <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-white"
                               >
                                 Role
                               </th>
                               <th
                                 scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
+                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-white"
                               >
                                 Language
                               </th>
@@ -240,7 +240,7 @@ export default function Home() {
                               </th> */}
                               <th
                                 scope="col"
-                                className="tracking wider px-6 py-3 text-left text-xs font-medium uppercase text-gray-500"
+                                className="tracking wider px-6 py-3 text-left text-xs font-medium uppercase text-white"
                               >
                                 Grade
                               </th>
@@ -276,12 +276,9 @@ export default function Home() {
                                   {student.grade}
                                 </td>
                                 <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                  <a
-                                    href="#"
-                                    className="text-indigo-600 hover:text-indigo-900"
-                                  >
+                                  <button className="mx-2 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-indigo-900">
                                     Edit
-                                  </a>
+                                  </button>
                                 </td>
                               </tr>
                             ))}
