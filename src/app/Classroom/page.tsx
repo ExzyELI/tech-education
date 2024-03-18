@@ -23,6 +23,7 @@ interface Student {
   email: string;
   role: string;
   id: string;
+  grade: string;
 }
 
 // Function to generate a random 5-digit number
@@ -73,6 +74,7 @@ export default function Home() {
               email: doc.data().email,
               role: doc.data().role,
               id: doc.id,
+              grade: doc.data().grade,
             }));
             setStudents(studentData);
             console.log("Gottem");
@@ -224,19 +226,7 @@ export default function Home() {
                                 scope="col"
                                 className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
                               >
-                                Printing
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                              >
-                                Recording
-                              </th>
-                              <th
-                                scope="col"
-                                className="px-6 py-3 text-left text-xs font-medium uppercase tracking-wider text-gray-500"
-                              >
-                                Accessibility
+                                Role
                               </th>
                               <th
                                 scope="col"
@@ -254,7 +244,7 @@ export default function Home() {
                                 scope="col"
                                 className="tracking wider px-6 py-3 text-left text-xs font-medium uppercase text-gray-500"
                               >
-                                Academic Goal
+                                Grade
                               </th>
                               <th scope="col" className="relative px-6 py-3">
                                 <span className="sr-only">Edit</span>
@@ -276,13 +266,7 @@ export default function Home() {
                                   M
                                 </td>
                                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  Off
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  Off
-                                </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  Off
+                                  {student.role}
                                 </td>
                                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                   English
@@ -291,7 +275,7 @@ export default function Home() {
                                   {student.id}
                                 </td> */}
                                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
-                                  1 Academic Year
+                                  {student.grade}
                                 </td>
                                 <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                   <a
