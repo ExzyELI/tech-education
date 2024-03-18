@@ -19,6 +19,7 @@ import Nav from "../../../comps/nav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import Footer from "../../../comps/footer";
 
 export default function ClassPage() {
@@ -82,9 +83,11 @@ export default function ClassPage() {
             classCode: classCode,
           });
           console.log("Done");
+          toast.success("Successfully added to class!"); // show success message
         } else {
           // No user with the specified role and class code exists
           console.log("No user with role 'Teacher' and class code:", classCode);
+          toast.error("No classroom with that code exists!");
         }
       } catch (error) {
         console.error("Error checking class code:", error);
@@ -147,8 +150,8 @@ export default function ClassPage() {
               </form>
             </div>
             <ToastContainer
-              className="Toast-position mt-[20px]"
-              style={{ width: "450px" }}
+              className="Toast-position mt-[70px]"
+              style={{ width: "350px" }}
               position="top-center"
             />
           </div>

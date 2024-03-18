@@ -16,6 +16,8 @@ import { User } from "firebase/auth";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 interface Student {
   firstName: string;
