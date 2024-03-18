@@ -131,22 +131,18 @@ export default function Home() {
   }
 
   return (
-    <main className="font-family: font-serif leading-normal tracking-normal text-[#132241]">
+    <main className="font-family: font-sans leading-normal tracking-normal text-[#132241]">
       <title>Classroom Page</title>
       {/*navbar begins */}
       <Nav />
       {/* navbar ends */}
 
       {/* banner begins */}
-      <section className="border-b bg-[#ffecde]">
+      <section className="border-b bg-[#FAF9F6]">
         <div className="px-6 pb-10 text-center md:px-12 lg:text-left">
           <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-            <header className="flex w-full items-center justify-center py-3 font-serif text-5xl leading-normal tracking-normal">
-              My Classroom
-            </header>
-
             <div className="col-span-1 row-span-1 mb-10">
-              <div className="flex items-center justify-center object-center">
+              <div className="flex items-center justify-center object-center pt-[50px]">
                 <img
                   className="h-[250px]"
                   src="https://i.imgur.com/1EDuUBO.png"
