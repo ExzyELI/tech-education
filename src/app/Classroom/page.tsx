@@ -14,8 +14,8 @@ import { db } from "@/app/firebase/init_app";
 import { useState, useEffect } from "react";
 import { User } from "firebase/auth";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
-import { useRouter } from "next/navigation";
 import Nav from "../../../comps/nav";
+import Footer from "../../../comps/footer";
 
 interface Student {
   firstName: string;
@@ -300,13 +300,7 @@ export default function Home() {
       </section>
 
       {/* footer begins */}
-      <footer className="sticky w-full bg-[#afce8b]">
-        <div className="mx-auto flex w-full max-w-screen-xl items-center justify-center px-4 py-4">
-          <span className="text-sm sm:text-center ">
-            © 2024 Tech Education™
-          </span>
-        </div>
-      </footer>
+      <Footer />
       {/* footer ends */}
     </main>
   );

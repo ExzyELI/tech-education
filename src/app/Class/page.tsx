@@ -17,11 +17,7 @@ import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import Nav from "../../../comps/nav";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faEye,
-  faEyeSlash,
-  faArrowLeft,
-} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import Footer from "../../../comps/footer";
 
