@@ -164,34 +164,16 @@ export default function Home() {
       {/* banner begins */}
       <section className="border-b bg-[#FAF9F6]">
         <div className="px-6 pb-10 text-center md:px-12 lg:text-left">
-          <div className="w-100 mx-auto sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
-            <div className="col-span-1 row-span-1 mb-10">
-              <div className="flex items-center justify-center object-center pt-[50px]">
-                <img
-                  className="h-[250px]"
-                  src="https://i.imgur.com/1EDuUBO.png"
-                />
-              </div>
-
-              <p className="text-center text-xs text-[#ff6865]">
-                <a
-                  href="https://www.vectorstock.com/royalty-free-vector/teacher-sitting-classroom-with-chalkboard-vector-43444042"
-                  target="_blank"
-                >
-                  img source
-                </a>
-              </p>
-            </div>
-
+          <div className="w-100 mx-auto pt-10 sm:max-w-2xl md:max-w-3xl lg:max-w-5xl xl:max-w-7xl">
             {/* Beginning of main content */}
             <div className="min-h-screen rounded-md bg-white">
               {/* Information Bar */}
-              <div className=" rounded-t-md bg-[#ff6865] shadow">
+              <div className=" rounded-t-md bg-[#87CEEB] shadow">
                 {/* Placeholder for actual navigation content */}
                 <div className="px-4 sm:px-6 lg:px-8">
                   <div className="flex items-center py-4">
                     <button
-                      className={`mr-10 rounded-lg bg-[#afce8b] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ffe08d] ${codeExists ? "hidden" : ""} `}
+                      className={`mr-10 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${codeExists ? "hidden" : ""} `}
                       onClick={createClassroom}
                     >
                       Create Class
@@ -209,7 +191,7 @@ export default function Home() {
                 <div className="mb-6 flex justify-between">
                   <div className="flex space-x-4">
                     <button
-                      className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]"
+                      className="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900"
                       onClick={handleStudents}
                     >
                       Add Student
@@ -223,13 +205,13 @@ export default function Home() {
                         className={`rounded-lg border px-4 py-2`}
                       />
                       <button
-                        className="ml-4 rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]"
+                        className="ml-4 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900"
                         onClick={handleAddStudent}
                       >
                         Add
                       </button>
                     </form>
-                    <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]">
+                    <button className="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900">
                       Edit Class
                     </button>
                   </div>
@@ -248,7 +230,7 @@ export default function Home() {
                     <div className="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
                       <div className="overflow-hidden border-b border-gray-200 shadow sm:rounded-lg">
                         <table className="min-w-full divide-y divide-gray-200">
-                          <thead className="bg-[#3f72af]">
+                          <thead className="bg-[#87CEEB]">
                             <tr>
                               <th
                                 scope="col"
