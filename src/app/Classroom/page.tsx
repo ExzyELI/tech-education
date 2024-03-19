@@ -41,6 +41,7 @@ export default function Home() {
   const [userRole, setUserRole] = useState<string>("");
   const [codeExists, setCodeExists] = useState(false);
   const [addStudents, setAddStudents] = useState(false);
+  const [studentCode, setStudentCode] = useState<string>("");
   const [students, setStudents] = useState<Student[]>([]);
 
   useEffect(() => {
@@ -231,11 +232,21 @@ export default function Home() {
                     >
                       Add Student
                     </button>
-                    <input
-                      type="text"
-                      placeholder="Add Student Code..."
-                      className={`rounded-lg border px-4 py-2 ${!addStudents ? "hidden" : ""} `}
-                    />
+                    <form className={`${!addStudents ? "hidden" : ""} `}>
+                      <input
+                        type="text"
+                        placeholder="Add Student Code..."
+                        onChange={(e) => setStudentCode(e.target.value)}
+                        maxLength={5}
+                        className={`rounded-lg border px-4 py-2`}
+                      />
+                      <button
+                        className="ml-4 rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]"
+                        onClick={handleStudents}
+                      >
+                        Add
+                      </button>
+                    </form>
                     <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]">
                       Edit Class
                     </button>
@@ -244,7 +255,6 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Search students..."
-                      maxLength={5}
                       className="rounded-lg border px-4 py-2"
                     />
                   </div>
