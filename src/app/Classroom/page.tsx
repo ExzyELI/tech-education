@@ -40,6 +40,7 @@ export default function Home() {
   const [classCode, setClassCode] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
   const [codeExists, setCodeExists] = useState(false);
+  const [addStudents, setAddStudents] = useState(false);
   const [students, setStudents] = useState<Student[]>([]);
 
   useEffect(() => {
@@ -114,6 +115,46 @@ export default function Home() {
     };
   }, []);
 
+  function handleStudents() {
+    setAddStudents(true);
+  }
+
+  async function addStudent() {
+    if (user) {
+      const firestore = getFirestore();
+
+      // reference to user document in Firestore
+      const userDocRef = doc(firestore, "users", user.uid);
+
+      // snapshot of user document
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        // user data is grabbed from snapshot if user document exists
+        const userData = userDocSnap.data();
+
+        if (userData.classCode) {
+          const q = query(
+            collection(db, "users"),
+            where("role", "==", "Student"),
+            where("classCode", "==", userData.classCode),
+          );
+          const querySnapshot = await getDocs(q);
+          const studentData = querySnapshot.docs.map((doc) => ({
+            firstName: doc.data().firstName,
+            lastName: doc.data().lastName,
+            email: doc.data().email,
+            role: doc.data().role,
+            id: doc.id,
+            grade: doc.data().grade,
+          }));
+          setStudents(studentData);
+          console.log("Gottem");
+        }
+        setUserRole(userData.role);
+      }
+    }
+  }
   // Function to create a classroom collection with a random 5-digit class code
   async function createClassroom() {
     const code = generateClassCode();
@@ -184,9 +225,17 @@ export default function Home() {
                 {/* Actions Bar */}
                 <div className="mb-6 flex justify-between">
                   <div className="flex space-x-4">
-                    <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]">
+                    <button
+                      className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]"
+                      onClick={handleStudents}
+                    >
                       Add Student
                     </button>
+                    <input
+                      type="text"
+                      placeholder="Add Student Code..."
+                      className={`rounded-lg border px-4 py-2 ${!addStudents ? "hidden" : ""} `}
+                    />
                     <button className="rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]">
                       Edit Class
                     </button>
@@ -195,6 +244,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Search students..."
+                      maxLength={5}
                       className="rounded-lg border px-4 py-2"
                     />
                   </div>
