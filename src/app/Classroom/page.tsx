@@ -120,40 +120,22 @@ export default function Home() {
     setAddStudents(true);
   }
 
-  async function addStudent() {
-    if (user) {
-      const firestore = getFirestore();
+  async function handleAddStudent() {
+    //Want to check the database for the studentCode that was input by the teacher,
+    //and if the code is found, add the classCode to that student users information.
+    const q = query(
+      collection(db, "users"),
+      where("role", "==", "Student"),
+      where("studentCode", "==", studentCode),
+    );
+    const querySnapshot = await getDocs(q);
 
-      // reference to user document in Firestore
-      const userDocRef = doc(firestore, "users", user.uid);
-
-      // snapshot of user document
-      const userDocSnap = await getDoc(userDocRef);
-
-      if (userDocSnap.exists()) {
-        // user data is grabbed from snapshot if user document exists
-        const userData = userDocSnap.data();
-
-        if (userData.classCode) {
-          const q = query(
-            collection(db, "users"),
-            where("role", "==", "Student"),
-            where("classCode", "==", userData.classCode),
-          );
-          const querySnapshot = await getDocs(q);
-          const studentData = querySnapshot.docs.map((doc) => ({
-            firstName: doc.data().firstName,
-            lastName: doc.data().lastName,
-            email: doc.data().email,
-            role: doc.data().role,
-            id: doc.id,
-            grade: doc.data().grade,
-          }));
-          setStudents(studentData);
-          console.log("Gottem");
-        }
-        setUserRole(userData.role);
-      }
+    if (!querySnapshot.empty) {
+      const userDoc = querySnapshot.docs[0]; // Get the first document from the query results
+      const userId = userDoc.id; // Extract the UID of the user
+      const userRef = doc(db, "users", userId);
+      await updateDoc(userRef, { classCode });
+      console.log(classCode);
     }
   }
   // Function to create a classroom collection with a random 5-digit class code
@@ -242,7 +224,7 @@ export default function Home() {
                       />
                       <button
                         className="ml-4 rounded-lg bg-[#ff6865] px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-[#ff9795]"
-                        onClick={handleStudents}
+                        onClick={handleAddStudent}
                       >
                         Add
                       </button>
