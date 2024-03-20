@@ -40,7 +40,7 @@ const KeyPKeyPressPage = () => {
     };
 
     return (
-        <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
+        <main className="flex min-h-screen flex-col space-y-[110px] bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">
             <title>Press Key P Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">
