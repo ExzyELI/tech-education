@@ -48,12 +48,12 @@ const Charts: React.FC<ChartProps> = ({ activityData }) => {
         donutCharts.push(
           <div
             key={activityName}
-            className="mb-8 w-full rounded-lg border bg-white p-6"
+            className="mb-8 rounded-lg border bg-white p-6 md:w-full md:max-w-2xl"
           >
             <h5 className="-mt-2 mb-4 text-center text-2xl font-bold text-gray-900">
               {activityName}
             </h5>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
               {/* highest score chart */}
               <div className="flex flex-col items-center">
                 <div className="relative h-24 w-24">

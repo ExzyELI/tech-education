@@ -97,8 +97,7 @@ const Nav: React.FC = () => {
     ],
     Parent: [
       { href: "/HomePage", label: "Home", icon: faHome },
-      { href: "/activities", label: "Activities", icon: faMouse },
-      { href: "/grades", label: "Grades", icon: faBookOpen },
+      { href: "/reports", label: "Reports", icon: faClipboardList },
       { href: "/profile", label: "Profile", icon: faUser },
     ],
   };

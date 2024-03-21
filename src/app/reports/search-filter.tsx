@@ -76,7 +76,7 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
       <div className="flex items-center overflow-hidden rounded-md border border-gray-200 bg-white">
         <button
           onClick={toggleFilter}
-          className="bg-gray-200 px-4 py-2 text-gray-700 hover:bg-gray-300 focus:outline-none"
+          className="bg-blue-200 px-4 py-2 text-gray-700 hover:bg-blue-300 focus:outline-none"
           type="button"
         >
           <FontAwesomeIcon icon={faFilter} />
