@@ -5,9 +5,7 @@ import { User } from "firebase/auth";
 import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
-// npm install react-chartjs-2 chart.js
-import "chart.js/auto";
-import { Pie } from "react-chartjs-2";
+import Charts from "./charts";
 
 interface Activity {
   activityName: string;
@@ -45,7 +43,7 @@ const ReportsPage = () => {
     }
   };
 
-  const generatePieCharts = () => {
+  const createDonutCharts = () => {
     const activityGroups: { [key: string]: Activity[] } = {};
     activityData.forEach((activity) => {
       if (!activityGroups[activity.activityName]) {
@@ -54,7 +52,7 @@ const ReportsPage = () => {
       activityGroups[activity.activityName].push(activity);
     });
 
-    const pieCharts: JSX.Element[] = [];
+    const donutCharts: JSX.Element[] = [];
     for (const activityName in activityGroups) {
       if (Object.prototype.hasOwnProperty.call(activityGroups, activityName)) {
         const activityData = activityGroups[activityName];
@@ -64,39 +62,26 @@ const ReportsPage = () => {
         const averageScore =
           scores.reduce((acc, score) => acc + score, 0) / scores.length;
 
-        const data = {
-          labels: ["Highest Score", "Lowest Score", "Average Score"],
-          datasets: [
-            {
-              data: [highestScore, lowestScore, averageScore],
-              backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-              hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            },
-          ],
-        };
-
-        pieCharts.push(
-          <div key={activityName} className="mx-auto mb-6 max-w-md">
-            <div className="rounded-lg bg-white p-4 shadow">
-              <h2 className="text-lg font-semibold">{activityName}</h2>
-              <Pie data={data} />
-            </div>
-          </div>,
+        donutCharts.push(
+          <Charts
+            key={activityName}
+            activityName={activityName}
+            highestScore={highestScore}
+            lowestScore={lowestScore}
+            averageScore={averageScore}
+          />,
         );
       }
     }
 
-    return pieCharts;
+    return donutCharts;
   };
 
   return (
     <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#2d2d2d]">
       <Nav />
-      <div className="mx-auto mt-10 w-full max-w-3xl flex-grow px-4 py-8 md:flex md:justify-center md:px-8">
-        <div className="w-full max-w-sm">
-          <div className="mb-3 flex items-center justify-between"></div>
-          {generatePieCharts()}
-        </div>
+      <div className="container mx-auto my-10 flex-grow px-4 md:flex md:justify-center md:px-8">
+        <div className="w-full max-w-xl">{createDonutCharts()}</div>
       </div>
       <Footer />
     </main>
