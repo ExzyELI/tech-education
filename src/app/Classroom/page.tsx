@@ -26,6 +26,7 @@ interface Student {
   role: string;
   id: string;
   grade: string;
+  studentCode: string;
 }
 
 // Function to generate a random 5-digit number
@@ -82,6 +83,7 @@ export default function Home() {
               role: doc.data().role,
               id: doc.id,
               grade: doc.data().grade,
+              studentCode: doc.data().studentCode,
             }));
             setStudents(studentData);
             setFilteredStudents(studentData);
@@ -298,6 +300,12 @@ export default function Home() {
                               >
                                 Grade
                               </th>
+                              <th
+                                scope="col"
+                                className="tracking wider px-6 py-3 text-left text-xs font-medium uppercase text-white"
+                              >
+                                Code
+                              </th>
                               <th scope="col" className="relative px-6 py-3">
                                 <span className="sr-only">Edit</span>
                               </th>
@@ -328,6 +336,9 @@ export default function Home() {
                                 </td> */}
                                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                   {student.grade}
+                                </td>
+                                <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
+                                  {student.studentCode}
                                 </td>
                                 <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
                                   <button
