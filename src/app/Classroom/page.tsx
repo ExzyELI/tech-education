@@ -9,6 +9,7 @@ import {
   addDoc,
   updateDoc,
   doc,
+  deleteField,
 } from "firebase/firestore";
 import { db } from "@/app/firebase/init_app";
 import { useState, useEffect } from "react";
@@ -135,30 +136,52 @@ export default function Home() {
     }
   }
 
+  async function handleDelete(index: number, userId: string) {
+    const firestore = getFirestore();
+    const userRef = doc(firestore, "users", userId);
+    await updateDoc(userRef, { classCode: deleteField() });
+    const userDocSnap = await getDoc(userRef);
+    if (userDocSnap.exists()) {
+      const userData = userDocSnap.data();
+      console.log(userData.classCode);
+    }
+    location.reload();
+  }
+
   async function handleAddStudent() {
-    //Want to check the database for the studentCode that was input by the teacher,
-    //and if the code is found, add the classCode to that student users information.
+    // error if the student code or classCode does not exist
+    if (!studentCode || !classCode) {
+      // Validate input fields
+      console.error("Student code or class code is missing.");
+      return;
+    }
+    //e.preventDefault();
+    // Want to check the database for the studentCode that was input by the teacher,
+    // and if the code is found, add the classCode to that student users information
+    const firestore = getFirestore();
     const q = query(
-      collection(db, "users"),
+      collection(firestore, "users"),
       where("role", "==", "Student"),
       where("studentCode", "==", studentCode),
     );
     const querySnapshot = await getDocs(q);
-
+    console.log(querySnapshot.size);
     if (!querySnapshot.empty) {
       const userDoc = querySnapshot.docs[0]; // Get the first document from the query results
       const userId = userDoc.id; // Extract the UID of the user
-      const userRef = doc(db, "users", userId);
+      const userRef = doc(firestore, "users", userId);
       await updateDoc(userRef, { classCode });
       console.log(classCode);
+      console.log("Student added successfully!");
+      //toast.success("Student added successfully!");
     }
+    location.reload();
   }
   // Function to create a classroom collection with a random 5-digit class code
   async function createClassroom() {
     const code = generateClassCode();
+    // If statement only allowing teachers to create classes
     if (user && userRole === "Teacher") {
-      // Only allow teachers to create classes
-      //await addDoc(collection(db, "classrooms"), { classCode: code });
       // Update the user's document with the class code
       await updateDoc(doc(db, "users", user.uid), {
         classCode: code,
@@ -226,21 +249,20 @@ export default function Home() {
                     >
                       Add Student
                     </button>
-                    <form className={`${!addStudents ? "hidden" : ""} `}>
-                      <input
-                        type="text"
-                        placeholder="Add Student Code..."
-                        onChange={(e) => setStudentCode(e.target.value)}
-                        maxLength={5}
-                        className={`rounded-lg border px-4 py-2`}
-                      />
-                      <button
-                        className="ml-4 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900"
-                        onClick={handleAddStudent}
-                      >
-                        Add
-                      </button>
-                    </form>
+                    <input
+                      type="text"
+                      placeholder="Add Student Code..."
+                      onChange={(e) => setStudentCode(e.target.value)}
+                      maxLength={5}
+                      className={`rounded-lg border px-4 py-2 ${!addStudents ? "hidden" : ""} `}
+                    />
+                    <button
+                      type="submit"
+                      className={`ml-4 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${!addStudents ? "hidden" : ""} `}
+                      onClick={handleAddStudent}
+                    >
+                      Add
+                    </button>
                     <button className="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900">
                       Edit Class
                     </button>
@@ -340,15 +362,18 @@ export default function Home() {
                                 <td className="whitespace-nowrap px-6 py-4 text-sm text-gray-500">
                                   {student.studentCode}
                                 </td>
-                                <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
+                                <td className="whitespace-nowrap px-3 py-4 text-right text-sm font-medium">
                                   <button
-                                    className="mx-2 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-indigo-900"
+                                    className="mx-4 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-indigo-900"
                                     onClick={() => handleEdit(index)}
                                   >
                                     Edit
                                   </button>
                                   <button
                                     className={`mx-2 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-red-900 ${editIndex === index ? "" : "hidden"}`}
+                                    onClick={() =>
+                                      handleDelete(index, student.id)
+                                    }
                                   >
                                     Remove
                                   </button>
