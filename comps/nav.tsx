@@ -103,7 +103,7 @@ const Nav: React.FC = () => {
   };
 
   return (
-    <nav className="flex h-16 items-center justify-between bg-[#3f72af] px-8 font-sans text-white">
+    <nav className="z-50 flex h-16 items-center justify-between bg-[#3f72af] px-8 font-sans text-white">
       <div>
         <a href="/HomePage" className="rounded-md text-xl font-bold">
           Tech Education
@@ -121,7 +121,10 @@ const Nav: React.FC = () => {
             <FontAwesomeIcon icon={faBars} className="text-lg" />
           </button>
           {showDropdown && (
-            <div className="absolute right-0 mt-2 rounded bg-white shadow-lg">
+            <div
+              className="absolute right-0 mt-2 rounded bg-white shadow-lg"
+              style={{ minWidth: "170px" }}
+            >
               <ul className="flex flex-col space-y-1 p-2">
                 {role && // check if user role is defined
                   navItems[role].map(
