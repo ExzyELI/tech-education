@@ -1,45 +1,96 @@
 "use client";
+import React, { useState, useEffect } from "react";
 import Nav from "../../../../comps/nav";
 import Footer from "../../../../comps/footer";
-import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getFirestore, doc, setDoc, serverTimestamp, collection, getDocs } from "firebase/firestore";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from "@/app/firebase/init_app";
 
 const arrowsKeyPressPage = () => {
   //store the last key pressed
   const [keyPressed, setKeyPressed] = useState("");
   //track if the correct key was pressed
   const [correctPress, setCorrectPress] = useState(false);
-  //track if the marks should be shown
+  //track if the marks should be shown 
   const [showMarks, setShowMarks] = useState(false);
+  //track how many wrong key presses attempts
+  const [attempts, setAttempts] = useState(0);
+  //start time initialized to current date and time
+  const [startTime] = useState(new Date());
+  //get the current user
+  const [user] = useAuthState(auth);
+  //track if the update is performed
+  const [updatePerformed, setUpdatePerformed] = useState(false);
 
   const router = useRouter();
+  const firestore = getFirestore();
+  //show overlay when the activity is finished
   const [showOverlay, setShowOverlay] = useState(false);
 
+  const [totalScore, setTotalScore] = useState(0);
+
+  // Function to fetch and sum scores from Firestore
   useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      //check if the arrows button is pressed
-      if (e.code === "ArrowRight") {
-        setKeyPressed("ArrowRight");
-        setCorrectPress(true);
-        setShowMarks(true);
-      } else if (e.code === "ArrowLeft") {
-        setKeyPressed("ArrowLeft");
-        setCorrectPress(true);
-        setShowMarks(true);
-      } else {
-        //if any other key is pressed
+    const fetchAndSumScores = async () => {
+      const activitiesRef = collection(firestore, `users/${user.uid}/activities`);
+      const snapshot = await getDocs(activitiesRef);
+      const totalScore = snapshot.docs
+        .filter(doc => doc.data().activityName === "KeyboardActivity-kindergarten")
+        .reduce((sum, doc) => sum + doc.data().score, 1);
+      setTotalScore(totalScore); // Set the total score state
+    };
+
+    if (user) { // Make sure user is loaded before fetching
+      fetchAndSumScores();
+    }
+  }, [firestore, user]); // Added user dependency to ensure user is loaded
+
+  useEffect(() => {
+    const handleKeyDown = async (e: KeyboardEvent) => {
+      setAttempts((prevAttempts) => prevAttempts + 1);
+      let isCorrect: boolean;
+      //check if the shifts buttons are pressed
+      if (isCorrect = e.code === "ArrowRight" || e.code === "ArrowLeft") {
         setKeyPressed(e.code);
+        setCorrectPress(isCorrect);
+        setShowMarks(true);
+
+        if (!updatePerformed) {
+          //if the correct key is pressed, save the activity data to the database
+          const endTime = new Date();
+          const elapsedTimeMs = endTime.getTime() - startTime.getTime();
+          const elapsedTimeSec = elapsedTimeMs / 1000;
+          const minutes = Math.floor(elapsedTimeSec / 60);
+          const seconds = Math.floor(elapsedTimeSec % 60);
+          const formattedElapsedTime = `00:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+          const userActivityDocRef = doc(collection(firestore, `users/${user.uid}/activities`));
+
+          await setDoc(userActivityDocRef, {
+            activityName: "KeyboardActivity-kindergarten",
+            elapsedTime: formattedElapsedTime,
+            KeyboardActivityKindergarten_attempts: attempts,
+            score: 1,
+            timestamp: serverTimestamp(),
+            keyPressed: e.code,
+            correctPress: isCorrect,
+          }, { merge: true });
+          setUpdatePerformed(true);
+
+        }
+      } else {
+        // Reset states if a wrong key is pressed
         setCorrectPress(false);
         setShowMarks(true);
+        // Ensure we can update the database on the next correct key press
+        setUpdatePerformed(false);
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
 
-    return () => {
-      window.removeEventListener("keydown", handleKeyDown);
-    };
-  }, []);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [firestore, user, attempts, startTime, updatePerformed]);
 
   // path to next task
   const goToNextTask = () => {
@@ -55,8 +106,7 @@ const arrowsKeyPressPage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col space-y-[110px] bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">
-      <title>Press Arrow Right or Arrow Left Activity</title>
+    <main className="flex min-h-screen flex-col justify-between bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">      <title>Press Arrow Right or Arrow Left Activity</title>
       <Nav />
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold">
@@ -101,11 +151,10 @@ const arrowsKeyPressPage = () => {
                   &times;
                 </button>
               </div>
-              <p className="text-2xl font-bold">Congratulations!</p>
-              <p className="text-large">
-                You finished the keyboard Activities for the kindergarten grade
-                level.
-              </p>
+              {/* Overlay content */}
+              <p className="text-3xl font-bold">Congratulations!</p>
+              <p className="text-xl">You finished the keyboard Activities for the kindergarten grade.</p>
+              <p className="text-xl">score: {totalScore}.</p>
               <button
                 onClick={goToNextTask}
                 className="mt-4 rounded bg-green-500 px-4 py-2 text-white transition duration-150 ease-in-out hover:bg-blue-600"
