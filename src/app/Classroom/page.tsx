@@ -45,6 +45,7 @@ export default function Home() {
   const [students, setStudents] = useState<Student[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredStudents, setFilteredStudents] = useState(students);
+  const [editIndex, setEditIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const fetchUser = auth.onAuthStateChanged(async (user) => {
@@ -121,6 +122,10 @@ export default function Home() {
 
   function handleStudents() {
     setAddStudents(true);
+  }
+
+  function handleEdit(index: number) {
+    setEditIndex(index);
   }
 
   async function handleAddStudent() {
@@ -320,8 +325,16 @@ export default function Home() {
                                   {student.grade}
                                 </td>
                                 <td className="whitespace-nowrap px-6 py-4 text-right text-sm font-medium">
-                                  <button className="mx-2 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-indigo-900">
+                                  <button
+                                    className="mx-2 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-indigo-900"
+                                    onClick={() => handleEdit(index)}
+                                  >
                                     Edit
+                                  </button>
+                                  <button
+                                    className={`mx-2 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white shadow hover:scale-110 hover:bg-red-900 ${editIndex === index ? "" : "hidden"}`}
+                                  >
+                                    Remove
                                   </button>
                                 </td>
                               </tr>
