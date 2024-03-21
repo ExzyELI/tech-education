@@ -149,12 +149,6 @@ export default function Home() {
   }
 
   async function handleAddStudent() {
-    // error if the student code or classCode does not exist
-    if (!studentCode || !classCode) {
-      // Validate input fields
-      console.error("Student code or class code is missing.");
-      return;
-    }
     //e.preventDefault();
     // Want to check the database for the studentCode that was input by the teacher,
     // and if the code is found, add the classCode to that student users information
@@ -166,6 +160,13 @@ export default function Home() {
     );
     const querySnapshot = await getDocs(q);
     console.log(querySnapshot.size);
+    // error if the student code or classCode does not exist
+    if (querySnapshot.empty) {
+      // Validate input fields
+      console.error("Student code or class code is missing.");
+      toast.error("Student code does not exist!");
+      return;
+    }
     if (!querySnapshot.empty) {
       const userDoc = querySnapshot.docs[0]; // Get the first document from the query results
       const userId = userDoc.id; // Extract the UID of the user
@@ -395,6 +396,11 @@ export default function Home() {
       {/* footer begins */}
       <Footer />
       {/* footer ends */}
+      <ToastContainer
+        className="Toast-position mt-[70px]"
+        style={{ width: "450px" }}
+        position="top-center"
+      />
     </main>
   );
 }
