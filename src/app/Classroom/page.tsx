@@ -43,6 +43,8 @@ export default function Home() {
   const [addStudents, setAddStudents] = useState(false);
   const [studentCode, setStudentCode] = useState<string>("");
   const [students, setStudents] = useState<Student[]>([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredStudents, setFilteredStudents] = useState(students);
 
   useEffect(() => {
     const fetchUser = auth.onAuthStateChanged(async (user) => {
@@ -81,6 +83,7 @@ export default function Home() {
               grade: doc.data().grade,
             }));
             setStudents(studentData);
+            setFilteredStudents(studentData);
             console.log("Gottem");
           }
           setUserRole(userData.role);
@@ -154,6 +157,21 @@ export default function Home() {
     console.log(code);
   }
 
+  // Function to handle search input changes
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Convert search query to lowercase
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+
+    // Filter students based on the search query
+    const filtered = students.filter(
+      (student) =>
+        student.firstName.toLowerCase().includes(query) ||
+        student.lastName.toLowerCase().includes(query),
+    );
+    setFilteredStudents(filtered);
+  };
+
   return (
     <main className="font-family: font-sans leading-normal tracking-normal text-[#132241]">
       <title>Classroom Page</title>
@@ -220,6 +238,8 @@ export default function Home() {
                       type="text"
                       placeholder="Search students..."
                       className="rounded-lg border px-4 py-2"
+                      value={searchQuery}
+                      onChange={handleSearchChange}
                     />
                   </div>
                 </div>
@@ -274,7 +294,7 @@ export default function Home() {
                             </tr>
                           </thead>
                           <tbody className="divide-y divide-gray-200 bg-white">
-                            {students.map((student, index) => (
+                            {filteredStudents.map((student, index) => (
                               <tr
                                 key={index}
                                 className={
