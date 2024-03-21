@@ -232,7 +232,9 @@ export default function Home() {
                     >
                       Create Class
                     </button>
-                    <h2 className="text-lg font-semibold text-white">
+                    <h2
+                      className={`text-lg font-semibold text-white ${!codeExists ? "hidden" : ""} `}
+                    >
                       Class ID: {classCode}
                     </h2>
                   </div>
@@ -245,7 +247,7 @@ export default function Home() {
                 <div className="mb-6 flex justify-between">
                   <div className="flex space-x-4">
                     <button
-                      className="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900"
+                      className={`rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${!codeExists ? "hidden" : ""} `}
                       onClick={handleStudents}
                     >
                       Add Student
@@ -264,7 +266,9 @@ export default function Home() {
                     >
                       Add
                     </button>
-                    <button className="rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900">
+                    <button
+                      className={`rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${!codeExists ? "hidden" : ""} `}
+                    >
                       Edit Class
                     </button>
                   </div>
@@ -272,7 +276,7 @@ export default function Home() {
                     <input
                       type="text"
                       placeholder="Search students..."
-                      className="rounded-lg border px-4 py-2"
+                      className={`rounded-lg border px-4 py-2 ${!codeExists ? "hidden" : ""} `}
                       value={searchQuery}
                       onChange={handleSearchChange}
                     />
