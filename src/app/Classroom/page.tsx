@@ -125,7 +125,12 @@ export default function Home() {
   }
 
   function handleEdit(index: number) {
-    setEditIndex(index);
+    if (editIndex === index) {
+      // If the edit button is clicked again on the same row, hide the remove button
+      setEditIndex(null);
+    } else {
+      setEditIndex(index); // Set the editIndex state to the index of the row being edited
+    }
   }
 
   async function handleAddStudent() {
