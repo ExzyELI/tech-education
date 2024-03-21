@@ -153,7 +153,7 @@ export default function ActivitiesPage() {
                             </a>
                           </div>
                           <div className="float-right ml-5 mr-5 w-60">
-                            <a href="KeyboardActivity-kindergarten/KeyboardActivity-alt">
+                            <a href="KeyboardActivity-kindergarten/KeyboardActivity-space">
                               <div className=" rounded-lg border border-gray-200 bg-[#e1f3ff] shadow hover:scale-110 hover:bg-gray-300">
                                 <img
                                   className="rounded-t-lg"
