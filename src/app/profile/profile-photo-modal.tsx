@@ -18,7 +18,7 @@ const ProfilePhotoModal: React.FC<ProfilePhotoModalProps> = ({
   currentPhoto,
 }) => {
   const [selectedPhoto, setSelectedPhoto] = useState<string>(
-    currentPhoto || "https://i.imgur.com/WgQVM1c.jpg",
+    currentPhoto || "https://i.imgur.com/Y4WCdEs.jpg",
   );
   const [isPhotoChanged, setIsPhotoChanged] = useState<boolean>(false);
 
@@ -38,12 +38,12 @@ const ProfilePhotoModal: React.FC<ProfilePhotoModalProps> = ({
   };
 
   const presetPhotos: string[] = [
-    "https://i.imgur.com/7prgkcA.jpg",
-    "https://i.imgur.com/etn9a6E.jpg",
-    "https://i.imgur.com/EQrr7NQ.jpg",
-    "https://i.imgur.com/YQyj0xp.jpg",
-    "https://i.imgur.com/7II0cie.jpg",
-    "https://i.imgur.com/gcpPfnZ.jpg",
+    "https://i.imgur.com/Y4WCdEs.jpg",
+    "https://i.imgur.com/aaOq2YY.jpg",
+    "https://i.imgur.com/9oj3LFH.jpg",
+    "https://i.imgur.com/kvlbtlx.jpg",
+    "https://i.imgur.com/xYQbMKV.jpg",
+    "https://i.imgur.com/YoLybf6.jpg",
   ];
 
   return isOpen && isEditMode ? (
@@ -65,7 +65,7 @@ const ProfilePhotoModal: React.FC<ProfilePhotoModalProps> = ({
               src={photo}
               alt={`Photo ${index + 1}`}
               className={`cursor-pointer rounded-lg ${
-                selectedPhoto === photo ? "border-4 border-yellow-500" : ""
+                selectedPhoto === photo ? "border-4 border-[#a891ed]" : ""
               }`}
               onClick={() => handlePhotoSelect(photo)}
             />

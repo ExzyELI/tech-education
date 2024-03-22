@@ -54,7 +54,7 @@ const ProfilePage = () => {
           setBirthdate(userData.birthdate);
           setGrade(userData.grade);
           setProfilePhoto(
-            userData.profilePhoto || "https://i.imgur.com/WgQVM1c.jpg",
+            userData.profilePhoto || "https://i.imgur.com/Y4WCdEs.jpg",
           );
 
           // reset to original data
@@ -105,18 +105,6 @@ const ProfilePage = () => {
         // no changes made, return
         return;
       }
-
-      // update originalData before showing confirmation modal
-      setOriginalData({
-        firstName,
-        lastName,
-        email,
-        role,
-        birthdate,
-        grade,
-        profilePhoto,
-        password: originalData.password, // password stays unchanged
-      });
 
       setConfirmModalOpen(true);
     } catch (error) {
