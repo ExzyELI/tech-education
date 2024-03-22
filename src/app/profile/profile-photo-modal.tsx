@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
@@ -17,17 +17,24 @@ const ProfilePhotoModal: React.FC<ProfilePhotoModalProps> = ({
   isEditMode,
   currentPhoto,
 }) => {
-  const [selectedPhoto, setSelectedPhoto] = useState<string>(currentPhoto);
+  const [selectedPhoto, setSelectedPhoto] = useState<string>(
+    currentPhoto || "https://i.imgur.com/WgQVM1c.jpg",
+  );
+  const [isPhotoChanged, setIsPhotoChanged] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsPhotoChanged(selectedPhoto !== currentPhoto);
+  }, [selectedPhoto, currentPhoto]);
 
   const handlePhotoSelect = (photo: string) => {
     setSelectedPhoto(photo);
   };
 
   const handleSave = () => {
-    if (selectedPhoto) {
+    if (selectedPhoto && isEditMode) {
       setProfilePhoto(selectedPhoto);
-      onClose();
     }
+    onClose();
   };
 
   const presetPhotos: string[] = [
@@ -57,16 +64,22 @@ const ProfilePhotoModal: React.FC<ProfilePhotoModalProps> = ({
               key={index}
               src={photo}
               alt={`Photo ${index + 1}`}
-              className={`cursor-pointer rounded-lg ${selectedPhoto === photo ? "border-4 border-yellow-500" : ""}`}
+              className={`cursor-pointer rounded-lg ${
+                selectedPhoto === photo ? "border-4 border-yellow-500" : ""
+              }`}
               onClick={() => handlePhotoSelect(photo)}
             />
           ))}
         </div>
         <div className="mt-4 flex justify-center">
           <button
-            className="mr-2 rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-[#ffd564]"
+            className={`mr-2 rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-sm font-bold text-gray-900 ${
+              !isPhotoChanged
+                ? "cursor-not-allowed bg-gray-400 text-gray-600"
+                : "hover:bg-[#ffd564] hover:text-gray-900"
+            }`}
             onClick={handleSave}
-            disabled={!selectedPhoto}
+            disabled={!isPhotoChanged}
           >
             Save
           </button>

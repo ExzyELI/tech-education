@@ -54,7 +54,9 @@ const ProfilePage = () => {
           setRole(userData.role);
           setBirthdate(userData.birthdate);
           setGrade(userData.grade);
-          setProfilePhoto(userData.profilePhoto);
+          setProfilePhoto(
+            userData.profilePhoto || "https://i.imgur.com/WgQVM1c.jpg",
+          );
 
           // reset to original data
           const originalData = {
@@ -104,6 +106,18 @@ const ProfilePage = () => {
         // no changes made, return
         return;
       }
+
+      // update originalData before showing confirmation modal
+      setOriginalData({
+        firstName,
+        lastName,
+        email,
+        role,
+        birthdate,
+        grade,
+        profilePhoto,
+        password: originalData.password, // password stays unchanged
+      });
 
       setConfirmModalOpen(true);
     } catch (error) {
@@ -205,6 +219,7 @@ const ProfilePage = () => {
     setRole(originalData.role);
     setBirthdate(originalData.birthdate);
     setGrade(originalData.grade);
+    setProfilePhoto(originalData.profilePhoto);
     setSuccess(false);
     setError("");
   };
@@ -475,7 +490,8 @@ const ProfilePage = () => {
                         email !== originalData.email ||
                         role !== originalData.role ||
                         birthdate !== originalData.birthdate ||
-                        grade !== originalData.grade
+                        grade !== originalData.grade ||
+                        profilePhoto !== originalData.profilePhoto
                       )
                         ? "cursor-not-allowed bg-gray-400 text-gray-600"
                         : "bg-[#ffe08d] text-gray-900 hover:bg-[#ffd564]"
