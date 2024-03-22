@@ -38,6 +38,17 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+
+  // enable/disable change password button based on password fields
+  useEffect(() => {
+    setIsButtonDisabled(
+      !currentPassword.trim() ||
+        !newPassword.trim() ||
+        !confirmNewPassword.trim(),
+    );
+  }, [currentPassword, newPassword, confirmNewPassword]);
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
       setUser(user);
@@ -190,8 +201,13 @@ const ChangePasswordModal: React.FC<ChangePasswordModalProps> = ({
                 </div>
                 <div className="flex items-center justify-center">
                   <button
-                    className="ms-3 rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-sm font-bold text-gray-900 hover:bg-[#ffd564]"
+                    className={`ms-3 rounded-lg border border-gray-200 bg-[#ffe08d] px-5 py-2.5 text-sm font-bold ${
+                      isButtonDisabled
+                        ? "cursor-not-allowed bg-gray-400 text-gray-600"
+                        : "text-gray-900 hover:bg-[#ffd564]"
+                    }`}
                     onClick={handleConfirmPassword}
+                    disabled={isButtonDisabled}
                   >
                     Change Password
                   </button>

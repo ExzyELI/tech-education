@@ -18,7 +18,6 @@ const ProfilePage = () => {
   const [birthdate, setBirthdate] = useState("");
   const [grade, setGrade] = useState("");
   const [editMode, setEditMode] = useState(false);
-  const [success, setSuccess] = useState(false);
   const [error, setError] = useState("");
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
@@ -122,7 +121,6 @@ const ProfilePage = () => {
       setConfirmModalOpen(true);
     } catch (error) {
       // updates if there was an error
-      setSuccess(false);
       setError("An error occurred while saving changes."); // set error message
       setConfirmModalOpen(false);
     }
@@ -163,7 +161,6 @@ const ProfilePage = () => {
   const confirmSave = async () => {
     setConfirmModalOpen(true);
     if (!user) return;
-    setSuccess(true);
 
     try {
       const firestore = getFirestore();
@@ -180,11 +177,10 @@ const ProfilePage = () => {
         profilePhoto: profilePhoto,
       });
 
-      // if success, set to true
-      setSuccess(true);
+      // opens confirmation modal
+      setConfirmModalOpen(true);
     } catch (error) {
       // if errors, set to false and display error message
-      setSuccess(false);
       setError("An error occurred while saving changes.");
       console.error("Error updating document:", error);
     }
@@ -220,7 +216,6 @@ const ProfilePage = () => {
     setBirthdate(originalData.birthdate);
     setGrade(originalData.grade);
     setProfilePhoto(originalData.profilePhoto);
-    setSuccess(false);
     setError("");
   };
 
