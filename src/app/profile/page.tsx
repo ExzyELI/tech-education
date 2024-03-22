@@ -7,6 +7,7 @@ import Footer from "../../../comps/footer";
 import Nav from "../../../comps/nav";
 import ConfirmationModal from "./confirmation-modal";
 import ChangePasswordModal from "./change-password-modal";
+import ProfilePhotoModal from "./profile-photo-modal";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -31,7 +32,10 @@ const ProfilePage = () => {
     birthdate: "",
     grade: "",
     password: "",
+    profilePhoto: "",
   });
+  const [profilePhoto, setProfilePhoto] = useState<string>("");
+  const [profilePhotoModalOpen, setProfilePhotoModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -50,6 +54,7 @@ const ProfilePage = () => {
           setRole(userData.role);
           setBirthdate(userData.birthdate);
           setGrade(userData.grade);
+          setProfilePhoto(userData.profilePhoto);
 
           // reset to original data
           const originalData = {
@@ -60,6 +65,7 @@ const ProfilePage = () => {
             birthdate: userData.birthdate || "",
             grade: userData.grade || "",
             password: "",
+            profilePhoto: userData.profilePhoto,
           };
 
           setOriginalData(originalData);
@@ -92,7 +98,8 @@ const ProfilePage = () => {
         email === originalData.email &&
         role === originalData.role &&
         birthdate === originalData.birthdate &&
-        grade === originalData.grade
+        grade === originalData.grade &&
+        profilePhoto === originalData.profilePhoto
       ) {
         // no changes made, return
         return;
@@ -156,6 +163,7 @@ const ProfilePage = () => {
         role: role,
         birthdate: birthdate,
         grade: grade,
+        profilePhoto: profilePhoto,
       });
 
       // if success, set to true
@@ -179,6 +187,7 @@ const ProfilePage = () => {
       birthdate: birthdate,
       grade: grade,
       password: originalData.password,
+      profilePhoto: originalData.profilePhoto,
     });
 
     // opens confirmation modal
@@ -216,15 +225,24 @@ const ProfilePage = () => {
         {user && (
           <div className="w-full max-w-md rounded-lg border border-gray-200 bg-[#FFFFFF] py-4 shadow-md">
             <div className="flex flex-col items-center px-6 pb-5">
-              <img
-                className="mb-3 mt-5 h-24 w-24 rounded-full shadow-md"
-                src="https://cdn-icons-png.flaticon.com/512/4322/4322993.png"
-              />
+              {profilePhoto && (
+                <img
+                  className="mb-3 mt-5 h-24 w-24 rounded-full shadow-md"
+                  src={profilePhoto}
+                />
+              )}
+
               <h1
                 className={`font-bold ${editMode ? "text-md" : "text-3xl"} text-[#2E2E2E]`}
               >
                 {editMode && (
                   <div className="flex flex-col">
+                    <button
+                      className="text-md -mt-2 mb-2 font-semibold text-[#a891ed]"
+                      onClick={() => setProfilePhotoModalOpen(true)}
+                    >
+                      Change Photo
+                    </button>
                     <div className="mb-2">
                       <label
                         htmlFor="firstName"
@@ -488,6 +506,17 @@ const ProfilePage = () => {
         )}
       </div>
       <Footer />
+
+      {/* profile photo modal */}
+      {profilePhotoModalOpen && (
+        <ProfilePhotoModal
+          isOpen={profilePhotoModalOpen}
+          onClose={() => setProfilePhotoModalOpen(false)}
+          setProfilePhoto={setProfilePhoto}
+          isEditMode={true}
+          currentPhoto={profilePhoto}
+        />
+      )}
 
       {/* confirmation modal */}
       {confirmModalOpen && (
