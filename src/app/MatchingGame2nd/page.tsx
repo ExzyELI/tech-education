@@ -19,6 +19,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
+import Stats from "../../../comps/stats";
 
 export default function Home() {
   const gridSize = 4;
@@ -47,6 +48,7 @@ export default function Home() {
   const [gameStarted, setGameStarted] = useState(false); // preform SetCards and start timer
   const [seconds, setSeconds] = useState(0); // timer
   const [isActive, setIsActive] = useState(false); // card is live
+  const [finalScore, setFinalScore] = useState<number | null>(null); // store user's score
   const [user, setUser] = useState<User | null>(null); // store logged in user
   const [matching2_attempts, setAttempts] = useState(0); // store attempts
   let interval: string | number | NodeJS.Timeout | undefined;
@@ -105,6 +107,8 @@ export default function Home() {
 
   const handleSave = async () => {
     console.log(user);
+    setFinalScore(score);
+
     const firestore = getFirestore();
     if (user) {
       const userDocRef = doc(firestore, `users/${user.uid}`);
@@ -202,28 +206,22 @@ export default function Home() {
     setCards(shuffle(initialCards)); // Shuffle cards after game is in start
     handleStart();
   };
-  const calculateScore = () => { // create score based on clicks and time elapsed
     const totalMoves = clickCount;
     const elapsedTime = seconds;
     const score = (12000 - totalMoves * 100 - elapsedTime * 10) / 2500;
-    if (score >= 4) {
-      return 4;
-    } else if (score >= 3.5) {
-      return 3.5;
-    } else if (score >= 3) {
-      return 3;
-    } else if (score >= 2.5) {
-      return 2.5;
+    const calculateScore = (score:number) : number => {
+    if (score >= 3) {
+      return 3; // 3 stars
     } else if (score >= 2) {
-      return 2;
-    } else if (score >= 1.5) {
-      return 1.5;
+      return 2; // 2 stars
     } else if (score >= 1) {
-      return 1;
+      return 1; // 1 star
+    } else {
+      return 0; // 0 star
     }
     //return Math.max(score,0);
-  };
-  const finalScore = calculateScore();
+  }
+  const stars = calculateScore(score);
 
   return (
     <main>

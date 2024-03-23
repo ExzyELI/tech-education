@@ -19,6 +19,7 @@ import {
   limit,
 } from "firebase/firestore";
 import { User } from "firebase/auth";
+import Stats from "../../../comps/stats";
 
 export default function Home() {
   const gridSize = 3;
@@ -45,6 +46,7 @@ export default function Home() {
   const [gameStarted, setGameStarted] = useState(false);
   const [seconds, setSeconds] = useState(0);
   const [isActive, setIsActive] = useState(false);
+  const [finalScore, setFinalScore] = useState<number | null>(null); // store user's score
   const [user, setUser] = useState<User | null>(null); // store logged in user
   const [matching1_attempts, setAttempts] = useState(0); // store attempts
   let interval: string | number | NodeJS.Timeout | undefined;
@@ -105,6 +107,8 @@ export default function Home() {
 
   const handleSave = async () => {
     console.log(user);
+    setFinalScore(score);
+
     const firestore = getFirestore();
       if (user) {
         const userDocRef = doc(firestore, `users/${user.uid}`);
@@ -196,34 +200,26 @@ export default function Home() {
     setCards(shuffle(initialCards)); // Shuffle cards after game is in start
     handleStart();
   };
-  const calculateScore = () => {
-    const totalMoves = clickCount;
-    const elapsedTime = seconds;
-    const score = (12000 - totalMoves * 100 - elapsedTime * 10)/2500;
-    if (score >= 4){
-      return 4 
-    }
-    else if (score >= 3.5){
-      return 3.5
-    }
-    else if (score >= 3){
-      return 3
-    }
-    else if (score >= 2.5){
-      return 2.5
-    }
-    else if (score >= 2){
-      return 2
-    }
-    else if (score >= 1.5){
-      return 1.5
-    }
-    else if (score >= 1){
-      return 1
+
+  const totalMoves = clickCount;
+  const elapsedTime = seconds;
+  const score = (12000 - totalMoves * 100 - elapsedTime * 10)/2500;
+
+  const calculateScore = (score:number) : number => {
+    if (score >= 3) {
+      return 3; // 3 stars
+    } else if (score >= 2) {
+      return 2; // 2 stars
+    } else if (score >= 1) {
+      return 1; // 1 star
+    } else {
+      return 0; // 0 star
     }
     //return Math.max(score,0);
   }
-  const finalScore = calculateScore()
+  
+  // const finalScore = calculateScore()
+  const stars = calculateScore(score);
   
   return (
     <main>
@@ -231,6 +227,7 @@ export default function Home() {
         {/*navbar begins */}
         <Nav/>
         {/* navbar ends */}
+
         <div className="flex min-h-screen bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
             <h1 className="mt-2 text-center text-7xl font-bold">
@@ -251,29 +248,9 @@ export default function Home() {
                 <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
               </div>
               <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-4 py-4">
-        <section className="grid grid-cols-4 justify-items-center gap-4">
-          {cards.map((card, index) => (
-            <button
-            key={index}
-            className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-[#ff5a5f] text-white hover:bg-[#ff4146] focus:outline-none focus:ring focus:ring-black active:bg-[#ff4146] shadow-lg ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
-            onClick={() => handleCardClick(index)}
-            disabled={isDisabled || matchedCards.includes(index)}
-        >
-            {flippedCards.includes(index) || matchedCards.includes(index) ? (
-                <img
-                    src={images[card]}
-                    alt={`Card ${index}`}
-                    className="w-full h-full"
-                />
-            ) : (
-                <img src="https://cdn.discordapp.com/attachments/1196945767785578598/1205159897663279114/Screen_Shot_2024-02-08_at_9.34.52_AM.png?ex=65f30b1e&is=65e0961e&hm=0f846bd73ee4c0bb03c39dc0488456a41e7ab937acd0f0824327bd152cd18dc7&"
-                
-                className="w-3/4 h-3/4" />
-            )}
-        </button>
-          ))}
-        </section>
-      </div>
+                <div className=''></div>
+        
+            </div>
               <div className="mt-4 flex justify-center">
                 <button
                   className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600 shadow-md"

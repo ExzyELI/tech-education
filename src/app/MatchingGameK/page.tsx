@@ -6,6 +6,7 @@ import MatchingNavBar from "../MatchingGame/MatchingNavBar";
 import Footer from "../../../comps/footer";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import Nav from "../../../comps/nav";
+import Stats from "../../../comps/stats";
 import {
   getFirestore,
   collection,
@@ -41,6 +42,7 @@ export default function Home() {
   const [isGameWon, setIsGameWon] = useState<boolean>(false);
   const [gameStarted, setGameStarted] = useState(false);
   const [seconds, setSeconds] = useState(0);
+  const [finalScore, setFinalScore] = useState<number | null>(null); // store user's score
   const [isActive, setIsActive] = useState(false);
   const [user, setUser] = useState<User | null>(null); // store logged in user
   const [matchingK_attempts, setAttempts] = useState(0); // store attempts
@@ -100,6 +102,8 @@ export default function Home() {
 
   const handleSave = async () => {
     console.log(user);
+    setFinalScore(score);
+
     const firestore = getFirestore();
     if (user) {
       const userDocRef = doc(firestore, `users/${user.uid}`);
@@ -197,28 +201,22 @@ export default function Home() {
     setCards(shuffle(initialCards)); // Shuffle cards after game is in start
     handleStart();
   };
-  const calculateScore = () => {
+  //const calculateScore = () => {
     const totalMoves = clickCount;
     const elapsedTime = seconds;
     const score = (12000 - totalMoves * 100 - elapsedTime * 10) / 2500;
-    if (score >= 4) {
-      return 4;
-    } else if (score >= 3.5) {
-      return 3.5;
-    } else if (score >= 3) {
-      return 3;
-    } else if (score >= 2.5) {
-      return 2.5;
-    } else if (score >= 2) {
-      return 2;
-    } else if (score >= 1.5) {
-      return 1.5;
-    } else if (score >= 1) {
-      return 1;
+    const calculateScore = (score:number) : number => {
+      if (score >= 3) {
+        return 3; // 3 stars
+      } else if (score >= 2) {
+        return 2; // 2 stars
+      } else if (score >= 1) {
+        return 1; // 1 star
+      } else {
+        return 0; // 0 star
+      }
+      //return Math.max(score,0);
     }
-    //return Math.max(score,0);
-  };
-  const finalScore = calculateScore();
 
   return (
     <main>
@@ -226,6 +224,7 @@ export default function Home() {
         {/*navbar begins */}
         <Nav />
         {/* navbar ends */}
+        
         <div className="flex min-h-screen bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
             <h1 className="mt-2 text-center text-7xl font-bold">
