@@ -1,209 +1,179 @@
-import React, { useState, useEffect } from "react";
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "../firebase/init_app";
+import React, { useState, useRef, useEffect } from "react";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faFilter } from "@fortawesome/free-solid-svg-icons";
 
 interface FiltersProps {
-  setFilteredGrades: React.Dispatch<React.SetStateAction<any[]>>;
+  applyFilters: (
+    activity: string,
+    timeFilter: string,
+    scoreFilter: string,
+  ) => void;
+  clearFilters: () => void;
+  activityNames: string[];
 }
 
-const Filters: React.FC<FiltersProps> = ({ setFilteredGrades }) => {
-  const [user] = useAuthState(auth);
-  const [sortBy, setSortBy] = useState<string>("descScore");
-  const [activityNames, setActivityNames] = useState<string[]>([]);
-  const [selectedActivity, setSelectedActivity] = useState<string>("");
-  const [selectedScoreFilter, setSelectedScoreFilter] = useState<string>("");
-  const [selectedTimeFilter, setSelectedTimeFilter] = useState<string>("");
+const Filters: React.FC<FiltersProps> = ({
+  applyFilters,
+  clearFilters,
+  activityNames,
+}) => {
+  const [activityFilter, setActivityFilter] = useState<string>("");
+  const [timeFilter, setTimeFilter] = useState<string>("");
+  const [scoreFilter, setScoreFilter] = useState<string>("");
+  const [showFilters, setShowFilters] = useState<boolean>(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
-    fetchActivityNames();
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        buttonRef.current &&
+        !dropdownRef.current.contains(event.target as Node) &&
+        !buttonRef.current.contains(event.target as Node)
+      ) {
+        setShowFilters(false);
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside, true);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside, true);
+    };
   }, []);
 
-  const fetchActivityNames = async () => {
-    try {
-      if (user) {
-        const firestore = getFirestore();
-        const gradesRef = collection(firestore, `users/${user.uid}/activities`);
-        const q = query(gradesRef);
-        const querySnapshot = await getDocs(q);
-        const names: string[] = [];
-        querySnapshot.forEach((doc) => {
-          const { activityName } = doc.data();
-          if (!names.includes(activityName)) {
-            names.push(activityName);
-          }
-        });
-        setActivityNames(names);
-      }
-    } catch (error) {
-      console.error("Error fetching activity names:", error);
-    }
+  const handleApplyFilters = () => {
+    applyFilters(activityFilter, timeFilter, scoreFilter);
+    setShowFilters(false);
   };
 
-  const applyFilters = () => {
-    if (!user) return;
-
-    try {
-      const firestore = getFirestore();
-      const gradesRef = collection(firestore, `users/${user.uid}/activities`);
-      let filteredGrades: any[] = [];
-
-      getDocs(gradesRef).then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const grade = doc.data();
-
-          if (
-            selectedActivity !== "" &&
-            grade.activityName !== selectedActivity
-          ) {
-            return;
-          }
-
-          if (selectedScoreFilter === "highest-score") {
-            filteredGrades.push(grade);
-          } else if (selectedScoreFilter === "lowest-score") {
-            filteredGrades.unshift(grade);
-          }
-
-          if (selectedTimeFilter === "fastest-time-taken") {
-            filteredGrades.push(grade);
-          } else if (selectedTimeFilter === "slowest-time-taken") {
-            filteredGrades.unshift(grade);
-          }
-        });
-
-        if (selectedScoreFilter === "highest-score") {
-          filteredGrades.sort((a, b) => b.score - a.score);
-        } else if (selectedScoreFilter === "lowest-score") {
-          filteredGrades.sort((a, b) => a.score - b.score);
-        }
-
-        if (selectedTimeFilter === "fastest-time-taken") {
-          filteredGrades.sort((a, b) => a.elapsedTime - b.elapsedTime);
-        } else if (selectedTimeFilter === "slowest-time-taken") {
-          filteredGrades.sort((a, b) => b.elapsedTime - a.elapsedTime);
-        }
-
-        setFilteredGrades(filteredGrades);
-      });
-    } catch (error) {
-      console.error("Error applying filters:", error);
-    }
+  const handleClearFilters = () => {
+    setActivityFilter("");
+    setTimeFilter("");
+    setScoreFilter("");
+    clearFilters();
   };
 
-  useEffect(() => {
-    applyFilters();
-  }, [user, setFilteredGrades]);
-
-  const handleFilterChange = (value: string) => {
-    setSortBy(value);
-  };
-
-  const clearFilters = () => {
-    setSortBy("descScore");
-    applyFilters();
-  };
+  const activeFilters = activityFilter || timeFilter || scoreFilter;
 
   return (
-    <div className="filters-container mx-auto w-full max-w-xs">
-      <div className="mb-4 rounded-lg bg-white p-4 shadow-md">
-        <div className="mb-4">
-          <h4 className="mb-2 text-sm font-semibold">Activity</h4>
-          <select
-            value={sortBy}
-            onChange={(e) => handleFilterChange(e.target.value)}
-            className="w-full rounded-md border border-gray-300 px-3 py-2"
-          >
-            <option value="descScore">Select Activity</option>
-            {activityNames.map((name, index) => (
-              <option key={index} value={name}>
-                {name}
-              </option>
-            ))}
-          </select>
-        </div>
+    <div className="relative">
+      {/* filter button */}
+      <div className="mb-4 flex items-center justify-between">
+        <button
+          ref={buttonRef}
+          onClick={() => setShowFilters(!showFilters)}
+          className="border-1 flex items-center space-x-2 rounded-full border border-gray-300 bg-white px-3 py-1 font-semibold focus:outline-none"
+          style={{
+            backgroundColor: activeFilters ? "#ffe08d" : "white",
+          }}
+        >
+          <FontAwesomeIcon icon={faFilter} className="text-[#ff8282]" />
+          <span className="text-gray-700">Filters</span>
+        </button>
+      </div>
 
-        <div className="mb-4">
-          <h4 className="mb-2 text-sm font-semibold">Score</h4>
-          <div className="mb-5 flex items-start justify-between">
-            <input
-              id="highest-score"
-              type="radio"
-              value="highest-score"
-              name="filter-score"
-              onChange={() => handleFilterChange("highest-score")}
-              className="sr-only"
-            />
-            <label
-              htmlFor="highest-score"
-              className="me-4 cursor-pointer rounded-lg border border-gray-300 bg-blue-200 px-4 py-2 text-center text-sm font-medium text-blue-800 transition-colors duration-300 hover:border-blue-600 hover:bg-blue-200"
-              style={{ width: "140px" }}
+      {/* dropdown menu */}
+      {showFilters && (
+        <div
+          ref={dropdownRef}
+          className="absolute left-0 z-10 mt-2 w-72 rounded-md border border-gray-300 bg-white px-6 py-4 shadow-lg"
+          style={{ top: "calc(100%)" }}
+        >
+          {/* activity filter */}
+          <div className="mb-4">
+            <h4 className="mb-2 text-sm font-semibold">Activity</h4>
+            <select
+              value={activityFilter}
+              onChange={(e) => setActivityFilter(e.target.value)}
+              className="w-full rounded-md border border-gray-300 px-2 py-1 focus:outline-none focus:ring-2 focus:ring-yellow-400"
             >
-              Highest
-            </label>
-            <input
-              id="lowest-score"
-              type="radio"
-              value="lowest-score"
-              name="filter-score"
-              onChange={() => handleFilterChange("lowest-score")}
-              className="sr-only"
-            />
-            <label
-              htmlFor="lowest-score"
-              className="me-4 cursor-pointer rounded-lg border border-gray-300 bg-blue-200 px-4 py-2 text-center text-sm font-medium text-blue-800 transition-colors duration-300 hover:border-blue-600 hover:bg-blue-200"
-              style={{ width: "140px" }}
-            >
-              Lowest
-            </label>
+              <option value="">Select Activity</option>
+              {activityNames.map((activityName, index) => (
+                <option key={index} value={activityName}>
+                  {activityName}
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* time filter */}
           <div className="mb-4">
             <h4 className="mb-2 text-sm font-semibold">Time</h4>
-            <div className="flex items-center">
-              <input
-                type="radio"
-                id="fastest-time-taken"
-                name="filter-time-taken"
-                value="fastest-time-taken"
-                onChange={() => handleFilterChange("fastest-time-taken")}
-                className="hidden"
-              />
-              <label
-                htmlFor="fastest-time-taken"
-                className="me-4 cursor-pointer rounded-lg border border-gray-300 bg-blue-200 px-4 py-2 text-center text-sm font-medium text-blue-800 transition-colors duration-300 hover:border-blue-600 hover:bg-blue-200"
-                style={{ width: "140px" }}
+            <div className="flex space-x-4">
+              <button
+                onClick={() => setTimeFilter("shortest")}
+                className={`flex-1 rounded-md ${
+                  timeFilter === "shortest"
+                    ? "border border-gray-300 bg-[#ffe08d] text-gray-900"
+                    : "border border-gray-300 bg-white text-gray-900"
+                } px-4 py-2 text-sm hover:bg-[#ffe08d]`}
               >
-                Fastest
-              </label>
-              <input
-                type="radio"
-                id="slowest-time-taken"
-                name="filter-time-taken"
-                value="slowest-time-taken"
-                onChange={() => handleFilterChange("slowest-time-taken")}
-                className="hidden"
-              />
-              <label
-                htmlFor="slowest-time-taken"
-                className="me-4 cursor-pointer rounded-lg border border-gray-300 bg-blue-200 px-4 py-2 text-center text-sm font-medium text-blue-800 transition-colors duration-300 hover:border-blue-600 hover:bg-blue-200"
-                style={{ width: "140px" }}
+                Shortest
+              </button>
+              <button
+                onClick={() => setTimeFilter("longest")}
+                className={`flex-1 rounded-md ${
+                  timeFilter === "longest"
+                    ? "border border-gray-300 bg-[#ffe08d] text-gray-900"
+                    : "border border-gray-300 bg-white text-gray-900"
+                } px-4 py-2 text-sm hover:bg-[#ffe08d]`}
               >
-                Slowest
-              </label>
+                Longest
+              </button>
             </div>
           </div>
-        </div>
 
-        <div className="mt-6 flex justify-between">
-          <button className="w-1/2 rounded-md bg-blue-400 py-2 font-semibold text-white transition-colors duration-300 hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-200">
-            Apply Filters
-          </button>
-          <button className="w-1/2 rounded-md bg-red-400 py-2 font-semibold text-white transition-colors duration-300 hover:bg-red-600 focus:outline-none focus:ring focus:ring-red-200">
-            Clear Filters
-          </button>
+          {/* score filter */}
+          <div className="mb-8">
+            <h4 className="mb-2 text-sm font-semibold">Score</h4>
+            <div className="flex space-x-4">
+              <button
+                onClick={() => setScoreFilter("highest")}
+                className={`flex-1 rounded-md ${
+                  scoreFilter === "highest"
+                    ? "border border-gray-300 bg-[#ffe08d] text-gray-900"
+                    : "border border-gray-300 bg-white text-gray-900"
+                } px-4 py-2 text-sm hover:bg-[#ffe08d]`}
+              >
+                Highest
+              </button>
+              <button
+                onClick={() => setScoreFilter("lowest")}
+                className={`flex-1 rounded-md ${
+                  scoreFilter === "lowest"
+                    ? "border border-gray-300 bg-[#ffe08d] text-gray-900"
+                    : "border border-gray-300 bg-white text-gray-900"
+                } px-4 py-2 text-sm hover:bg-[#ffe08d]`}
+              >
+                Lowest
+              </button>
+            </div>
+          </div>
+
+          {/* apply and clear filter buttons */}
+          <div className="flex justify-center">
+            <button
+              onClick={handleApplyFilters}
+              disabled={!activeFilters}
+              className={`mr-4 rounded-md ${
+                activeFilters
+                  ? "bg-green-400 text-white hover:bg-green-500"
+                  : "cursor-not-allowed bg-gray-300 text-gray-700"
+              } px-8 py-2 focus:outline-none`}
+            >
+              Apply
+            </button>
+            <button
+              onClick={handleClearFilters}
+              className="rounded-md bg-red-400 px-8 py-2 text-white hover:bg-red-500 focus:outline-none"
+            >
+              Clear
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

@@ -23,6 +23,7 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { auth } from "../firebase/init_app";
+import Filters from "./filters";
 
 const GradesPage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -76,25 +77,117 @@ const GradesPage = () => {
     fetchGrades(user?.uid || ""); // updated sort order
   };
 
+  const applyFilters = (
+    activity: string,
+    timeFilter: string,
+    scoreFilter: string,
+  ) => {
+    const activeFilters: ((grade: any) => boolean)[] = [];
+
+    const parseTime = (timeStr: string) => {
+      const [hours, minutes, seconds] = timeStr.split(":").map(Number);
+      return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    if (activity) {
+      activeFilters.push((grade) => grade.activityName === activity);
+    }
+    if (timeFilter === "shortest") {
+      activeFilters.push(
+        (grade) =>
+          grade.elapsedTime ===
+          grades.reduce(
+            (min, curr) =>
+              parseTime(curr.elapsedTime) < parseTime(min)
+                ? curr.elapsedTime
+                : min,
+            grades[0].elapsedTime,
+          ),
+      );
+    } else if (timeFilter === "longest") {
+      activeFilters.push(
+        (grade) =>
+          grade.elapsedTime ===
+          grades.reduce(
+            (max, curr) =>
+              parseTime(curr.elapsedTime) > parseTime(max)
+                ? curr.elapsedTime
+                : max,
+            grades[0].elapsedTime,
+          ),
+      );
+    }
+    if (scoreFilter === "highest") {
+      activeFilters.push(
+        (grade) =>
+          grade.score ===
+          grades.reduce(
+            (max, curr) => (curr.score > max ? curr.score : max),
+            grades[0].score,
+          ),
+      );
+    } else if (scoreFilter === "lowest") {
+      activeFilters.push(
+        (grade) =>
+          grade.score ===
+          grades.reduce(
+            (min, curr) => (curr.score < min ? curr.score : min),
+            grades[0].score,
+          ),
+      );
+    }
+
+    let filteredGrades = [...grades];
+    if (activeFilters.length > 1) {
+      filteredGrades = grades.filter((grade) =>
+        activeFilters.every((filter) => filter(grade)),
+      );
+    } else if (activeFilters.length === 1) {
+      filteredGrades = grades.filter(activeFilters[0]);
+    }
+
+    setGrades(filteredGrades);
+  };
+
+  const clearFilters = () => {
+    fetchGrades(user?.uid || "");
+  };
+
   return (
     <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-gray-800">
       <title>Grades</title>
       <Nav />
       <div className="mx-auto my-5 min-h-screen max-w-screen-xl px-4 sm:px-8">
-        {/* sort buttons */}
-        <div className="mb-4 flex items-center justify-between">
-          <button
-            onClick={toggleSortOrder}
-            className="border-1 flex items-center space-x-2 rounded-full border border-gray-300 bg-white px-3 py-1 font-semibold"
-          >
-            <FontAwesomeIcon
-              icon={sortBy === "desc" ? faSortAmountDown : faSortAmountUp}
-              className="text-[#ff8282]"
+        <div className="flex items-start">
+          {/* filters component */}
+          <div className="mr-4">
+            {" "}
+            <Filters
+              applyFilters={applyFilters}
+              clearFilters={clearFilters}
+              activityNames={Array.from(
+                new Set(grades.map((grade) => grade.activityName)),
+              )}
             />
-            <span className="text-gray-700">
-              {sortBy === "desc" ? "Sort Newest" : "Sort Oldest"}
-            </span>
-          </button>
+          </div>
+
+          {/* sort button */}
+          <div>
+            <div className="mb-4 flex items-center">
+              <button
+                onClick={toggleSortOrder}
+                className="border-1 flex items-center space-x-2 rounded-full border border-gray-300 bg-white px-3 py-1 font-semibold"
+              >
+                <FontAwesomeIcon
+                  icon={sortBy === "desc" ? faSortAmountDown : faSortAmountUp}
+                  className="text-[#ff8282]"
+                />
+                <span className="text-gray-700">
+                  {sortBy === "desc" ? "Sort Newest" : "Sort Oldest"}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* grades table */}
