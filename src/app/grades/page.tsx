@@ -81,69 +81,35 @@ const GradesPage = () => {
     activity: string,
     timeFilter: string,
     scoreFilter: string,
+    originalGrades: any[],
   ) => {
-    const activeFilters: ((grade: any) => boolean)[] = [];
-
     const parseTime = (timeStr: string) => {
       const [hours, minutes, seconds] = timeStr.split(":").map(Number);
       return hours * 3600 + minutes * 60 + seconds;
     };
 
+    let filteredGrades = [...originalGrades];
+
     if (activity) {
-      activeFilters.push((grade) => grade.activityName === activity);
-    }
-    if (timeFilter === "shortest") {
-      activeFilters.push(
-        (grade) =>
-          grade.elapsedTime ===
-          grades.reduce(
-            (min, curr) =>
-              parseTime(curr.elapsedTime) < parseTime(min)
-                ? curr.elapsedTime
-                : min,
-            grades[0].elapsedTime,
-          ),
-      );
-    } else if (timeFilter === "longest") {
-      activeFilters.push(
-        (grade) =>
-          grade.elapsedTime ===
-          grades.reduce(
-            (max, curr) =>
-              parseTime(curr.elapsedTime) > parseTime(max)
-                ? curr.elapsedTime
-                : max,
-            grades[0].elapsedTime,
-          ),
-      );
-    }
-    if (scoreFilter === "highest") {
-      activeFilters.push(
-        (grade) =>
-          grade.score ===
-          grades.reduce(
-            (max, curr) => (curr.score > max ? curr.score : max),
-            grades[0].score,
-          ),
-      );
-    } else if (scoreFilter === "lowest") {
-      activeFilters.push(
-        (grade) =>
-          grade.score ===
-          grades.reduce(
-            (min, curr) => (curr.score < min ? curr.score : min),
-            grades[0].score,
-          ),
+      filteredGrades = filteredGrades.filter(
+        (grade) => grade.activityName === activity,
       );
     }
 
-    let filteredGrades = [...grades];
-    if (activeFilters.length > 1) {
-      filteredGrades = grades.filter((grade) =>
-        activeFilters.every((filter) => filter(grade)),
+    if (timeFilter === "shortest") {
+      filteredGrades.sort(
+        (a, b) => parseTime(a.elapsedTime) - parseTime(b.elapsedTime),
       );
-    } else if (activeFilters.length === 1) {
-      filteredGrades = grades.filter(activeFilters[0]);
+    } else if (timeFilter === "longest") {
+      filteredGrades.sort(
+        (a, b) => parseTime(b.elapsedTime) - parseTime(a.elapsedTime),
+      );
+    }
+
+    if (scoreFilter === "highest") {
+      filteredGrades.sort((a, b) => b.score - a.score);
+    } else if (scoreFilter === "lowest") {
+      filteredGrades.sort((a, b) => a.score - b.score);
     }
 
     setGrades(filteredGrades);
@@ -163,7 +129,9 @@ const GradesPage = () => {
           <div className="mr-4">
             {" "}
             <Filters
-              applyFilters={applyFilters}
+              applyFilters={(activity, timeFilter, scoreFilter) =>
+                applyFilters(activity, timeFilter, scoreFilter, grades)
+              }
               clearFilters={clearFilters}
               activityNames={Array.from(
                 new Set(grades.map((grade) => grade.activityName)),
