@@ -206,17 +206,30 @@ export default function Home() {
   const score = (12000 - totalMoves * 100 - elapsedTime * 10)/2500;
 
   const calculateScore = (score:number) : number => {
-    if (score >= 3) {
+    if (score >= 4) {
       return 3; // 3 stars
-    } else if (score >= 2) {
+    } else if (score >= 3) {
       return 2; // 2 stars
-    } else if (score >= 1) {
+    } else if (score >= 2) {
       return 1; // 1 star
     } else {
       return 0; // 0 star
     }
     //return Math.max(score,0);
   }
+
+  /*const FinalScoreEditer = (finalScore:number) : number =>{
+    if (finalScore >= 4){
+      return 3;
+    }else if (finalScore >= 3){
+      return 2;}
+      else if (finalScore >= 2){
+        return 1;}
+        else{
+          return 0;
+        }
+        }
+        */ 
   
   // const finalScore = calculateScore()
   const stars = calculateScore(score);
@@ -242,15 +255,61 @@ export default function Home() {
             )}
           </div>
           {gameStarted && (
+            
             <div>
+              {/*Header Begins: Click Counter and Timer*/}
               <div className="mt-4 flex justify-evenly">
                 <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 cursor-none">Click Count: {clickCount}</p>
                 <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
               </div>
+              {/*Header Ends: Click Counter and Timer*/}
+              
+              <div className=''>
+                <div className='flex-1'>
               <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-4 py-4">
-                <div className=''></div>
+              <section className="grid grid-cols-4 justify-items-center gap-4">
+          {cards.map((card, index) => (
+
+            <button
+            key={index}
+            className={`memory-card flex h-40 w-40 items-center justify-center rounded-lg bg-[#ff5a5f] text-white hover:bg-[#ff4146] focus:outline-none focus:ring focus:ring-black active:bg-[#ff4146] shadow-lg ${flippedCards.includes(index) || matchedCards.includes(index) ? "flipped" : ""}`}
+            onClick={() => handleCardClick(index)}
+            disabled={isDisabled || matchedCards.includes(index)}
+        >
+            {flippedCards.includes(index) || matchedCards.includes(index) ? (
+                <img
+                    src={images[card]}
+                    alt={`Card ${index}`}
+                    className="w-full h-full"
+                />
+            ) : (
+                <img src="https://cdn.discordapp.com/attachments/1196945767785578598/1205159897663279114/Screen_Shot_2024-02-08_at_9.34.52_AM.png?ex=65f30b1e&is=65e0961e&hm=0f846bd73ee4c0bb03c39dc0488456a41e7ab937acd0f0824327bd152cd18dc7&"
+
+                className="w-3/4 h-3/4" />
+            )}
+            
+        </button>
+          ))}
+
+        </section>
         
             </div>
+            </div>
+            <div className='mt-8 flex justify-end'>
+              {/* Stats Box Component */}
+          <div className="mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
+            <Stats
+              attempts={matching1_attempts}
+              elapsedTime={elapsedTime}
+              score={(finalScore)}
+              renderStars={() => stars}
+            />
+          </div>
+
+            </div>
+            </div>
+            {/*matching game ends here*/}
+
               <div className="mt-4 flex justify-center">
                 <button
                   className="rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-600 shadow-md"
@@ -272,6 +331,7 @@ export default function Home() {
               </div>
               )}
             </div>
+
           )}
           </div>
         </div>
