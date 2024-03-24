@@ -1,3 +1,4 @@
+"use client";
 import { useState, useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/init_app";
@@ -49,13 +50,6 @@ export default function Sign_in_form() {
         {/* container */}
         <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-4xl">
           {/* left column */}
-          <div
-            className="rounded-l-lg bg-cover object-center lg:block lg:w-1/2"
-            style={{
-              backgroundImage: 'url("https://i.imgur.com/ZmR82c5.jpg")',
-            }}
-          />
-          {/* right column */}
           <div className="relative w-full px-6 py-10 md:px-8 lg:w-1/2">
             <button
               onClick={() => router.push("/")}
@@ -155,6 +149,14 @@ export default function Sign_in_form() {
               position="top-center"
             />
           </div>
+
+          {/* right column */}
+          <div
+            className="rounded-r-lg bg-cover object-center lg:block lg:w-1/2"
+            style={{
+              backgroundImage: 'url("https://i.imgur.com/ZmR82c5.jpg")',
+            }}
+          />
         </div>
       </div>
     </div>
