@@ -10,6 +10,7 @@ import {
   updateDoc,
   doc,
   deleteField,
+  writeBatch,
 } from "firebase/firestore";
 import { db } from "@/app/firebase/init_app";
 import { useState, useEffect } from "react";
@@ -48,6 +49,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredStudents, setFilteredStudents] = useState(students);
   const [editIndex, setEditIndex] = useState<number | null>(null);
+  const [editClass, setEditClass] = useState(false);
 
   useEffect(() => {
     const fetchUser = auth.onAuthStateChanged(async (user) => {
@@ -124,7 +126,48 @@ export default function Home() {
   }, []);
 
   function handleStudents() {
-    setAddStudents(true);
+    setAddStudents((prevState) => !prevState);
+  }
+
+  function handleClassEdit() {
+    setEditClass((prevState) => !prevState);
+  }
+
+  async function handleDeleteClass() {
+    // Function that deletes the classCode field for every Student that has this classCode and the Teacher that has the classCode
+    try {
+      if (user) {
+        // Update the teacher's document to delete the classCode
+        const teacherDocRef = doc(db, "users", user.uid); // Replace teacherId with the actual ID of the teacher
+        await updateDoc(teacherDocRef, { classCode: deleteField() });
+
+        // Query students with the same classCode and update their documents
+        const studentQuery = query(
+          collection(db, "users"),
+          where("role", "==", "Student"),
+          where("classCode", "==", classCode),
+        );
+        const querySnapshot = await getDocs(studentQuery);
+        const batch = writeBatch(db);
+
+        querySnapshot.forEach((doc) => {
+          const studentDocRef = doc.ref;
+          batch.update(studentDocRef, { classCode: deleteField() });
+        });
+
+        // Commit the batched updates
+        await batch.commit();
+
+        console.log("Class deleted successfully!");
+        //toast.success("Class deleted successfully!");
+        // Adding a delay between the page reload and the toast message
+        //setTimeout(() => {
+        location.reload();
+        //}, 1000);
+      }
+    } catch (error) {
+      console.error("Error deleting class:", error);
+    }
   }
 
   function handleEdit(index: number) {
@@ -268,8 +311,15 @@ export default function Home() {
                     </button>
                     <button
                       className={`rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${!codeExists ? "hidden" : ""} `}
+                      onClick={handleClassEdit}
                     >
                       Edit Class
+                    </button>
+                    <button
+                      className={`ml-4 rounded-lg bg-red-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-red-900 ${!editClass ? "hidden" : ""} `}
+                      onClick={handleDeleteClass}
+                    >
+                      Delete Class
                     </button>
                   </div>
                   <div>
