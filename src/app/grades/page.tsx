@@ -50,8 +50,8 @@ const toHHMMSS = (secs: number): string => {
 
 
   // Consolidate KeyboardActivity-kindergarten entries
-  const consolidateActivities = (activities: any[]) => {
-  return activities.reduce((acc: any[], activity: any) => {
+  const consolidateActivities = (activities) => {
+  return activities.reduce((acc: any[], activity) => {
     if (activity.activityName === "KeyboardActivity-kindergarten" || activity.activityName === "KeyboardActivity-firstGrade" || activity.activityName === "KeyboardActivity-secondGrade") {
       const existing = acc.find(a => a.activityName === activity.activityName);
       if (existing) {
@@ -141,7 +141,7 @@ const toHHMMSS = (secs: number): string => {
               className="text-[#ff8282]"
             />
             <span className="text-gray-700">
-              {sortBy === "asc" ? "Sort Newest" : "Sort Oldest"}
+              {sortBy === "desc" ? "Sort Newest" : "Sort Oldest"}
             </span>
           </button>
         </div>
