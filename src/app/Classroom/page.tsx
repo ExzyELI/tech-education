@@ -20,6 +20,8 @@ import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 
 interface Student {
   firstName: string;
@@ -295,20 +297,25 @@ export default function ClassroomPage() {
                     >
                       Add Student
                     </button>
-                    <input
-                      type="text"
-                      placeholder="Add Student Code..."
-                      onChange={(e) => setStudentCode(e.target.value)}
-                      maxLength={5}
-                      className={`rounded-lg border px-4 py-2 ${!addStudents ? "hidden" : ""} `}
-                    />
-                    <button
-                      type="submit"
-                      className={`ml-4 rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${!addStudents ? "hidden" : ""} `}
-                      onClick={handleAddStudent}
+                    <div
+                      className={`items-center overflow-hidden rounded-md border border-gray-200 bg-white ${!addStudents ? "hidden" : ""}`}
                     >
-                      Add
-                    </button>
+                      <input
+                        type="text"
+                        placeholder="Add Student Code..."
+                        onChange={(e) => setStudentCode(e.target.value)}
+                        maxLength={5}
+                        className={`rounded-lg px-4 py-2 focus:outline-none `}
+                      />
+                      <button
+                        type="submit"
+                        onClick={handleAddStudent}
+                        className="bg-white px-4 py-2 text-gray-700 hover:scale-110 focus:outline-none"
+                      >
+                        <FontAwesomeIcon icon={faPlus} />
+                        <span className="sr-only">Search</span>
+                      </button>
+                    </div>
                     <button
                       className={`rounded-lg bg-indigo-600 px-4 py-2 font-semibold text-white shadow-md hover:scale-110 hover:bg-indigo-900 ${!codeExists ? "hidden" : ""} `}
                       onClick={handleClassEdit}

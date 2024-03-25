@@ -148,7 +148,7 @@ const ReportsPage = () => {
             <button
               type="submit"
               onClick={handleAddStudent}
-              className="bg-white px-4 py-2 text-gray-700 focus:outline-none"
+              className="bg-white px-4 py-2 text-gray-700 hover:scale-110 focus:outline-none"
             >
               <FontAwesomeIcon icon={faPlus} />
               <span className="sr-only">Search</span>
