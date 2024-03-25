@@ -4,6 +4,8 @@ import { auth } from "../firebase/init_app";
 import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
 import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Charts from "./charts";
 import SearchFilter from "./search-filter";
 
@@ -16,6 +18,7 @@ interface Activity {
 // define component
 const ReportsPage = () => {
   // define state variables
+  const [studentCode, setStudentCode] = useState<string>("");
   const [activityData, setActivityData] = useState<Activity[]>([]);
   const [filteredActivityData, setFilteredActivityData] = useState<Activity[]>(
     [],
@@ -55,15 +58,32 @@ const ReportsPage = () => {
     <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#2d2d2d]">
       <Nav />
       <div className="container relative mx-auto my-10 flex-grow px-4 md:flex md:justify-center md:px-8">
-        <div className="mx-auto w-2/4">
-          {/* search and filter */}
-          <SearchFilter
-            activityData={activityData}
-            setFilteredActivityData={setFilteredActivityData}
-          />
-          <div className="z-0 mt-4">
-            {/* charts */}
-            <Charts activityData={filteredActivityData} />
+        <div className="w-2/4">
+          <div className="mx-auto mb-2 flex w-full items-center overflow-hidden rounded-md border border-gray-200 bg-white">
+            <input
+              type="search"
+              className="block w-full bg-white px-4 py-2 text-gray-700 focus:outline-none"
+              onChange={(e) => setStudentCode(e.target.value)}
+              placeholder="Add student code..."
+            />
+            <button
+              type="submit"
+              className="bg-white px-4 py-2 text-gray-700 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faPlus} />
+              <span className="sr-only">Search</span>
+            </button>
+          </div>
+          <div className="mx-auto w-full">
+            {/* search and filter */}
+            <SearchFilter
+              activityData={activityData}
+              setFilteredActivityData={setFilteredActivityData}
+            />
+            <div className="z-0 mt-4">
+              {/* charts */}
+              <Charts activityData={filteredActivityData} />
+            </div>
           </div>
         </div>
       </div>

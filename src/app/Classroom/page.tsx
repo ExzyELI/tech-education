@@ -38,7 +38,7 @@ function generateClassCode(): string {
   return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
 }
 
-export default function Home() {
+export default function ClassroomPage() {
   const [user, setUser] = useState<User | null>(null); // logged-in user
   const [classCode, setClassCode] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
