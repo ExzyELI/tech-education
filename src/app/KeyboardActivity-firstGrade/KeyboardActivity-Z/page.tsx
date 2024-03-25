@@ -154,6 +154,7 @@ const KeyZKeyPressPage = () => {
               </div>
               {/* Overlay content */}
               <p className="text-3xl font-bold">Congratulations!</p>
+              <p className="text-3xl">🌟🌟🌟</p>
               <p className="text-xl">You finished the keyboard Activities for the first grade.</p>
               <p className="text-xl">score: {totalScore}.</p>
               <button
