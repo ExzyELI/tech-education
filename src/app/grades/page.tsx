@@ -50,8 +50,8 @@ const toHHMMSS = (secs: number): string => {
 
 
   // Consolidate KeyboardActivity-kindergarten entries
-  const consolidateActivities = (activities) => {
-  return activities.reduce((acc: any[], activity) => {
+  const consolidateActivities = (activities: any[]) => {
+  return activities.reduce((acc: any[], activity: any) => {
     if (activity.activityName === "KeyboardActivity-kindergarten" || activity.activityName === "KeyboardActivity-firstGrade" || activity.activityName === "KeyboardActivity-secondGrade") {
       const existing = acc.find(a => a.activityName === activity.activityName);
       if (existing) {
