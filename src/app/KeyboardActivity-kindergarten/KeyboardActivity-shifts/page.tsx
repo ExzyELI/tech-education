@@ -31,6 +31,7 @@ const shiftsKeyPressPage = () => {
     useEffect(() => {
         const handleKeyDown = async (e: KeyboardEvent) => {
             setAttempts((prevAttempts) => prevAttempts + 1);
+            setKeyPressed(e.code);
             let isCorrect: boolean;
             //check if the shifts buttons are pressed
             if (isCorrect = e.code === "ShiftLeft" || e.code === "ShiftRight") {
@@ -46,7 +47,7 @@ const shiftsKeyPressPage = () => {
                     const minutes = Math.floor(elapsedTimeSec / 60);
                     const seconds = Math.floor(elapsedTimeSec % 60);
                     const formattedElapsedTime = `00:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-                    const userActivityDocRef = doc(collection(firestore, `users/${user.uid}/activities`));
+                    const userActivityDocRef = doc(collection(firestore, `users/${user!.uid}/activities`));
 
                     await setDoc(userActivityDocRef, {
                         activityName: "KeyboardActivity-kindergarten",
@@ -65,7 +66,7 @@ const shiftsKeyPressPage = () => {
                 setCorrectPress(false);
                 setShowMarks(true);
                 // Ensure we can update the database on the next correct key press
-                setUpdatePerformed(false);
+                //setUpdatePerformed(false);
             }
         };
 

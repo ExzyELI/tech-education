@@ -3,25 +3,56 @@ import Nav from "../../../../comps/nav";
 import Footer from "../../../../comps/footer";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { getFirestore, doc, setDoc, serverTimestamp, collection } from "firebase/firestore";
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from "@/app/firebase/init_app";
 
 const WordInputPage = () => {
     const targetWord = "dog"; //word to match
     const [typedWord, setTypedWord] = useState(""); //store key presses as a word
     const [correctPress, setCorrectPress] = useState(false);
     const [showMarks, setShowMarks] = useState(false);
+    const [attempts, setAttempts] = useState(0);
+    const [startTime] = useState(new Date());
+    const [databaseRegistered, setDatabaseRegistered] = useState(false);
+    const [user] = useAuthState(auth);
     const router = useRouter();
+    const firestore = getFirestore();
 
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-
+        const handleKeyDown = async (e: KeyboardEvent) => {
             if (!e.key.match(/^[A-Za-z]$/)) return;
-
+            
+            setAttempts((prevAttempts) => prevAttempts + 1);
             const newWord = (typedWord + e.key).toLowerCase();
             setShowMarks(true);
 
             if (newWord === targetWord) {
                 setTypedWord(newWord);
                 setCorrectPress(true);
+
+                // Save to database once correct word is typed
+                if (!databaseRegistered) {
+                    setDatabaseRegistered(true); //prevent further registrations
+                    
+                    const endTime = new Date();
+                    const elapsedTimeMs = endTime.getTime() - startTime.getTime();
+                    const elapsedTimeSec = elapsedTimeMs / 1000;
+                    const minutes = Math.floor(elapsedTimeSec / 60);
+                    const seconds = Math.floor(elapsedTimeSec % 60);
+                    const formattedElapsedTime = `00:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
+                    const userActivityDocRef = doc(collection(firestore, `users/${user!.uid}/activities`));
+
+                    await setDoc(userActivityDocRef, {
+                        activityName: "KeyboardActivity-secondGrade",
+                        elapsedTime: formattedElapsedTime,
+                        KeyboardActivitysecondGrade_attempts: attempts,
+                        score: 1,
+                        timestamp: serverTimestamp(),
+                        typedWord: newWord,
+                        correctPress: true,
+                    }, { merge: true });
+                }
             } else {
                 setTypedWord(newWord);
                 setCorrectPress(false);
@@ -38,10 +69,8 @@ const WordInputPage = () => {
 
         window.addEventListener("keydown", handleKeyDown);
 
-        return () => {
-            window.removeEventListener("keydown", handleKeyDown);
-        };
-    }, [typedWord, correctPress, targetWord]);
+        return () => window.removeEventListener("keydown", handleKeyDown);
+    }, [firestore, user, typedWord, correctPress, attempts, startTime, databaseRegistered, targetWord]);
 
     // path to next task
     const goToNextTask = () => {
@@ -49,7 +78,7 @@ const WordInputPage = () => {
     };
 
     return (
-        <main className="flex min-h-screen flex-col space-y-[110px] bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">
+        <main className="flex min-h-screen flex-col justify-between bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">
             <title>Type Word Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">

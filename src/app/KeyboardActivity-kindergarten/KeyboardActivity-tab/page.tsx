@@ -44,7 +44,7 @@ const tabKeyPressPage = () => {
                 const minutes = Math.floor(elapsedTimeSec / 60);
                 const seconds = Math.floor(elapsedTimeSec % 60);
                 const formattedElapsedTime = `00:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-                const userActivityDocRef = doc(collection(firestore, `users/${user.uid}/activities`));
+                const userActivityDocRef = doc(collection(firestore, `users/${user!.uid}/activities`));
 
                 await setDoc(userActivityDocRef, {
                     activityName: "KeyboardActivity-kindergarten",

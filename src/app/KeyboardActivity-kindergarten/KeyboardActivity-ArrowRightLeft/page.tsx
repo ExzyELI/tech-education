@@ -33,7 +33,7 @@ const arrowsKeyPressPage = () => {
   // Function to fetch and sum scores from Firestore
   useEffect(() => {
     const fetchAndSumScores = async () => {
-      const activitiesRef = collection(firestore, `users/${user.uid}/activities`);
+      const activitiesRef = collection(firestore, `users/${user!.uid}/activities`);
       const snapshot = await getDocs(activitiesRef);
       const totalScore = snapshot.docs
         .filter(doc => doc.data().activityName === "KeyboardActivity-kindergarten")
@@ -49,6 +49,7 @@ const arrowsKeyPressPage = () => {
   useEffect(() => {
     const handleKeyDown = async (e: KeyboardEvent) => {
       setAttempts((prevAttempts) => prevAttempts + 1);
+      setKeyPressed(e.code);
       let isCorrect: boolean;
       //check if the shifts buttons are pressed
       if (isCorrect = e.code === "ArrowRight" || e.code === "ArrowLeft") {
@@ -64,7 +65,7 @@ const arrowsKeyPressPage = () => {
           const minutes = Math.floor(elapsedTimeSec / 60);
           const seconds = Math.floor(elapsedTimeSec % 60);
           const formattedElapsedTime = `00:${minutes < 10 ? `0${minutes}` : minutes}:${seconds < 10 ? `0${seconds}` : seconds}`;
-          const userActivityDocRef = doc(collection(firestore, `users/${user.uid}/activities`));
+          const userActivityDocRef = doc(collection(firestore, `users/${user!.uid}/activities`));
 
           await setDoc(userActivityDocRef, {
             activityName: "KeyboardActivity-kindergarten",
@@ -83,7 +84,7 @@ const arrowsKeyPressPage = () => {
         setCorrectPress(false);
         setShowMarks(true);
         // Ensure we can update the database on the next correct key press
-        setUpdatePerformed(false);
+        //setUpdatePerformed(false);
       }
     };
 
@@ -106,7 +107,8 @@ const arrowsKeyPressPage = () => {
   };
 
   return (
-    <main className="flex min-h-screen flex-col justify-between bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">      <title>Press Arrow Right or Arrow Left Activity</title>
+    <main className="flex min-h-screen flex-col justify-between bg-[#FAF9F6] font-serif leading-normal tracking-normal text-[#132241]">      
+    <title>Press Arrow Right or Arrow Left Activity</title>
       <Nav />
       <div className="flex flex-col items-center justify-center">
         <h1 className="text-2xl font-bold">
