@@ -23,18 +23,18 @@ import {
   getDocs,
 } from "firebase/firestore";
 import { auth } from "../firebase/init_app";
+import Filters from "./filters";
 
 const GradesPage = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [grades, setGrades] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"asc" | "desc">("desc"); // default sort order is descending
   const itemsPerPage = 15; // 15 items displayed on a page
+  const [originalGrades, setOriginalGrades] = useState<any[]>([]);
 
   useEffect(() => {
     // auth state change listener
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
       if (user) {
         fetchGrades(user.uid);
       }
@@ -55,6 +55,7 @@ const GradesPage = () => {
         fetchedGrades.push(doc.data());
       });
 
+      setOriginalGrades(fetchedGrades);
       setGrades(fetchedGrades);
     } catch (error) {
       console.error("Error fetching grades:", error);
@@ -73,7 +74,66 @@ const GradesPage = () => {
   // function to sort order
   const toggleSortOrder = () => {
     setSortBy(sortBy === "asc" ? "desc" : "asc");
-    fetchGrades(user?.uid || ""); // updated sort order
+
+    // sorts the current filtered grades
+    const sortedGrades = [...grades];
+    sortedGrades.sort((a, b) => {
+      const timestampA = a.timestamp.seconds;
+      const timestampB = b.timestamp.seconds;
+      if (sortBy === "asc") {
+        return timestampA - timestampB;
+      } else {
+        return timestampB - timestampA;
+      }
+    });
+    setGrades(sortedGrades);
+  };
+
+  // function to apply filters
+  const applyFilters = (
+    activity: string,
+    timeFilter: string,
+    scoreFilter: string,
+    originalGrades: any[],
+  ) => {
+    const parseTime = (timeStr: string) => {
+      const [hours, minutes, seconds] = timeStr.split(":").map(Number);
+      return hours * 3600 + minutes * 60 + seconds;
+    };
+
+    let filteredGrades = [...originalGrades];
+
+    // applies activity filter
+    if (activity) {
+      filteredGrades = filteredGrades.filter(
+        (grade) => grade.activityName === activity,
+      );
+    }
+
+    // applies time filter
+    if (timeFilter === "shortest") {
+      filteredGrades.sort(
+        (a, b) => parseTime(a.elapsedTime) - parseTime(b.elapsedTime),
+      );
+    } else if (timeFilter === "longest") {
+      filteredGrades.sort(
+        (a, b) => parseTime(b.elapsedTime) - parseTime(a.elapsedTime),
+      );
+    }
+
+    // applies score filter
+    if (scoreFilter === "highest") {
+      filteredGrades.sort((a, b) => b.score - a.score);
+    } else if (scoreFilter === "lowest") {
+      filteredGrades.sort((a, b) => a.score - b.score);
+    }
+
+    setGrades(filteredGrades);
+  };
+
+  // function to clear filters
+  const clearFilters = () => {
+    setGrades(originalGrades); // resets filtered grades to original data
   };
 
   return (
@@ -81,20 +141,38 @@ const GradesPage = () => {
       <title>Grades</title>
       <Nav />
       <div className="mx-auto my-5 min-h-screen max-w-screen-xl px-4 sm:px-8">
-        {/* sort buttons */}
-        <div className="mb-4 flex items-center justify-between">
-          <button
-            onClick={toggleSortOrder}
-            className="border-1 flex items-center space-x-2 rounded-full border border-gray-300 bg-white px-3 py-1 font-semibold"
-          >
-            <FontAwesomeIcon
-              icon={sortBy === "desc" ? faSortAmountDown : faSortAmountUp}
-              className="text-[#ff8282]"
+        <div className="flex items-start">
+          {/* filters component */}
+          <div className="mr-4">
+            {" "}
+            <Filters
+              applyFilters={(activity, timeFilter, scoreFilter) =>
+                applyFilters(activity, timeFilter, scoreFilter, originalGrades)
+              }
+              clearFilters={clearFilters}
+              activityNames={Array.from(
+                new Set(originalGrades.map((grade) => grade.activityName)),
+              )}
             />
-            <span className="text-gray-700">
-              {sortBy === "desc" ? "Sort Newest" : "Sort Oldest"}
-            </span>
-          </button>
+          </div>
+
+          {/* sort button */}
+          <div>
+            <div className="mb-4 flex items-center">
+              <button
+                onClick={toggleSortOrder}
+                className="border-1 flex items-center space-x-2 rounded-full border border-gray-300 bg-white px-3 py-1 font-semibold"
+              >
+                <FontAwesomeIcon
+                  icon={sortBy === "desc" ? faSortAmountDown : faSortAmountUp}
+                  className="text-[#ff8282]"
+                />
+                <span className="text-gray-700">
+                  {sortBy === "desc" ? "Sort Newest" : "Sort Oldest"}
+                </span>
+              </button>
+            </div>
+          </div>
         </div>
 
         {/* grades table */}
@@ -161,7 +239,13 @@ const GradesPage = () => {
                       {grade.elapsedTime}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
-                      {grade.quiz1_attempts || grade.password1_attempts || grade.quizK_attempts || grade.matching1_attempts}
+                      {grade.quiz1_attempts ||
+                        grade.password1_attempts ||
+                        grade.quizK_attempts ||
+                        grade.matching1_attempts ||
+                        grade.quiz2_attempts ||
+                        grade.matchingK_attempts ||
+                        grade.matching2_attempts}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
                       {grade.timestamp

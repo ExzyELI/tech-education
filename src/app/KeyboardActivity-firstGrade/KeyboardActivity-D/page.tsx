@@ -41,20 +41,20 @@ const KeyDKeyPressPage = () => {
 
     return (
         <main className="flex min-h-screen flex-col space-y-[110px] bg-[#ffecde] font-serif leading-normal tracking-normal text-[#132241]">
-            <title>Press KeyD Activity</title>
+            <title>Press Key D Activity</title>
             <Nav />
             <div className="flex flex-col items-center justify-center">
-                <h1 className="text-2xl font-bold">Press the KeyD Button</h1>
+                <h1 className="text-2xl font-bold">Press the Key D Button</h1>
                 {/* image path */}
                 <img src="/images/KeyD-key-press.gif" alt="Press KeyD" className="mt-4" />
                 {showMarks && (
                     <p className="mt-4 text-lg">
                         {/* display if right key is pressed */}
                         {correctPress ? (
-                            <span className="text-green-500">✓ Correct! You pressed the KeyD button.</span>
+                            <span className="text-green-500">✓ Correct! You pressed the Key D button.</span>
                         ) : (
                             //display any other key pressed */}
-                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the KeyD button.</span>
+                            <span className="text-red-500">✗ You pressed {keyPressed}. Please press the Key D button.</span>
                         )}
                     </p>
                 )}

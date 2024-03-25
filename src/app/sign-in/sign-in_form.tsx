@@ -1,4 +1,5 @@
-import { useState } from "react";
+"use client";
+import { useState, useEffect } from "react";
 import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
@@ -9,6 +10,9 @@ import {
   faEyeSlash,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { User } from "firebase/auth";
 
 export default function Sign_in_form() {
   const [email, setEmail] = useState("");
@@ -24,8 +28,11 @@ export default function Sign_in_form() {
       const res = await signInWithEmailAndPassword(email, password);
       console.log("signed in", { res });
 
-      if (res !== undefined) {
+      if (res !== undefined && res.user.emailVerified) {
         router.push("/HomePage");
+      }
+      if (res !== undefined && !res.user.emailVerified) {
+        toast.error("Please check your email and verify to sign in."); // show messages for email verification if the user email is not verified
       }
     } catch (error) {
       console.error(error);
@@ -43,13 +50,6 @@ export default function Sign_in_form() {
         {/* container */}
         <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-4xl">
           {/* left column */}
-          <div
-            className="rounded-l-lg bg-cover object-center lg:block lg:w-1/2"
-            style={{
-              backgroundImage: 'url("https://i.imgur.com/ZmR82c5.jpg")',
-            }}
-          />
-          {/* right column */}
           <div className="relative w-full px-6 py-10 md:px-8 lg:w-1/2">
             <button
               onClick={() => router.push("/")}
@@ -143,7 +143,20 @@ export default function Sign_in_form() {
                 </p>
               </form>
             </div>
+            <ToastContainer
+              className="Toast-position mt-[20px]"
+              style={{ width: "450px" }}
+              position="top-center"
+            />
           </div>
+
+          {/* right column */}
+          <div
+            className="rounded-r-lg bg-cover object-center lg:block lg:w-1/2"
+            style={{
+              backgroundImage: 'url("https://i.imgur.com/ZmR82c5.jpg")',
+            }}
+          />
         </div>
       </div>
     </div>

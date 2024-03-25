@@ -2,7 +2,6 @@
 import { ReactNode } from 'react';
 import { useState, useEffect } from "react";
 import { shuffle } from "lodash"; // npm run lodash
-import MatchingNavBar from "./MatchingNavBar";
 import Footer from "../../../comps/footer";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import Nav from "../../../comps/nav";
@@ -282,13 +281,16 @@ export default function Home() {
               </div>
               {isGameWon && (
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
-                    <div className="text-4xl font-bold text-center">
-                      Congratulations! You Win!
+                <div className="bg-green-500 bg-opacity-90 text-white rounded-lg p-8">
+                  <div className="text-6xl font-bold text-center">
+                    Great Job!
+                    <div className="flex items-center justify-center animate-bounce"> {/* Flex container */}
+                      <img src="/CGimages/goodjob-man (1).png" style={{ width: "350px", height: "350px" }} />
                     </div>
-                    <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-8 text-center">Score: {finalScore}</p>
                   </div>
+                  <p className="bg-green-500 bg-opacity-60 text-white text-3xl rounded-lg p-1 text-center">Score: {finalScore}</p>
                 </div>
+              </div>
               )}
             </div>
           )}
