@@ -26,13 +26,6 @@ export default function ResetPasswordForm() {
         {/* container */}
         <div className="mx-auto flex w-full max-w-sm rounded-lg bg-white shadow-lg lg:max-w-3xl">
           {/* left column */}
-          <div
-            className="rounded-l-lg bg-[#e1f3ff] bg-cover object-center lg:block lg:w-1/2"
-            style={{
-              backgroundImage: 'url("https://i.imgur.com/59W6oS6.png")',
-            }}
-          />
-          {/* right column */}
           <div className="relative w-full px-6 py-10 md:px-8 lg:w-1/2">
             <button
               onClick={() => router.push("/")}
@@ -107,6 +100,14 @@ export default function ResetPasswordForm() {
               </form>
             </div>
           </div>
+
+          {/* right column */}
+          <div
+            className="rounded-r-lg bg-[#e1f3ff] bg-cover object-center lg:block lg:w-1/2"
+            style={{
+              backgroundImage: 'url("https://i.imgur.com/59W6oS6.png")',
+            }}
+          />
         </div>
       </div>
     </div>
