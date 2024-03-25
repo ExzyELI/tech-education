@@ -26,7 +26,7 @@ export default function ClassPage() {
   const [user, setUser] = useState<User | null>(null); // logged-in user
   const [classCode, setClassCode] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
-  const [codeExists, setCodeExists] = useState(false);
+  const [codeExists, setCodeExists] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {

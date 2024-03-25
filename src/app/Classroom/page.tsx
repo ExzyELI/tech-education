@@ -42,11 +42,11 @@ export default function ClassroomPage() {
   const [user, setUser] = useState<User | null>(null); // logged-in user
   const [classCode, setClassCode] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
-  const [codeExists, setCodeExists] = useState(false);
-  const [addStudents, setAddStudents] = useState(false);
+  const [codeExists, setCodeExists] = useState<boolean>(false);
+  const [addStudents, setAddStudents] = useState<boolean>(false);
   const [studentCode, setStudentCode] = useState<string>("");
   const [students, setStudents] = useState<Student[]>([]);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [filteredStudents, setFilteredStudents] = useState(students);
   const [editIndex, setEditIndex] = useState<number | null>(null);
   const [editClass, setEditClass] = useState(false);
