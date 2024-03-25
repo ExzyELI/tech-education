@@ -26,16 +26,15 @@ import { auth } from "../firebase/init_app";
 import Filters from "./filters";
 
 const GradesPage = () => {
-  const [user, setUser] = useState<User | null>(null);
   const [grades, setGrades] = useState<any[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"asc" | "desc">("desc"); // default sort order is descending
   const itemsPerPage = 15; // 15 items displayed on a page
+  const [originalGrades, setOriginalGrades] = useState<any[]>([]);
 
   useEffect(() => {
     // auth state change listener
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
       if (user) {
         fetchGrades(user.uid);
       }
@@ -56,6 +55,7 @@ const GradesPage = () => {
         fetchedGrades.push(doc.data());
       });
 
+      setOriginalGrades(fetchedGrades);
       setGrades(fetchedGrades);
     } catch (error) {
       console.error("Error fetching grades:", error);
@@ -74,9 +74,22 @@ const GradesPage = () => {
   // function to sort order
   const toggleSortOrder = () => {
     setSortBy(sortBy === "asc" ? "desc" : "asc");
-    fetchGrades(user?.uid || ""); // updated sort order
+
+    // sorts the current filtered grades
+    const sortedGrades = [...grades];
+    sortedGrades.sort((a, b) => {
+      const timestampA = a.timestamp.seconds;
+      const timestampB = b.timestamp.seconds;
+      if (sortBy === "asc") {
+        return timestampA - timestampB;
+      } else {
+        return timestampB - timestampA;
+      }
+    });
+    setGrades(sortedGrades);
   };
 
+  // function to apply filters
   const applyFilters = (
     activity: string,
     timeFilter: string,
@@ -90,12 +103,14 @@ const GradesPage = () => {
 
     let filteredGrades = [...originalGrades];
 
+    // applies activity filter
     if (activity) {
       filteredGrades = filteredGrades.filter(
         (grade) => grade.activityName === activity,
       );
     }
 
+    // applies time filter
     if (timeFilter === "shortest") {
       filteredGrades.sort(
         (a, b) => parseTime(a.elapsedTime) - parseTime(b.elapsedTime),
@@ -106,6 +121,7 @@ const GradesPage = () => {
       );
     }
 
+    // applies score filter
     if (scoreFilter === "highest") {
       filteredGrades.sort((a, b) => b.score - a.score);
     } else if (scoreFilter === "lowest") {
@@ -115,8 +131,9 @@ const GradesPage = () => {
     setGrades(filteredGrades);
   };
 
+  // function to clear filters
   const clearFilters = () => {
-    fetchGrades(user?.uid || "");
+    setGrades(originalGrades); // resets filtered grades to original data
   };
 
   return (
@@ -130,11 +147,11 @@ const GradesPage = () => {
             {" "}
             <Filters
               applyFilters={(activity, timeFilter, scoreFilter) =>
-                applyFilters(activity, timeFilter, scoreFilter, grades)
+                applyFilters(activity, timeFilter, scoreFilter, originalGrades)
               }
               clearFilters={clearFilters}
               activityNames={Array.from(
-                new Set(grades.map((grade) => grade.activityName)),
+                new Set(originalGrades.map((grade) => grade.activityName)),
               )}
             />
           </div>
