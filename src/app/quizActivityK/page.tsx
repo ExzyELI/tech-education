@@ -209,8 +209,8 @@ export default function Quiz() {
     <main className="font-family: flex min-h-screen flex-col space-y-[60px] bg-[#FAF9F6] font-sans leading-normal tracking-normal text-[#132241]">
       <title>Tech Education</title>
       <Nav />
-      <div className="//rounded-lg //bg-white //border mx-[200px] flex justify-center border-gray-200 md:flex">
-        <div className="flex-child ml-[200px] w-[500px] md:flex">
+      <div className="//rounded-lg //bg-white //border mx-[200px] flex justify-center border-gray-200">
+        <div className="flex-child ml-[200px] w-[500px]">
           {(() => {
             switch (isGameStarted) {
               case true:
@@ -322,7 +322,7 @@ export default function Quiz() {
             />
           </div>
         </div>
-        <div className="float ml-20 mt-[60px] flex md:flex">
+        <div className="float ml-20 mt-[60px]">
           <Stats
             attempts={quizK_attempts}
             elapsedTime={elapsedTime}

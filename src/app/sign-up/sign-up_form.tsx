@@ -3,7 +3,7 @@ import { sendEmailVerification } from "firebase/auth";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, db } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 import Radio from "./radio";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -67,6 +67,12 @@ export default function Sign_up_form() {
           lastName: lastName,
           role: role,
         });
+        if (role == "Student") {
+          const code = generateStudentCode();
+          await updateDoc(doc(db, "users", res.user.uid), {
+            studentCode: code,
+          });
+        }
         //Sending email verification
         await sendEmailVerification(res.user);
       }
@@ -96,6 +102,13 @@ export default function Sign_up_form() {
       console.error(error);
     }
   };
+  
+  // Function to generate a random 5-digit number
+  function generateStudentCode(): string {
+    const min = 10000;
+    const max = 99999;
+    return (Math.floor(Math.random() * (max - min + 1)) + min).toString();
+  }
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
