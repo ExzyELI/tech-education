@@ -30,6 +30,54 @@ const GradesPage = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortBy, setSortBy] = useState<"asc" | "desc">("desc"); // default sort order is descending
   const itemsPerPage = 15; // 15 items displayed on a page
+  //to consildate multiple pages of the same activity
+  const [consolidatedGrades, setConsolidatedGrades] = useState<any[]>([]);
+
+
+  const toSeconds = (time: string): number => {
+    const [hours, minutes, seconds] = time.split(":").map(parseFloat);
+    return hours * 3600 + minutes * 60 + seconds;
+};
+
+const toHHMMSS = (secs: number): string => {
+  const hours = Math.floor(secs / 3600);
+  const minutes = Math.floor((secs % 3600) / 60);
+  const seconds = secs % 60;
+  return [hours, minutes, seconds]
+      .map(v => v < 10 ? "0" + v : v)
+      .join(":");
+};
+
+
+  // Consolidate KeyboardActivity-kindergarten entries
+  const consolidateActivities = (activities: any[]) => {
+  return activities.reduce((acc: any[], activity: any) => {
+    if (activity.activityName === "KeyboardActivity-kindergarten" || activity.activityName === "KeyboardActivity-firstGrade" || activity.activityName === "KeyboardActivity-secondGrade") {
+      const existing = acc.find(a => a.activityName === activity.activityName);
+      if (existing) {
+        existing.score = (existing.score || 0) + (activity.score || 0);
+        existing.elapsedTime = toHHMMSS(toSeconds(existing.elapsedTime) + toSeconds(activity.elapsedTime));
+        // Assuming the attempts property needs to be handled the same way for both activity types
+        existing.KeyboardActivityKindergarten_attempts = (existing.KeyboardActivityKindergarten_attempts || 0) + (activity.KeyboardActivityKindergarten_attempts || 0);
+        existing.KeyboardActivityfirstGrade_attempts = (existing.KeyboardActivityfirstGrade_attempts || 0) + (activity.KeyboardActivityfirstGrade_attempts || 0);
+        existing.KeyboardActivitysecondGrade_attempts = (existing.KeyboardActivitysecondGrade_attempts || 0) + (activity.KeyboardActivitysecondGrade_attempts || 0);
+      } else {
+        acc.push({
+          ...activity,
+          elapsedTime: activity.elapsedTime,
+          KeyboardActivityKindergarten_attempts: activity.KeyboardActivityKindergarten_attempts || 0,
+          KeyboardActivityfirstGrade_attempts: activity.KeyboardActivityfirstGrade_attempts || 0,
+          KeyboardActivitysecondGrade_attempts: activity.KeyboardActivitysecondGrade_attempts || 0,
+        });
+      }
+    } else {
+      acc.push(activity);
+    }
+    return acc;
+  }, []);
+};
+
+
 
   useEffect(() => {
     // auth state change listener
@@ -56,19 +104,20 @@ const GradesPage = () => {
       });
 
       setGrades(fetchedGrades);
+      setConsolidatedGrades(consolidateActivities(fetchedGrades));
     } catch (error) {
       console.error("Error fetching grades:", error);
     }
   };
 
   // calulate pages based on grades and items per page
-  const totalPages = Math.ceil(grades.length / itemsPerPage);
+  const totalPages = Math.ceil(consolidatedGrades.length / itemsPerPage);
   // calculate start index of current page
   const startIndex = (currentPage - 1) * itemsPerPage;
   // calculate end index of current page
   const endIndex = startIndex + itemsPerPage;
   // get grades for the current page
-  const currentGrades = grades.slice(startIndex, endIndex);
+  const currentGrades = consolidatedGrades.slice(startIndex, endIndex);
 
   // function to sort order
   const toggleSortOrder = () => {
@@ -92,7 +141,7 @@ const GradesPage = () => {
               className="text-[#ff8282]"
             />
             <span className="text-gray-700">
-              {sortBy === "desc" ? "Sort Newest" : "Sort Oldest"}
+              {sortBy === "asc" ? "Sort Newest" : "Sort Oldest"}
             </span>
           </button>
         </div>
@@ -167,13 +216,16 @@ const GradesPage = () => {
                         grade.matching1_attempts ||
                         grade.quiz2_attempts ||
                         grade.matchingK_attempts ||
-                        grade.matching2_attempts}
+                        grade.matching2_attempts ||
+                        grade.KeyboardActivityKindergarten_attempts ||
+                        grade.KeyboardActivityfirstGrade_attempts ||
+                        grade.KeyboardActivitysecondGrade_attempts}
                     </td>
                     <td className="px-6 py-4 text-center text-gray-800">
                       {grade.timestamp
                         ? new Date(
-                            grade.timestamp.seconds * 1000,
-                          ).toLocaleDateString()
+                          grade.timestamp.seconds * 1000,
+                        ).toLocaleDateString()
                         : ""}
                     </td>
                   </tr>
@@ -193,9 +245,8 @@ const GradesPage = () => {
               <button
                 onClick={() => setCurrentPage(currentPage - 1)}
                 disabled={currentPage === 1}
-                className={`relative inline-flex items-center rounded-md border border-gray-300 bg-[#ffe08d] px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#ffe08d] ${
-                  currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
-                }`}
+                className={`relative inline-flex items-center rounded-md border border-gray-300 bg-[#ffe08d] px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#ffe08d] ${currentPage === 1 ? "cursor-not-allowed opacity-50" : ""
+                  }`}
               >
                 <FontAwesomeIcon icon={faArrowLeft} />
               </button>
@@ -203,11 +254,10 @@ const GradesPage = () => {
               <button
                 onClick={() => setCurrentPage(currentPage + 1)}
                 disabled={currentPage === totalPages}
-                className={`relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-[#ffe08d] px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#ffe08d] ${
-                  currentPage === totalPages
-                    ? "cursor-not-allowed opacity-50"
-                    : ""
-                }`}
+                className={`relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-[#ffe08d] px-4 py-2 text-sm font-medium text-gray-700 hover:bg-[#ffe08d] ${currentPage === totalPages
+                  ? "cursor-not-allowed opacity-50"
+                  : ""
+                  }`}
               >
                 <FontAwesomeIcon icon={faArrowRight} />
               </button>
@@ -221,9 +271,8 @@ const GradesPage = () => {
                 <button
                   onClick={() => setCurrentPage(currentPage - 1)}
                   disabled={currentPage === 1}
-                  className={`relative inline-flex items-center rounded-l-md bg-white px-2 py-2 text-[#ff8282] ring-1 ring-inset ring-gray-300 ${
-                    currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                  }`}
+                  className={`relative inline-flex items-center rounded-l-md bg-white px-2 py-2 text-[#ff8282] ring-1 ring-inset ring-gray-300 ${currentPage === 1 ? "pointer-events-none opacity-50" : ""
+                    }`}
                 >
                   <FontAwesomeIcon icon={faArrowLeft} className="h-5 w-5" />
                 </button>
@@ -232,11 +281,10 @@ const GradesPage = () => {
                   <button
                     key={i}
                     onClick={() => setCurrentPage(i + 1)}
-                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${
-                      currentPage === i + 1
-                        ? "bg-[#ffe08d] text-gray-700 ring-1 ring-inset ring-gray-300"
-                        : "bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-[#ffe08d] hover:text-gray-700"
-                    }`}
+                    className={`relative inline-flex items-center px-4 py-2 text-sm font-semibold ${currentPage === i + 1
+                      ? "bg-[#ffe08d] text-gray-700 ring-1 ring-inset ring-gray-300"
+                      : "bg-white text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-[#ffe08d] hover:text-gray-700"
+                      }`}
                   >
                     {i + 1}
                   </button>
@@ -245,11 +293,10 @@ const GradesPage = () => {
                 <button
                   onClick={() => setCurrentPage(currentPage + 1)}
                   disabled={currentPage === totalPages}
-                  className={`relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-[#ff8282] ring-1 ring-inset ring-gray-300 ${
-                    currentPage === totalPages
-                      ? "pointer-events-none opacity-50"
-                      : ""
-                  }`}
+                  className={`relative inline-flex items-center rounded-r-md bg-white px-2 py-2 text-[#ff8282] ring-1 ring-inset ring-gray-300 ${currentPage === totalPages
+                    ? "pointer-events-none opacity-50"
+                    : ""
+                    }`}
                 >
                   <FontAwesomeIcon icon={faArrowRight} className="h-5 w-5" />
                 </button>
