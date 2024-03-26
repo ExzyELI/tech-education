@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { sendEmailVerification } from "firebase/auth";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { auth, db } from "@/app/firebase/init_app";
@@ -37,12 +37,40 @@ export default function Sign_up_form() {
   const [lastName, setlastName] = useState("");
   const router = useRouter();
   const [role, selectedRole] = useState("");
+  const [showPasswordRequirements, setShowPasswordRequirements] = useState(false);
+  const [showConfirmPasswordMatch, setShowConfirmPasswordMatch] = useState(false);
+
 
   const [createUserWithEmailAndPassword] =
     useCreateUserWithEmailAndPassword(auth);
 
+  const [passwordValidity, setPasswordValidity] = useState({
+    minLength: false,
+    hasNumber: false,
+    hasUpper: false,
+    hasLower: false,
+    hasSpecialChar: false,
+  });
+
+  useEffect(() => {
+    const minLength = password.length >= 8;
+    const hasNumber = /[0-9]/.test(password);
+    const hasUpper = /[A-Z]/.test(password);
+    const hasLower = /[a-z]/.test(password);
+    const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+
+    setPasswordValidity({
+      minLength,
+      hasNumber,
+      hasUpper,
+      hasLower,
+      hasSpecialChar,
+    });
+  }, [password]);
+
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setShowPasswordRequirements(true);
     //if passwords do not match, set error message here
     if (password !== confirmPassword) {
       setPasswordError("Passwords do not match.");
@@ -50,8 +78,18 @@ export default function Sign_up_form() {
     } else {
       setPasswordError("");
     }
-    //if role is not selected
-    if (!role) {
+
+    // password requirements are met before submitting the form
+    const allRequirementsMet = Object.values(passwordValidity).every(Boolean);
+    //if password Requirements are not met 
+    if (!allRequirementsMet) {
+      setPasswordLengthError("Password must meet all requirements.");
+      return;
+    } else {
+      setPasswordLengthError("");
+    }
+    //if role is not met 
+    if (!role ) {
       setRoleError("Please select a role.");
       return;
     } else {
@@ -81,9 +119,6 @@ export default function Sign_up_form() {
       setPassword("");
       setConfirmPassword("");
 
-      //if (setPassword.length <= 7){
-      //setPasswordLengthError("Password must be at least 8 Characters, please use a different password!");
-      //}
 
       if (res !== undefined) {
         toast.success("Account created! Please check your email to verify and then sign in."); // show email verification has been sent message
@@ -93,7 +128,7 @@ export default function Sign_up_form() {
       if (res == undefined) {
         //If the user attempts to sign up with the same email, they are thrown an error
         setEmailError(
-          "Account already created with this email, please reload and try a new email or sign in!",
+          "Account already created with this email, please try a new email or Login!"
         );
       } else {
         setEmailError("");
@@ -102,7 +137,7 @@ export default function Sign_up_form() {
       console.error(error);
     }
   };
-  
+
   // Function to generate a random 5-digit number
   function generateStudentCode(): string {
     const min = 10000;
@@ -210,6 +245,8 @@ export default function Sign_up_form() {
                     autoComplete="current-password"
                     required
                     onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setShowPasswordRequirements(true)} // show popup on focus
+                    onBlur={() => setShowPasswordRequirements(false)} // hide popup on blur
                     className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
                   />
                   <button
@@ -223,8 +260,30 @@ export default function Sign_up_form() {
                     />
                   </button>
                 </div>
-                {/*error message here if there is one*/}
-                {/*{passwordLengthError && <p className="mt-2 text-sm text-red-500">{passwordLengthError}</p>}*/}
+                {/* Display password length error message if it exists */}
+                {passwordLengthError && (
+                  <p className="mt-2 text-sm text-red-500">{passwordLengthError}</p>
+                )}
+                {/* password requirements popup */}
+                {showPasswordRequirements && !emailError && !roleError && !showConfirmPasswordMatch &&(
+                  <div className="absolute z-10 w-96 p-4 mt-2 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <p className={`text-sm ${passwordValidity.minLength ? "text-green-500" : "text-red-500"}`}>
+                      {passwordValidity.minLength ? "✓" : "✗"} At least 8 characters
+                    </p>
+                    <p className={`text-sm ${passwordValidity.hasNumber ? "text-green-500" : "text-red-500"}`}>
+                      {passwordValidity.hasNumber ? "✓" : "✗"} Contains a number
+                    </p>
+                    <p className={`text-sm ${passwordValidity.hasUpper ? "text-green-500" : "text-red-500"}`}>
+                      {passwordValidity.hasUpper ? "✓" : "✗"} Contains an uppercase letter
+                    </p>
+                    <p className={`text-sm ${passwordValidity.hasLower ? "text-green-500" : "text-red-500"}`}>
+                      {passwordValidity.hasLower ? "✓" : "✗"} Contains a lowercase letter
+                    </p>
+                    <p className={`text-sm ${passwordValidity.hasSpecialChar ? "text-green-500" : "text-red-500"}`}>
+                      {passwordValidity.hasSpecialChar ? "✓" : "✗"} Contains a special character
+                    </p>
+                  </div>
+                )}
               </div>
 
               <div className="pt-3">
@@ -242,7 +301,9 @@ export default function Sign_up_form() {
                     autoComplete="new-password"
                     required
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    className="block w-full rounded-lg border bg-white px-4 py-1 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-40"
+                    onFocus={() => setShowConfirmPasswordMatch(true)} // show popup on focus
+                    onBlur={() => setShowConfirmPasswordMatch(false)} // hide popup on blur
+                    className="block w-full rounded-lg border bg-white px-4 py-2 focus:border-yellow-400 focus:outline-none focus:ring focus:ring-yellow-200 focus:ring-opacity-40"
                   />
                   <button
                     type="button"
@@ -255,9 +316,13 @@ export default function Sign_up_form() {
                     />
                   </button>
                 </div>
-                {/* error message here if there is one */}
-                {passwordError && (
-                  <p className="mt-2 text-sm text-red-500">{passwordError}</p>
+                {/* Conditional rendering of the confirm password match popup */}
+                {showConfirmPasswordMatch && (
+                  <div className="absolute z-10 w-96 p-4 mt-2 bg-white rounded-lg shadow-lg border border-gray-200">
+                    <p className={`text-sm ${password === confirmPassword && confirmPassword ? "text-green-500" : "text-red-500"}`}>
+                      {password === confirmPassword && confirmPassword ? "✓" : "✗"} Passwords match
+                    </p>
+                  </div>
                 )}
               </div>
 
@@ -282,7 +347,7 @@ export default function Sign_up_form() {
                 <ToastContainer
                   className="Toast-position -mt-[15px]"
                   style={{ width: "600px" }}
-                  position = "top-center"
+                  position="top-center"
                 />
               </div>
               <p className="mt-10 text-center text-sm text-gray-500">
