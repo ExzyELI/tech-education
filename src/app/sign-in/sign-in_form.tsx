@@ -12,13 +12,13 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { User } from "firebase/auth";
+//import { User } from "firebase/auth";
 
 export default function Sign_in_form() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(auth);
+  const [signInWithEmailAndPassword, user, loading, error] = useSignInWithEmailAndPassword(auth);
   const router = useRouter();
 
   const handleSignin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -38,6 +38,21 @@ export default function Sign_in_form() {
       console.error(error);
     }
   };
+
+  useEffect(() => {
+    if (error) {
+      switch (error.code) {
+        case 'auth/user-not-found':
+          toast.error("User not found. Please check your email address.");
+          break;
+        case 'auth/wrong-password':
+          toast.error("Incorrect password. Please try again.");
+          break;
+        default:
+          toast.error("An error occurred. Please try again.");
+      }
+    }
+  }, [error]);
 
   const togglePasswordVisibility = () => {
     setPasswordVisible((prev) => !prev);
