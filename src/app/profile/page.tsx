@@ -300,7 +300,7 @@ const ProfilePage = () => {
       age--;
     }
 
-    // maximum plausible age (e.g., 120 years)
+    // maximum plausible age for parent/teacher (e.g., 120 years)
     const maxPlausibleAge = 120;
     const earliestPlausibleYear = currentYear - maxPlausibleAge;
 
@@ -310,27 +310,10 @@ const ProfilePage = () => {
       return false;
     }
 
-    // defining age requirements based on typical U.S. standards
-    const kindergartenStartAge = 5;
-    const firstGradeStartAge = 6;
-    const secondGradeStartAge = 7;
-
-    // assume cutoff date of 9/1 for school enrollment
-    const cutoffMonth = 8; // september (0-indexed)
-    const isBeforeCutoff =
-      currentDate.getMonth() < cutoffMonth ||
-      (currentDate.getMonth() === cutoffMonth && currentDate.getDate() < 1);
-
     if (role === "Student") {
-      let requiredAge = 0;
-      if (grade === "Kindergarten") requiredAge = kindergartenStartAge;
-      else if (grade === "1st") requiredAge = firstGradeStartAge;
-      else if (grade === "2nd") requiredAge = secondGradeStartAge;
-
-      if (isBeforeCutoff) requiredAge--;
-
-      if (age !== requiredAge) {
-        setBirthdateError(`Age must match grade level`);
+      // age range check for students
+      if (age < 4 || age > 18) {
+        setBirthdateError("Age must be between 4-18 years old");
         return false;
       }
     } else {
