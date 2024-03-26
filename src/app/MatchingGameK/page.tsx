@@ -217,6 +217,7 @@ export default function Home() {
       }
       //return Math.max(score,0);
     }
+    const stars = calculateScore(score);
 
   return (
     <main>
@@ -287,6 +288,14 @@ export default function Home() {
                     Reset Game{" "}
                   </button>
                 </div>
+                <div className="mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
+            <Stats
+              attempts={matchingK_attempts}
+              elapsedTime={elapsedTime}
+              score={(finalScore)}
+              renderStars={() => stars}
+            />
+          </div>
                 {isGameWon && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="rounded-lg bg-green-500 bg-opacity-90 p-8 text-white">

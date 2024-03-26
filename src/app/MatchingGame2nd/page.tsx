@@ -226,17 +226,22 @@ export default function Home() {
   return (
     <main>
       <div className="font-sans leading-normal tracking-normal text-[#132241]">
-        {/*navbar begins */}
+        {/* Navbar */}
         <Nav />
-        {/* navbar ends */}
+        
         <div className="flex min-h-screen bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
+            {/* Game Title */}
             <h1 className="mt-2 text-center text-7xl font-bold">
               Match the Tech!
             </h1>
+            
+            {/* Instructions */}
             <p className="mt-2 text-center text-xl">
               Instructions: Click on cards to match them.
             </p>
+            
+            {/* Start Game Button */}
             <div className="mx-auto max-w-[400px] sm:max-w-[600px]">
               {!gameStarted && (
                 <button
@@ -247,16 +252,23 @@ export default function Home() {
                 </button>
               )}
             </div>
+            
+            {/* Stats Component */}
             {gameStarted && (
-              <div>
+              <div className="relative">
+                {/* Game Header */}
                 <div className="mt-4 flex justify-evenly">
+                  {/* Click Count */}
                   <p className="cursor-none rounded-lg border-4 border-gray-300 bg-[#5c93ff] p-4 text-white">
                     Click Count: {clickCount}
                   </p>
+                  {/* Timer */}
                   <p className="w-33 cursor-none rounded-lg border-4 border-gray-300 bg-[#5c93ff] p-4 text-white">
                     Timer: {formatTime(seconds)}
                   </p>
                 </div>
+                
+                {/* Game Cards Section */}
                 <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-4 py-4">
                   <section className="grid grid-cols-4 justify-items-center gap-4">
                     {cards.map((card, index) => (
@@ -283,21 +295,34 @@ export default function Home() {
                     ))}
                   </section>
                 </div>
+                
+                {/* Reset Game Button */}
                 <div className="mt-4 flex justify-center">
                   <button
                     className="rounded bg-red-500 px-4 py-2 font-bold text-white shadow-md hover:bg-red-600"
                     onClick={resetGame}
                   >
-                    Reset Game{" "}
+                    Reset Game
                   </button>
                 </div>
+                
+                {/* Stats Component */}
+                <div className="absolute top-0 right-4 mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
+                  <Stats
+                    attempts={matching2_attempts}
+                    elapsedTime={elapsedTime}
+                    score={(finalScore)}
+                    renderStars={() => stars}
+                  />
+                </div>
+                
+                {/* Congrats Message */}
                 {isGameWon && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="rounded-lg bg-green-500 bg-opacity-90 p-8 text-white">
                       <div className="text-center text-6xl font-bold sm:text-7xl lg:text-8xl">
                         Great Job!
                         <div className="flex items-center justify-center animate-bounce">
-                          {" "}
                           {/* Flex container */}
                           <img
                             src="/CGimages/goodjob-man (1).png"
