@@ -117,7 +117,7 @@ export default function ActivitiesPage() {
                             </a>
                           </div>
                           <div className="float-right ml-5 mr-5 w-60">
-                            <a href="/#">
+                            <a href="/passwordActivityK">
                               <div className="w-75 rounded-lg border border-gray-200 bg-[#e1f3ff] shadow hover:scale-110 hover:bg-gray-300">
                                 <img
                                   className="rounded-t-lg"
@@ -199,7 +199,7 @@ export default function ActivitiesPage() {
                             </a>
                           </div>
                           <div className="float-right ml-5 mr-5 w-60">
-                            <a href="/passwordActivity">
+                            <a href="/passwordActivity1">
                               <div className="w-75 rounded-lg border border-gray-200 bg-[#e1f3ff] shadow hover:scale-110 hover:bg-gray-300">
                                 <img
                                   className="rounded-t-lg"
@@ -281,7 +281,7 @@ export default function ActivitiesPage() {
                             </a>
                           </div>
                           <div className="float-right ml-5 mr-5 w-60">
-                            <a href="/#">
+                            <a href="/passwordActivity2">
                               <div className="w-75 rounded-lg border border-gray-200 bg-[#e1f3ff] shadow hover:scale-110 hover:bg-gray-300">
                                 <img
                                   className="rounded-t-lg"
