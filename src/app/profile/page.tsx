@@ -7,6 +7,7 @@ import Footer from "../../../comps/footer";
 import Nav from "../../../comps/nav";
 import ConfirmationModal from "./confirmation-modal";
 import ChangePasswordModal from "./change-password-modal";
+import ProfilePhotoModal from "./profile-photo-modal";
 
 const ProfilePage = () => {
   const [user, setUser] = useState<User | null>(null);
@@ -19,11 +20,15 @@ const ProfilePage = () => {
   const [studentCode, setStudentCode] = useState("");
   const [roleCheck, setRoleCheck] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [success, setSuccess] = useState(false);
+
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [birthdateError, setBirthdateError] = useState("");
+  const [gradeError, setGradeError] = useState("");
+
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-  const [emailFieldTyped, setEmailFieldTyped] = useState(false);
+
   const [originalData, setOriginalData] = useState({
     // original data for resetting fields
     firstName: "",
@@ -33,7 +38,11 @@ const ProfilePage = () => {
     birthdate: "",
     grade: "",
     password: "",
+    profilePhoto: "",
   });
+
+  const [profilePhoto, setProfilePhoto] = useState<string>("");
+  const [profilePhotoModalOpen, setProfilePhotoModalOpen] = useState(false);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
@@ -52,6 +61,9 @@ const ProfilePage = () => {
           setRole(userData.role);
           setBirthdate(userData.birthdate);
           setGrade(userData.grade);
+          setProfilePhoto(
+            userData.profilePhoto || "https://i.imgur.com/Y4WCdEs.jpg",
+          );
           setStudentCode(userData.studentCode);
 
           // reset to original data
@@ -63,6 +75,7 @@ const ProfilePage = () => {
             birthdate: userData.birthdate || "",
             grade: userData.grade || "",
             password: "",
+            profilePhoto: userData.profilePhoto,
           };
 
           const roleChecker = () => {
@@ -89,11 +102,34 @@ const ProfilePage = () => {
         return;
       }
 
-      // checks email errors only if typed in email field
-      if (emailFieldTyped && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        // if email error, do not save changes
-        setError("Invalid email format");
+      // validate birthdate
+      const isBirthdateValid = validateBirthdate();
+      const isGradeValid = validateGrade();
+
+      if (!isBirthdateValid || !isGradeValid) {
+        // prevent form submission if validation fails
         return;
+      }
+
+      // email validation
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setEmailError("Invalid email format (abc@xyz.com)");
+        return; // if error, do not save
+      } else {
+        setEmailError(""); // clear email error
+      }
+
+      // validate birthdate
+      if (!validateBirthdate()) {
+        return;
+      }
+
+      // validate grade for students
+      if (role === "Student" && !grade) {
+        setGradeError("Please select a grade level");
+        return; // if error, do not save
+      } else {
+        setGradeError(""); // clear grade error
       }
 
       // check if any field has been modified
@@ -103,7 +139,8 @@ const ProfilePage = () => {
         email === originalData.email &&
         role === originalData.role &&
         birthdate === originalData.birthdate &&
-        grade === originalData.grade
+        grade === originalData.grade &&
+        profilePhoto === originalData.profilePhoto
       ) {
         // no changes made, return
         return;
@@ -112,18 +149,27 @@ const ProfilePage = () => {
       setConfirmModalOpen(true);
     } catch (error) {
       // updates if there was an error
-      setSuccess(false);
       setError("An error occurred while saving changes."); // set error message
       setConfirmModalOpen(false);
     }
   };
 
-  // error handling for email
+  const validateGrade = () => {
+    if (role === "Student" && !grade) {
+      setGradeError("Please select a grade level");
+      return false;
+    }
+
+    // clear grade error
+    setGradeError("");
+    return true; // grade is valid
+  };
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setEmail(value);
-    setEmailFieldTyped(true);
-    setError(""); // clear error message
+    // clear the email error on typing
+    setEmailError("");
   };
 
   // checks for a valid name
@@ -153,7 +199,6 @@ const ProfilePage = () => {
   const confirmSave = async () => {
     setConfirmModalOpen(true);
     if (!user) return;
-    setSuccess(true);
 
     try {
       const firestore = getFirestore();
@@ -167,13 +212,13 @@ const ProfilePage = () => {
         role: role,
         birthdate: birthdate,
         grade: grade,
+        profilePhoto: profilePhoto,
       });
 
-      // if success, set to true
-      setSuccess(true);
+      // opens confirmation modal
+      setConfirmModalOpen(true);
     } catch (error) {
       // if errors, set to false and display error message
-      setSuccess(false);
       setError("An error occurred while saving changes.");
       console.error("Error updating document:", error);
     }
@@ -190,6 +235,7 @@ const ProfilePage = () => {
       birthdate: birthdate,
       grade: grade,
       password: originalData.password,
+      profilePhoto: originalData.profilePhoto,
     });
 
     // opens confirmation modal
@@ -207,8 +253,13 @@ const ProfilePage = () => {
     setRole(originalData.role);
     setBirthdate(originalData.birthdate);
     setGrade(originalData.grade);
-    setSuccess(false);
+    setProfilePhoto(originalData.profilePhoto);
+
+    // clear error messages
     setError("");
+    setEmailError("");
+    setBirthdateError("");
+    setGradeError("");
   };
 
   const handleRoleChange = (newRole: string) => {
@@ -217,25 +268,97 @@ const ProfilePage = () => {
       setGrade("");
     }
     setRole(newRole);
+    setBirthdateError("");
+  };
+
+  // function to handle birthdate change
+  const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    setBirthdate(value);
+    setBirthdateError("");
+  };
+
+  // function to validate birthdate based on user role
+  const validateBirthdate = (inputBirthdate = birthdate) => {
+    // birthdate must be filled (YYYY-MM-DD format)
+    if (!inputBirthdate || !/^\d{4}-\d{2}-\d{2}$/.test(inputBirthdate)) {
+      setBirthdateError("Please fill in the birth month, day, and year");
+      return false;
+    }
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const birthDate = new Date(birthdate);
+    const birthYear = birthDate.getFullYear();
+    let age = currentYear - birthYear;
+
+    // check if birthday has passed in the current year
+    // if not, subtract one year from age
+    const hasBirthdayPassedThisYear =
+      currentDate >=
+      new Date(currentYear, birthDate.getMonth(), birthDate.getDate());
+    if (!hasBirthdayPassedThisYear) {
+      age--;
+    }
+
+    // maximum plausible age for parent/teacher (e.g., 120 years)
+    const maxPlausibleAge = 120;
+    const earliestPlausibleYear = currentYear - maxPlausibleAge;
+
+    // check for a plausible birth year
+    if (birthYear < earliestPlausibleYear) {
+      setBirthdateError("Please enter a valid birth year");
+      return false;
+    }
+
+    if (role === "Student") {
+      // age range check for students
+      if (age < 4 || age > 18) {
+        setBirthdateError("Age must be between 4-18 years old");
+        return false;
+      }
+    } else {
+      // parents and teachers
+      if (age < 18) {
+        setBirthdateError("Must be 18 years or older");
+        return false;
+      }
+    }
+
+    return true; // birthdate is valid
   };
 
   return (
     <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#0D103E]">
       <title>Tech Education</title>
       <Nav />
+      {/* display error message if it exists */}
+      {error && (
+        <div className="mx-auto max-w-4xl px-4 py-2 text-center text-red-500">
+          {error}
+        </div>
+      )}
       <div className="mb-5 mt-5 flex min-h-screen flex-1 items-center justify-center p-8">
         {user && (
           <div className="w-full max-w-md rounded-lg border border-gray-200 bg-[#FFFFFF] py-4 shadow-md">
             <div className="flex flex-col items-center px-6 pb-5">
-              <img
-                className="mb-3 mt-5 h-24 w-24 rounded-full shadow-md"
-                src="https://cdn-icons-png.flaticon.com/512/4322/4322993.png"
-              />
+              {profilePhoto && (
+                <img
+                  className="mb-3 mt-5 h-24 w-24 rounded-full shadow-md"
+                  src={profilePhoto}
+                />
+              )}
+
               <h1
                 className={`font-bold ${editMode ? "text-md" : "text-3xl"} text-[#2E2E2E]`}
               >
                 {editMode && (
                   <div className="flex flex-col">
+                    <button
+                      className="text-md -mt-2 mb-2 font-semibold text-[#a891ed]"
+                      onClick={() => setProfilePhotoModalOpen(true)}
+                    >
+                      Change Photo
+                    </button>
                     <div className="mb-2">
                       <label
                         htmlFor="firstName"
@@ -341,14 +464,19 @@ const ProfilePage = () => {
                         type="text"
                         value={email}
                         onChange={handleEmailChange}
-                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
+                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight 
+                        ${emailError ? "border-red-500" : ""} focus:border-[#ffcf4f]
+                        focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 
+                        ${
                           editMode && email !== originalData.email
                             ? "bg-yellow-100"
                             : ""
                         }`}
                         placeholder="Email"
                       />
-                      {error && <div className="text-red-500">{error}</div>}
+                      {emailError && (
+                        <div className="text-red-500">{emailError}</div>
+                      )}
                     </div>
                   ) : (
                     <>
@@ -407,11 +535,12 @@ const ProfilePage = () => {
                         <select
                           id="grade"
                           value={grade}
-                          onChange={(e) => setGrade(e.target.value.trim())}
+                          onChange={(e) => {
+                            setGrade(e.target.value.trim());
+                            setGradeError(""); // Reset error message on user interaction
+                          }}
                           className={`mb-2 w-[320px] cursor-pointer rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
-                            editMode && grade !== originalData.grade
-                              ? "bg-yellow-100"
-                              : ""
+                            gradeError ? "border-red-500" : ""
                           }`}
                         >
                           <option value="">Select a grade</option>
@@ -419,6 +548,9 @@ const ProfilePage = () => {
                           <option value="1st">1st</option>
                           <option value="2nd">2nd</option>
                         </select>
+                        {gradeError && (
+                          <div className="text-red-500">{gradeError}</div>
+                        )}
                       </div>
                     ) : (
                       <>
@@ -448,13 +580,21 @@ const ProfilePage = () => {
                         id="birthdate"
                         type="date"
                         value={birthdate}
-                        onChange={(e) => setBirthdate(e.target.value.trim())}
-                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
+                        onChange={handleBirthdateChange}
+                        max={new Date().toISOString().split("T")[0]} // Set max date to today
+                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight 
+                        ${birthdateError ? "border-red-500" : ""} focus:border-[#ffcf4f]
+                        focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 
+                        ${
                           editMode && birthdate !== originalData.birthdate
                             ? "bg-yellow-100"
                             : ""
                         }`}
                       />
+
+                      {birthdateError && (
+                        <div className="text-red-500">{birthdateError}</div>
+                      )}
                     </div>
                   ) : (
                     <>
@@ -479,7 +619,8 @@ const ProfilePage = () => {
                         email !== originalData.email ||
                         role !== originalData.role ||
                         birthdate !== originalData.birthdate ||
-                        grade !== originalData.grade
+                        grade !== originalData.grade ||
+                        profilePhoto !== originalData.profilePhoto
                       )
                         ? "cursor-not-allowed bg-gray-400 text-gray-600"
                         : "bg-[#ffe08d] text-gray-900 hover:bg-[#ffd564]"
@@ -510,6 +651,17 @@ const ProfilePage = () => {
         )}
       </div>
       <Footer />
+
+      {/* profile photo modal */}
+      {profilePhotoModalOpen && (
+        <ProfilePhotoModal
+          isOpen={profilePhotoModalOpen}
+          onClose={() => setProfilePhotoModalOpen(false)}
+          setProfilePhoto={setProfilePhoto}
+          isEditMode={true}
+          currentPhoto={profilePhoto}
+        />
+      )}
 
       {/* confirmation modal */}
       {confirmModalOpen && (

@@ -92,7 +92,7 @@ const Nav: React.FC = () => {
     Teacher: [
       { href: "/HomePage", label: "Home", icon: faHome },
       { href: "/activities", label: "Activities", icon: faMouse },
-      { href: "/grades", label: "Grades", icon: faBookOpen },
+      { href: "/reports", label: "Reports", icon: faClipboardList },
       { href: "/Classroom", label: "Classroom", icon: faChalkboard },
       { href: "/profile", label: "Profile", icon: faUser },
     ],
