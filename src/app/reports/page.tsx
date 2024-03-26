@@ -3,9 +3,24 @@ import React, { useState, useEffect } from "react";
 import { auth } from "../firebase/init_app";
 import Nav from "../../../comps/nav";
 import Footer from "../../../comps/footer";
-import { getFirestore, collection, query, getDocs } from "firebase/firestore";
+import {
+  getFirestore,
+  collection,
+  query,
+  getDocs,
+  where,
+  updateDoc,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import { User } from "firebase/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Charts from "./charts";
 import SearchFilter from "./search-filter";
+import StudentFilter from "./student-filter";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // define activity data
 interface Activity {
@@ -13,19 +28,64 @@ interface Activity {
   score: number;
 }
 
+// Define student data
+interface Student {
+  id: string;
+  firstName: string;
+  lastName: string;
+  studentCode: string;
+}
+
 // define component
 const ReportsPage = () => {
   // define state variables
+  const [user, setUser] = useState<User | null>(null); // Logged-in user
+  const [role, setRole] = useState<string | null>(null); // User role
+  const [studentCode, setStudentCode] = useState<string>("");
+  const [hasCode, setHasCode] = useState<boolean>(false);
   const [activityData, setActivityData] = useState<Activity[]>([]);
   const [filteredActivityData, setFilteredActivityData] = useState<Activity[]>(
     [],
   );
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(async (user) => {
+      setUser(user);
       // if user is authenticated, fetch activity data
       if (user) {
-        fetchActivity(user.uid);
+        const firestore = getFirestore();
+
+        // reference to user document in Firestore
+        const userDocRef = doc(firestore, "users", user.uid);
+
+        // snapshot of user document
+        const userDocSnap = await getDoc(userDocRef);
+
+        if (userDocSnap.exists()) {
+          // user data is grabbed from snapshot if user document exists
+          const userData = userDocSnap.data();
+
+          // setting user role
+          setRole(userData.role);
+
+          if (userData.studentCode) {
+            setHasCode(true);
+
+            const q = query(
+              collection(firestore, "users"),
+              where("role", "==", "Student"),
+              where("studentCode", "==", userData.studentCode),
+            );
+            const querySnapshot = await getDocs(q);
+            console.log(querySnapshot.size);
+            if (!querySnapshot.empty) {
+              const userDoc = querySnapshot.docs[0]; // Get the first document from the query results
+              const userId = userDoc.id; // Extract the UID of the user
+              fetchActivity(userId);
+              console.log("Hi");
+            }
+          }
+        }
       }
     });
 
@@ -51,23 +111,113 @@ const ReportsPage = () => {
     }
   };
 
+  async function handleAddStudent() {
+    setUser(user);
+
+    if (user) {
+      const firestore = getFirestore();
+      const q = query(
+        collection(firestore, "users"),
+        where("role", "==", "Student"),
+        where("studentCode", "==", studentCode),
+      );
+      const querySnapshot = await getDocs(q);
+      // error if the student code does not exist
+      if (querySnapshot.empty) {
+        // Validate input fields
+        console.error("Student code is missing.");
+        toast.error("Student code does not exist!");
+        return;
+      }
+      if (!querySnapshot.empty) {
+        const userDoc = querySnapshot.docs[0]; // Get the first document from the query results
+        const userId = userDoc.id; // Extract the UID of the user
+        fetchActivity(userId);
+        const userRef = doc(firestore, "users", user.uid);
+        await updateDoc(userRef, { studentCode });
+        console.log("Student added successfully!");
+        toast.success("Student added successfully!");
+      }
+    }
+  }
+
+  const handleSearch = async (studentData: string) => {
+    if (user) {
+      const firestore = getFirestore();
+
+      // reference to user document in Firestore
+      const userDocRef = doc(firestore, "users", user.uid);
+
+      // snapshot of user document
+      const userDocSnap = await getDoc(userDocRef);
+
+      if (userDocSnap.exists()) {
+        // user data is grabbed from snapshot if user document exists
+        const userData = userDocSnap.data();
+
+        const q = query(
+          collection(firestore, "users"),
+          where("role", "==", "Student"),
+          where("studentCode", "==", studentData),
+        );
+        const querySnapshot = await getDocs(q);
+        console.log(studentData);
+        if (!querySnapshot.empty) {
+          const userDoc = querySnapshot.docs[0]; // Get the first document from the query results
+          const userId = userDoc.id; // Extract the UID of the user
+          fetchActivity(userId);
+        }
+      }
+    }
+  };
+
   return (
     <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#2d2d2d]">
       <Nav />
       <div className="container relative mx-auto my-10 flex-grow px-4 md:flex md:justify-center md:px-8">
-        <div className="mx-auto w-2/4">
-          {/* search and filter */}
-          <SearchFilter
-            activityData={activityData}
-            setFilteredActivityData={setFilteredActivityData}
-          />
-          <div className="z-0 mt-4">
-            {/* charts */}
-            <Charts activityData={filteredActivityData} />
+        <div className="w-2/4">
+          <div
+            className={`mx-auto mb-4 flex w-full items-center overflow-hidden rounded-md border border-gray-200 bg-white ${role == "Teacher" ? "hidden" : ""}`}
+          >
+            <input
+              type="search"
+              className="block w-full bg-white px-4 py-2 text-gray-700 focus:outline-none"
+              onChange={(e) => setStudentCode(e.target.value)}
+              placeholder="Add student code..."
+              maxLength={5}
+            />
+            <button
+              type="submit"
+              onClick={handleAddStudent}
+              className="bg-white px-4 py-2 text-gray-700 hover:scale-110 focus:outline-none"
+            >
+              <FontAwesomeIcon icon={faPlus} />
+              <span className="sr-only">Search</span>
+            </button>
+          </div>
+          <div className={`mx-auto w-full ${role == "Parent" ? "hidden" : ""}`}>
+            {/* Student search and filter */}
+            <StudentFilter user={user} handleSearch={handleSearch} />
+          </div>
+          <div className="mx-auto w-full">
+            {/* search and filter */}
+            <SearchFilter
+              activityData={activityData}
+              setFilteredActivityData={setFilteredActivityData}
+            />
+            <div className="z-0 mt-4">
+              {/* charts */}
+              <Charts activityData={filteredActivityData} />
+            </div>
           </div>
         </div>
       </div>
       <Footer />
+      <ToastContainer
+        className="Toast-position mt-[70px]"
+        style={{ width: "450px" }}
+        position="top-center"
+      />
     </main>
   );
 };

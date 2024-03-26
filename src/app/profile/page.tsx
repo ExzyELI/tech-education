@@ -17,7 +17,8 @@ const ProfilePage = () => {
   const [role, setRole] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [grade, setGrade] = useState("");
-
+  const [studentCode, setStudentCode] = useState("");
+  const [roleCheck, setRoleCheck] = useState(false);
   const [editMode, setEditMode] = useState(false);
 
   const [error, setError] = useState("");
@@ -63,6 +64,7 @@ const ProfilePage = () => {
           setProfilePhoto(
             userData.profilePhoto || "https://i.imgur.com/Y4WCdEs.jpg",
           );
+          setStudentCode(userData.studentCode);
 
           // reset to original data
           const originalData = {
@@ -76,6 +78,14 @@ const ProfilePage = () => {
             profilePhoto: userData.profilePhoto,
           };
 
+          const roleChecker = () => {
+            // if statement checking if the user role is currently a student
+            if (userData.role == "Student") {
+              setRoleCheck(true);
+            }
+          };
+
+          roleChecker();
           setOriginalData(originalData);
         }
       }
@@ -432,7 +442,18 @@ const ProfilePage = () => {
                     </div>
                   </div>
                 )}
-                {!editMode && (
+                {!editMode && roleCheck && (
+                  <div className="flex flex-col items-center">
+                    <span>
+                      {firstName}
+                      <span className="ml-1">{lastName}</span>
+                    </span>
+                    <span className="mb-6 text-sm text-gray-400">
+                      {role}: {studentCode}
+                    </span>
+                  </div>
+                )}
+                {!editMode && !roleCheck && (
                   <div className="flex flex-col items-center">
                     <span>
                       {firstName}
