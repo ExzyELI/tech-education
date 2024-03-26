@@ -39,7 +39,7 @@ const StudentFilter: React.FC<StudentFilterProps> = ({
   const [role, setRole] = useState<string | null>(null);
   const [hasClass, setHasClass] = useState<boolean>(false);
 
-  // Fetch students based on the teacher's class code
+  // Fetch students based on the teacher and student class code
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -144,7 +144,7 @@ const StudentFilter: React.FC<StudentFilterProps> = ({
             readOnly
             onClick={toggleFilter}
             value={searchQuery}
-            //onChange={(e) => setSearchQuery(e.target.value)} // update searchQuery state
+            //onChange={(e) => setSearchQuery(e.target.value)}
             className="block w-full bg-white px-4 py-2 text-gray-700 focus:outline-none"
             placeholder="Select student..."
             required
