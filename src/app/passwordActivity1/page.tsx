@@ -25,9 +25,8 @@ import {
   limit,
 } from "firebase/firestore";
 import Stats from "../../../comps/stats";
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PasswordPage = () => {
   const [password, setPassword] = useState(""); // store password
@@ -42,7 +41,6 @@ const PasswordPage = () => {
   const [showSubmit, setShowSubmit] = useState(false); // submit button visibility
 
   useEffect(() => {
-
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user); // update the user state when auth state changes
       if (user) {
@@ -125,7 +123,11 @@ const PasswordPage = () => {
         // update attempts locally
         setAttempts(currentAttempts + 1);
         // update attempts to firestore
-        await setDoc(userDocRef, { password1_attempts: increment(1) }, { merge: true });
+        await setDoc(
+          userDocRef,
+          { password1_attempts: increment(1) },
+          { merge: true },
+        );
         // save activity data in firestore
         await addDoc(collection(firestore, `users/${user.uid}/activities`), {
           activityName: "Password Activity 1",
@@ -167,12 +169,10 @@ const PasswordPage = () => {
     const lowerCaseLetters = /[a-z]/g;
     const upperCaseLetters = /[A-Z]/g;
     const numbers = /[0-9]/g;
-    const minLength = password.length >= 8;
 
     if (password.match(lowerCaseLetters)) strength += 1;
     if (password.match(upperCaseLetters)) strength += 1;
-    if (password.match(numbers)) strength += 1;
-    if (minLength) strength += 1;
+    if (password.match(numbers)) strength += 2;
 
     return strength;
   };
@@ -209,12 +209,12 @@ const PasswordPage = () => {
           <div className="w-full">
             <form
               onSubmit={handleSubmit}
-              className="rounded-lg bg-white p-6 py-[26px] shadow-md"
+              className="h-[426px] rounded-lg bg-white p-6 py-[26px] shadow-md"
             >
               <div className="flex flex-col">
                 <label
                   htmlFor="psw"
-                  className="text-lg font-semibold text-[#5c93ff]"
+                  className="-mt-2 text-lg font-semibold text-[#5c93ff]"
                 >
                   Password
                 </label>
@@ -242,7 +242,10 @@ const PasswordPage = () => {
                     <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
                   </button>
                 </div>
-                <div id="message" className="mb-4 rounded-lg bg-gray-100 p-4">
+                <div
+                  id="message"
+                  className="mb-4 rounded-lg bg-gray-100 p-4 pb-14"
+                >
                   <h3 className="mb-2 text-lg font-semibold">
                     Create a password with the following:
                   </h3>
@@ -262,12 +265,6 @@ const PasswordPage = () => {
                     className={`p-1 ${password.match(/[0-9]/g) ? "text-green-500" : "text-red-500"}`}
                   >
                     {password.match(/[0-9]/g) ? "✔" : "✘"} A <b>number</b>
-                  </p>
-                  <p
-                    className={`p-1 ${password.length >= 8 ? "text-green-500" : "text-red-500"}`}
-                  >
-                    {password.length >= 8 ? "✔" : "✘"} At least{" "}
-                    <b>8 characters</b>
                   </p>
                 </div>
                 <div className="relative mb-5 h-4 overflow-hidden rounded-md border border-gray-300 bg-gray-100">
@@ -302,10 +299,10 @@ const PasswordPage = () => {
                   <FontAwesomeIcon icon={faCheck} className="mr-2 text-lg" />
                   Submit
                 </button>
-                <ToastContainer 
-                  className="Toast-position mt-12"
-                  position = "top-center"
-              />
+                <ToastContainer
+                  className="Toast-position mt-20"
+                  position="top-center"
+                />
               </div>
             </form>
           </div>
