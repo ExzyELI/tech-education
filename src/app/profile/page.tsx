@@ -17,11 +17,17 @@ const ProfilePage = () => {
   const [role, setRole] = useState("");
   const [birthdate, setBirthdate] = useState("");
   const [grade, setGrade] = useState("");
+
   const [editMode, setEditMode] = useState(false);
+
   const [error, setError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [birthdateError, setBirthdateError] = useState("");
+  const [gradeError, setGradeError] = useState("");
+
   const [confirmModalOpen, setConfirmModalOpen] = useState(false);
   const [changePasswordModalOpen, setChangePasswordModalOpen] = useState(false);
-  const [emailFieldTyped, setEmailFieldTyped] = useState(false);
+
   const [originalData, setOriginalData] = useState({
     // original data for resetting fields
     firstName: "",
@@ -33,6 +39,7 @@ const ProfilePage = () => {
     password: "",
     profilePhoto: "",
   });
+
   const [profilePhoto, setProfilePhoto] = useState<string>("");
   const [profilePhotoModalOpen, setProfilePhotoModalOpen] = useState(false);
 
@@ -85,11 +92,34 @@ const ProfilePage = () => {
         return;
       }
 
-      // checks email errors only if typed in email field
-      if (emailFieldTyped && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        // if email error, do not save changes
-        setError("Invalid email format");
+      // validate birthdate
+      const isBirthdateValid = validateBirthdate();
+      const isGradeValid = validateGrade();
+
+      if (!isBirthdateValid || !isGradeValid) {
+        // prevent form submission if validation fails
         return;
+      }
+
+      // email validation
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        setEmailError("Invalid email format (abc@xyz.com)");
+        return; // if error, do not save
+      } else {
+        setEmailError(""); // clear email error
+      }
+
+      // validate birthdate
+      if (!validateBirthdate()) {
+        return;
+      }
+
+      // validate grade for students
+      if (role === "Student" && !grade) {
+        setGradeError("Please select a grade level");
+        return; // if error, do not save
+      } else {
+        setGradeError(""); // clear grade error
       }
 
       // check if any field has been modified
@@ -114,12 +144,22 @@ const ProfilePage = () => {
     }
   };
 
-  // error handling for email
+  const validateGrade = () => {
+    if (role === "Student" && !grade) {
+      setGradeError("Please select a grade level");
+      return false;
+    }
+
+    // clear grade error
+    setGradeError("");
+    return true; // grade is valid
+  };
+
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.trim();
     setEmail(value);
-    setEmailFieldTyped(true);
-    setError(""); // clear error message
+    // clear the email error on typing
+    setEmailError("");
   };
 
   // checks for a valid name
@@ -204,7 +244,12 @@ const ProfilePage = () => {
     setBirthdate(originalData.birthdate);
     setGrade(originalData.grade);
     setProfilePhoto(originalData.profilePhoto);
+
+    // clear error messages
     setError("");
+    setEmailError("");
+    setBirthdateError("");
+    setGradeError("");
   };
 
   const handleRoleChange = (newRole: string) => {
@@ -213,12 +258,92 @@ const ProfilePage = () => {
       setGrade("");
     }
     setRole(newRole);
+    setBirthdateError("");
+  };
+
+  // function to handle birthdate change
+  const handleBirthdateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.trim();
+    setBirthdate(value);
+    setBirthdateError("");
+  };
+
+  // function to validate birthdate based on user role
+  const validateBirthdate = (inputBirthdate = birthdate) => {
+    // birthdate must be filled (YYYY-MM-DD format)
+    if (!inputBirthdate || !/^\d{4}-\d{2}-\d{2}$/.test(inputBirthdate)) {
+      setBirthdateError("Please fill in the birth month, day, and year");
+      return false;
+    }
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const birthDate = new Date(birthdate);
+    const birthYear = birthDate.getFullYear();
+    let age = currentYear - birthYear;
+
+    // check if birthday has passed in the current year
+    // if not, subtract one year from age
+    const hasBirthdayPassedThisYear =
+      currentDate >=
+      new Date(currentYear, birthDate.getMonth(), birthDate.getDate());
+    if (!hasBirthdayPassedThisYear) {
+      age--;
+    }
+
+    // maximum plausible age (e.g., 120 years)
+    const maxPlausibleAge = 120;
+    const earliestPlausibleYear = currentYear - maxPlausibleAge;
+
+    // check for a plausible birth year
+    if (birthYear < earliestPlausibleYear) {
+      setBirthdateError("Please enter a valid birth year");
+      return false;
+    }
+
+    // defining age requirements based on typical U.S. standards
+    const kindergartenStartAge = 5;
+    const firstGradeStartAge = 6;
+    const secondGradeStartAge = 7;
+
+    // assume cutoff date of 9/1 for school enrollment
+    const cutoffMonth = 8; // september (0-indexed)
+    const isBeforeCutoff =
+      currentDate.getMonth() < cutoffMonth ||
+      (currentDate.getMonth() === cutoffMonth && currentDate.getDate() < 1);
+
+    if (role === "Student") {
+      let requiredAge = 0;
+      if (grade === "Kindergarten") requiredAge = kindergartenStartAge;
+      else if (grade === "1st") requiredAge = firstGradeStartAge;
+      else if (grade === "2nd") requiredAge = secondGradeStartAge;
+
+      if (isBeforeCutoff) requiredAge--;
+
+      if (age !== requiredAge) {
+        setBirthdateError(`Age must match grade level`);
+        return false;
+      }
+    } else {
+      // parents and teachers
+      if (age < 18) {
+        setBirthdateError("Must be 18 years or older");
+        return false;
+      }
+    }
+
+    return true; // birthdate is valid
   };
 
   return (
     <main className="flex min-h-screen flex-col bg-[#FAF9F6] font-sans text-[#0D103E]">
       <title>Tech Education</title>
       <Nav />
+      {/* display error message if it exists */}
+      {error && (
+        <div className="mx-auto max-w-4xl px-4 py-2 text-center text-red-500">
+          {error}
+        </div>
+      )}
       <div className="mb-5 mt-5 flex min-h-screen flex-1 items-center justify-center p-8">
         {user && (
           <div className="w-full max-w-md rounded-lg border border-gray-200 bg-[#FFFFFF] py-4 shadow-md">
@@ -335,14 +460,19 @@ const ProfilePage = () => {
                         type="text"
                         value={email}
                         onChange={handleEmailChange}
-                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
+                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight 
+                        ${emailError ? "border-red-500" : ""} focus:border-[#ffcf4f]
+                        focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 
+                        ${
                           editMode && email !== originalData.email
                             ? "bg-yellow-100"
                             : ""
                         }`}
                         placeholder="Email"
                       />
-                      {error && <div className="text-red-500">{error}</div>}
+                      {emailError && (
+                        <div className="text-red-500">{emailError}</div>
+                      )}
                     </div>
                   ) : (
                     <>
@@ -401,11 +531,12 @@ const ProfilePage = () => {
                         <select
                           id="grade"
                           value={grade}
-                          onChange={(e) => setGrade(e.target.value.trim())}
+                          onChange={(e) => {
+                            setGrade(e.target.value.trim());
+                            setGradeError(""); // Reset error message on user interaction
+                          }}
                           className={`mb-2 w-[320px] cursor-pointer rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
-                            editMode && grade !== originalData.grade
-                              ? "bg-yellow-100"
-                              : ""
+                            gradeError ? "border-red-500" : ""
                           }`}
                         >
                           <option value="">Select a grade</option>
@@ -413,6 +544,9 @@ const ProfilePage = () => {
                           <option value="1st">1st</option>
                           <option value="2nd">2nd</option>
                         </select>
+                        {gradeError && (
+                          <div className="text-red-500">{gradeError}</div>
+                        )}
                       </div>
                     ) : (
                       <>
@@ -442,13 +576,21 @@ const ProfilePage = () => {
                         id="birthdate"
                         type="date"
                         value={birthdate}
-                        onChange={(e) => setBirthdate(e.target.value.trim())}
-                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight text-gray-600 focus:border-[#ffcf4f] focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 ${
+                        onChange={handleBirthdateChange}
+                        max={new Date().toISOString().split("T")[0]} // Set max date to today
+                        className={`mb-2 w-[320px] rounded-md border px-3 py-2 leading-tight 
+                        ${birthdateError ? "border-red-500" : ""} focus:border-[#ffcf4f]
+                        focus:outline-none focus:ring focus:ring-[#ffe08d] focus:ring-opacity-50 
+                        ${
                           editMode && birthdate !== originalData.birthdate
                             ? "bg-yellow-100"
                             : ""
                         }`}
                       />
+
+                      {birthdateError && (
+                        <div className="text-red-500">{birthdateError}</div>
+                      )}
                     </div>
                   ) : (
                     <>
