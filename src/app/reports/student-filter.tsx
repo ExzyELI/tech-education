@@ -36,6 +36,8 @@ const StudentFilter: React.FC<StudentFilterProps> = ({
   const [filterOpen, setFilterOpen] = useState<boolean>(false);
   const [studentOptions, setStudentOptions] = useState<Student[]>([]);
   const [selectedStudentData, setSelectedStudentData] = useState<string>("");
+  const [role, setRole] = useState<string | null>(null);
+  const [hasClass, setHasClass] = useState<boolean>(false);
 
   // Fetch students based on the teacher's class code
   useEffect(() => {
@@ -52,8 +54,10 @@ const StudentFilter: React.FC<StudentFilterProps> = ({
           if (userDocSnap.exists()) {
             // User data is grabbed from snapshot if user document exists
             const userData = userDocSnap.data();
+            setRole(userData.role);
 
             if (userData.classCode) {
+              setHasClass(true);
               console.log("Classroom exists", userData.classCode);
               // Set state for classroom existing
 
@@ -70,6 +74,9 @@ const StudentFilter: React.FC<StudentFilterProps> = ({
               });
 
               setStudentOptions(students);
+            }
+            if (!userData.classCode) {
+              setHasClass(false);
             }
           }
         }
@@ -123,16 +130,26 @@ const StudentFilter: React.FC<StudentFilterProps> = ({
         >
           <FontAwesomeIcon icon={faFilter} />
         </button>
-        <input
-          type="text"
-          readOnly
-          onClick={toggleFilter}
-          value={searchQuery}
-          //onChange={(e) => setSearchQuery(e.target.value)} // update searchQuery state
-          className="block w-full bg-white px-4 py-2 text-gray-700 focus:outline-none"
-          placeholder="Select student..."
-          required
-        />
+        {!hasClass ? (
+          <input
+            type="text"
+            readOnly
+            value="Create a class on the classroom page first!"
+            className="block w-full bg-white px-4 py-2 text-gray-700 focus:outline-none"
+            required
+          />
+        ) : (
+          <input
+            type="text"
+            readOnly
+            onClick={toggleFilter}
+            value={searchQuery}
+            //onChange={(e) => setSearchQuery(e.target.value)} // update searchQuery state
+            className="block w-full bg-white px-4 py-2 text-gray-700 focus:outline-none"
+            placeholder="Select student..."
+            required
+          />
+        )}
         <button
           type="submit"
           onClick={handleClick}
