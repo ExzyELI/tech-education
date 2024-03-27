@@ -217,25 +217,11 @@ export default function Home() {
     }
     //return Math.max(score,0);
   }
-
-  /*const FinalScoreEditer = (finalScore:number) : number =>{
-    if (finalScore >= 4){
-      return 3;
-    }else if (finalScore >= 3){
-      return 2;}
-      else if (finalScore >= 2){
-        return 1;}
-        else{
-          return 0;
-        }
-        }
-        */ 
-  
-  // const finalScore = calculateScore()
   const stars = calculateScore(score);
   
   return (
     <main>
+
       <div className="font-sans leading-normal tracking-normal text-[#132241]">
         {/*navbar begins */}
         <Nav/>
@@ -243,13 +229,10 @@ export default function Home() {
 
         <div className="flex min-h-screen bg-gradient-to-br from-[#FAF9F6] to-[#FAF9F6] text-[#434343]">
           <div className="container mx-auto max-w-3xl px-4 py-6">
-            <h1 className="mt-2 text-center text-7xl font-bold">
-              Match the Tech!
-            </h1>
-            <p className="mt-2 text-center text-xl">
-              Instructions: Click on cards to match them.
-            </p>
-            <div className="mx-auto max-w-[400px] sm:max-w-[600px]"> 
+            <h1 className="mt-2 text-center text-7xl font-bold">Match the Tech!</h1>
+            <p className="mt-2 text-center text-xl">Instructions: Click on cards to match them.</p>
+            <div className="mx-auto max-w-[400px] sm:max-w-[600px]">
+
             {!gameStarted && (
               <button className="mt-4 rounded-lg bg-[#ffe08d] px-6 py-4 text-xl shadow-md transition ease-in-out hover:-translate-y-1 hover:scale-110 hover:bg-[#ff914d] block mx-auto" onClick={startGame}>Start Game</button>
             )}
@@ -263,9 +246,6 @@ export default function Home() {
                 <p className="bg-[#5c93ff] text-white rounded-lg p-4 border-gray-300 border-4 w-33 cursor-none">Timer: {formatTime(seconds)}</p>
               </div>
               {/*Header Ends: Click Counter and Timer*/}
-              
-              <div className=''>
-                <div className='flex-1'>
               <div className="container mt-8 border-4 border-dashed border-[#5c93ff] bg-[#5ab2ff] px-4 py-4">
               <section className="grid grid-cols-4 justify-items-center gap-4">
           {cards.map((card, index) => (
@@ -294,8 +274,7 @@ export default function Home() {
         </section>
         
             </div>
-            </div>
-            <div className='mt-8 flex justify-end'>
+            <div className='mt-8 flex'>
               {/* Stats Box Component */}
           <div className="mt-4 md:mt-0 md:w-1/3 md:flex-shrink-0">
             <Stats
@@ -307,7 +286,7 @@ export default function Home() {
           </div>
 
             </div>
-            </div>
+            <div></div>
             {/*matching game ends here*/}
 
               <div className="mt-4 flex justify-center">
@@ -334,9 +313,12 @@ export default function Home() {
 
           )}
           </div>
+
         </div>
+
       </div>
       <Footer />
+
     </main>
   );
 }
