@@ -1,4 +1,5 @@
 "use client";
+import { Carousel } from "@material-tailwind/react";
 import { auth, useHandleRedirect } from "@/app/firebase/init_app";
 import { useRouter } from "next/navigation";
 import { signOut } from "firebase/auth";
@@ -72,36 +73,40 @@ export default function Home() {
               </div>
               {/* mouse image end */}
             </div>
+            
 
-            {/* title */}
-            <div className="-mt-[70px] flex cursor-pointer flex-col items-center justify-center py-2 pb-20 lg:flex-row">
-              <a
-                href="#"
-                className="delay-50 m-2 flex h-[280px] w-2/3 items-center justify-center rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500 lg:w-1/4"
-              >
-                <h1 className="text-center text-3xl font-semibold tracking-tight">
-                  Kindergarten
-                </h1>
-              </a>
-              <a
-                href="#"
-                className="delay-50 m-2 flex h-[280px] w-2/3 items-center justify-center rounded-md bg-[#e1f3ff] bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500 lg:w-1/4"
-              >
-                <h1 className="text-center text-3xl font-semibold tracking-tight">
-                  1st <br />
-                  Grade
-                </h1>
-              </a>
-              <a
-                href="#"
-                className="delay-50 m-2 flex h-[280px] w-2/3 items-center justify-center rounded-md bg-[#e1f3ff] bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500 lg:w-1/4"
-              >
-                <h1 className="text-center text-3xl font-semibold tracking-tight">
-                  2nd <br />
-                  Grade
-                </h1>
-              </a>
-            </div>
+            {/* game cards */}
+            <Carousel className="rounded-xl flex items-center h-[400px] w-full">
+  <div className="w-full">
+    <button className="h-[400px] w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transform transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
+  <h1 className="text-center text-5xl font-semibold tracking-tight">
+    Keyboard Activities
+  </h1>
+</button>
+
+  </div>
+  <div className="w-full">
+    <button className="h-[400px] w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
+      <h1 className="text-center text-5xl font-semibold tracking-tight">
+        Quiz Solver
+      </h1>
+    </button>
+  </div>
+  <div className="w-full">
+    <button className="h-[400px] w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
+      <h1 className="text-center text-5xl font-semibold tracking-tight">
+        Password
+      </h1>
+    </button>
+  </div>
+  <div className="w-full">
+    <button className="h-[400px]  w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
+      <h1 className="text-center text-5xl font-semibold tracking-tight">
+        Match the Cards!
+      </h1>
+    </button>
+  </div>
+</Carousel>
           </div>
         </div>
       </section>
