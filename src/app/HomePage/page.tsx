@@ -76,34 +76,38 @@ export default function Home() {
             
 
             {/* game cards */}
-            <Carousel className="rounded-xl flex items-center h-[400px] w-full">
+            <Carousel className="rounded-xl flex items-center h-[400px] w-full" keyboard={false}>
   <div className="w-full">
     <button className="h-[400px] w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transform transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
   <h1 className="text-center text-5xl font-semibold tracking-tight">
-    Keyboard Activities
+    Keyboard Quest
   </h1>
+  <h2>Find the Keyboard Keys!</h2>
 </button>
 
   </div>
   <div className="w-full">
     <button className="h-[400px] w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
       <h1 className="text-center text-5xl font-semibold tracking-tight">
-        Quiz Solver
+        Tech Trivia
       </h1>
+      <h2>Let's See How Tech Savvy You Are!</h2>
     </button>
   </div>
   <div className="w-full">
     <button className="h-[400px] w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
       <h1 className="text-center text-5xl font-semibold tracking-tight">
-        Password
+        Password Protecter
       </h1>
+      <h2>Build Your Top Secret Password!</h2>
     </button>
   </div>
   <div className="w-full">
     <button className="h-[400px]  w-full rounded-md bg-gradient-to-r from-green-400 to-blue-500 transition-transform hover:scale-105 hover:from-green-400 hover:via-[#ffe08d] hover:to-blue-500">
       <h1 className="text-center text-5xl font-semibold tracking-tight">
-        Match the Cards!
+        Tech Tango
       </h1>
+      <h2>Match the Gadgets!</h2>
     </button>
   </div>
 </Carousel>
